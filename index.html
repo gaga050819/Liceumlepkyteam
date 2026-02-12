@@ -6,7 +6,6 @@
 <title>Учнівське самоврядування</title>
 
 <style>
-/* ОСНОВНІ СТИЛІ */
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
@@ -20,13 +19,11 @@ body {
     min-height: 100vh;
 }
 
-/* ТЕМНА ТЕМА */
 body.dark {
     background: linear-gradient(180deg, #0f172a, #020617) !important;
     color: #f8fafc;
 }
 
-/* ЗАГОЛОВОК */
 .header-title {
     margin-top: 60px;
     text-align: center;
@@ -44,7 +41,6 @@ body.dark .header-title h1 {
     -webkit-background-clip: text;
 }
 
-/* КНОПКА ТЕМИ */
 #themeBtn {
     position: fixed;
     top: 20px;
@@ -67,7 +63,6 @@ body.dark #themeBtn {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* НАВІГАЦІЯ */
 .nav {
     margin: 40px 0;
     display: flex;
@@ -96,7 +91,6 @@ body.dark .nav a { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba
 }
 .nav a.pulse { animation: pulse 0.4s ease; }
 
-/* КАРТКИ */
 .container {
     width: 90%;
     max-width: 1000px;
@@ -106,10 +100,10 @@ body.dark .nav a { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba
 }
 
 .card {
-    position: relative; /* Важливо для позиціонування кнопки */
+    position: relative;
     display: flex;
     flex-direction: row;
-    align-items: flex-start; /* Щоб картка росла вниз */
+    align-items: flex-start;
     gap: 30px;
     border-radius: 40px;
     padding: 25px;
@@ -129,10 +123,8 @@ body.dark .card {
 }
 .card.visible { opacity: 1; transform: translateY(0); }
 
-/* При наведенні піднімаємо тільки якщо не розгорнута */
 .card:not(.expanded):hover { transform: translateY(-10px) scale(1.02); }
 
-/* КНОПКА "ПЛЮС" */
 .expand-btn {
     position: absolute;
     top: 25px;
@@ -164,23 +156,20 @@ body.dark .expand-btn {
     transform: scale(1.1);
 }
 
-/* Стан розгорнутої картки */
 .card.expanded .expand-btn {
-    transform: rotate(135deg); /* Перетворення плюса на хрестик */
-    background: rgba(255, 59, 48, 0.15); /* Червонуватий відтінок */
+    transform: rotate(135deg);
+    background: rgba(255, 59, 48, 0.15);
 }
 body.dark .card.expanded .expand-btn {
     background: rgba(255, 69, 58, 0.25);
 }
 
-/* Прихований текст */
 .more-text {
     display: none;
     margin-top: 20px;
     opacity: 0;
 }
 
-/* Поява тексту */
 .card.expanded .more-text {
     display: block;
     animation: fadeIn 0.6s ease forwards;
@@ -193,10 +182,9 @@ body.dark .card.expanded .expand-btn {
 
 .card img { width: 45%; border-radius: 30px; transition: 0.4s; align-self: flex-start; }
 .card img:hover { transform: scale(1.05); }
-.card .text { width: 55%; font-size: 18px; padding-right: 40px; /* Місце для кнопки */ }
+.card .text { width: 55%; font-size: 18px; padding-right: 40px; }
 .card .text h2 { margin-top: 0; }
 
-/* КНОПКА ВГОРУ */
 .back-to-top {
     position: fixed;
     bottom: 25px;
@@ -214,7 +202,6 @@ body.dark .card.expanded .expand-btn {
 }
 body.dark .back-to-top { background: rgba(255, 255, 255, 0.1); }
 
-/* ФУТЕР */
 footer {
     width: 100%;
     padding: 50px 0;
@@ -227,11 +214,11 @@ footer {
 
 @media (max-width: 900px) {
     .card { flex-direction: column; align-items: center; text-align: center; }
-    .card.expanded { align-items: center; } /* Залишаємо по центру на мобільному */
+    .card.expanded { align-items: center; }
     .card img, .card .text { width: 100%; }
     .card .text { padding-right: 0; padding-top: 20px; }
     .expand-btn { top: 15px; right: 15px; width: 35px; height: 35px; font-size: 22px; }
-    .more-text { text-align: left; } /* Розгорнутий текст вирівнюємо вліво для зручності */
+    .more-text { text-align: left; }
 }
 </style>
 </head>
@@ -240,13 +227,13 @@ footer {
 <button id="themeBtn">🌙/☀</button>
 
 <div class="header-title">
-    <h1>Рада ліцею</h1>
-    <p>Творимо майбутнє разом</p>
+    <h1>Учнівське самоврядування</h1>
+    <p>Усі новини тут</p>
 </div>
 
 <div class="nav">
-    <a href="#team" class="active">Команда</a>
-    <a href="#info">Про нас</a>
+    <a href="#team" class="active">Заголовок 1</a>
+    <a href="#info">Заголовок 2</a>
 </div>
 
 <div class="container">
@@ -254,11 +241,11 @@ footer {
         <button class="expand-btn" aria-label="Розгорнути">+</button>
         <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='gray'/></svg>">
         <div class="text">
-            <h2>Наша команда</h2>
-            <p>Ми — об'єднання активних учнів, які прагнуть зробити життя ліцею цікавішим.</p>
+            <h2>Заголовок біля фото 1</h2>
+            <p>текст 1</p>
             <div class="more-text">
-                <p>Тут знаходиться детальна інформація про склад нашої команди. Ми складаємося з представників кожного класу, які були обрані шляхом голосування. Наша мета — представляти інтереси всіх учнів перед адміністрацією.</p>
-                <p>Ми регулярно проводимо збори, де обговорюємо нові ідеї, плануємо заходи та вирішуємо нагальні питання. Приєднуйтесь до нас, якщо хочете впливати на життя школи!</p>
+                <p>текст 2</p>
+                <p>текст 3</p>
             </div>
         </div>
     </div>
@@ -267,11 +254,11 @@ footer {
         <button class="expand-btn" aria-label="Розгорнути">+</button>
         <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='white'/></svg>">
         <div class="text">
-            <h2>Наші цілі</h2>
-            <p>Розвиток лідерських якостей та організація крутих заходів.</p>
+            <h2>Заголовок біля фото 2</h2>
+            <p>текст 1</p>
             <div class="more-text">
-                <p>Наші основні завдання включають: організацію святкових концертів, спортивних змагань, благодійних ярмарків та тематичних днів. Ми також працюємо над покращенням умов навчання та відпочинку в ліцеї.</p>
-                <p>Ми віримо, що кожен учень має потенціал стати лідером, і наше самоврядування — це платформа для розвитку цих навичок через реальні проєкти та відповідальність.</p>
+                <p>текст 2</p>
+                <p>текст 3</p>
             </div>
         </div>
     </div>
@@ -280,7 +267,6 @@ footer {
 <footer>
     <div style="margin-bottom: 15px;">
         <a href="#" style="color: inherit; margin: 0 15px; text-decoration: none; font-weight: 600; opacity: 0.7;">INSTAGRAM</a>
-        <a href="#" style="color: inherit; margin: 0 15px; text-decoration: none; font-weight: 600; opacity: 0.7;">TELEGRAM</a>
     </div>
     <p style="font-size: 12px; opacity: 0.5;">&copy; 2026 Учнівське самоврядування</p>
 </footer>
@@ -292,7 +278,6 @@ const themeBtn = document.getElementById('themeBtn');
 const body = document.body;
 const backToTop = document.querySelector('.back-to-top');
 
-// 1. Збереження теми
 if (localStorage.getItem('theme') === 'dark') body.classList.add('dark');
 
 themeBtn.addEventListener('click', () => {
@@ -302,39 +287,31 @@ themeBtn.addEventListener('click', () => {
     if(isDark) body.style.background = "";
 });
 
-// 2. ЛОГІКА РОЗГОРТАННЯ ТЕКСТУ (НОВЕ)
 const expandBtns = document.querySelectorAll('.expand-btn');
 expandBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-        // Знаходимо батьківську картку
         const card = btn.closest('.card');
-        // Перемикаємо клас .expanded
         card.classList.toggle('expanded');
     });
 });
 
-// 3. Скрол-функції (Поява карток, Кнопка Вгору, Активне меню, Фон)
 const cards = document.querySelectorAll('.card');
 const navLinks = document.querySelectorAll('.nav a');
 
 window.addEventListener('scroll', () => {
     const scroll = window.scrollY;
 
-    // Поява карток
     cards.forEach(card => {
         const rect = card.getBoundingClientRect();
         if(rect.top < window.innerHeight - 100) card.classList.add('visible');
     });
 
-    // Кнопка вгору
     backToTop.style.display = scroll > 300 ? 'block' : 'none';
 
-    // Динамічний фон (тільки світла тема)
     if(!body.classList.contains('dark')){
         body.style.background = `linear-gradient(180deg, rgba(219,234,254,1) ${Math.max(0, 100-scroll/10)}%, rgba(147,197,253,1) 100%)`;
     }
 
-    // Активне меню
     cards.forEach((card, i) => {
         const rect = card.getBoundingClientRect();
         if(rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
@@ -344,7 +321,6 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// 4. Плавний скрол + Пульс
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
