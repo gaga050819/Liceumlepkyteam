@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Новини - Учнівське самоврядування</title>
+<title>Учнівське самоврядування</title>
 
 <style>
 :root {
@@ -83,12 +83,18 @@ body.dark {
     display: flex;
     flex-direction: column;
     padding: 100px 30px 40px;
-    box-sizing: border-box;
-    opacity: 0;
+    box-shadow: 15px 0 50px rgba(0,0,0,0.2);
+    box-sizing: border-box; 
+    opacity: 0; 
     visibility: hidden;
 }
 
-.sidebar.open { left: 0; opacity: 1; visibility: visible; }
+.sidebar.open { 
+    left: 0; 
+    opacity: 1;
+    visibility: visible;
+}
+
 .sidebar a {
     text-decoration: none;
     padding: 18px 25px;
@@ -119,7 +125,7 @@ body.dark {
 header {
     width: 90%;
     max-width: 1200px;
-    margin: 40px 0 40px;
+    margin: 40px 0;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -127,7 +133,7 @@ header {
 
 .main-title {
     grid-column: 2;
-    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-size: clamp(2rem, 8vw, 3.5rem);
     font-weight: 900;
     text-align: center;
     margin: 0;
@@ -135,8 +141,8 @@ header {
 
 .logo {
     justify-self: end;
-    width: 70px;
-    height: 70px;
+    width: clamp(50px, 10vw, 80px);
+    height: clamp(50px, 10vw, 80px);
     border-radius: 50%;
     border: 3px solid currentColor;
     display: flex;
@@ -145,88 +151,85 @@ header {
     font-weight: bold;
 }
 
-/* --- News Cards --- */
+/* --- Cards --- */
 .container {
     width: 95%;
-    max-width: 1000px;
+    max-width: 1100px;
 }
 
 .card {
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
-    gap: 30px;
+    gap: 40px;
     border-radius: 40px;
-    padding: 30px;
+    padding: clamp(20px, 5vw, 40px);
     background: var(--card-bg);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid var(--card-border);
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     transition: var(--transition);
-    position: relative;
+    position: relative; /* Обов'язково для позиціонування кнопки */
 }
 
-.card-img-wrapper {
-    width: 40%;
-    min-width: 250px;
+.hero-card { align-items: center; justify-content: center; }
+.hero-box-label { font-size: 1.6rem; font-weight: 800; border-right: 3px solid currentColor; padding-right: 25px; }
+.hero-text { font-size: 1.5rem; padding-left: 25px; font-style: italic; }
+
+.section-label {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 25px;
 }
 
 .card img {
-    width: 100%;
-    height: 100%;
+    width: 40%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 4/3;
     object-fit: cover;
-    border-radius: 25px;
+    border-radius: 30px;
     border: 1px dashed currentColor;
-    aspect-ratio: 16/10;
 }
 
 .card-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
+    justify-content: center;
 }
 
-.card-content h2 { margin: 0 0 10px 0; font-size: 1.8rem; }
-.info-1 { font-size: 1.1rem; opacity: 0.9; }
-
+/* --- Кнопка ПЛЮСИК (Перенесено згідно з Фото 7240.jpg) --- */
 .expand-btn {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 25px; 
+    right: 25px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
     border: 2px solid currentColor;
-    background: none;
+    background: var(--card-bg); /* Трохи фону для видимості поверх фото */
+    backdrop-filter: blur(5px);
     color: inherit;
     font-size: 26px;
     cursor: pointer;
     transition: var(--transition);
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .card.expanded .expand-btn { transform: rotate(45deg); }
+.more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1; animation: fadeIn 1.5s ease; }
+.card.expanded .more-text { display: block; }
 
-/* Секція "Більше інфи" */
-.more-info {
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.5s ease;
-    opacity: 0;
-}
-
-.card.expanded .more-info {
-    max-height: 800px;
-    opacity: 1;
-    margin-top: 15px;
-}
-
-/* --- Footer (Додано посилання у стилі Фото 1) --- */
+/* --- Footer (Стиль як на Фото 1) --- */
 footer {
     width: 100%;
     padding: 60px 20px 40px;
+    background: none;
     text-align: center;
     margin-top: auto;
     box-sizing: border-box;
@@ -237,7 +240,7 @@ footer {
     justify-content: center;
     flex-wrap: wrap;
     gap: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .social-links a {
@@ -249,55 +252,27 @@ footer {
     transition: var(--transition);
 }
 
-.social-links a:hover {
-    opacity: 0.7;
-}
+.social-links a:hover { opacity: 0.7; }
 
-/* --- МОБІЛЬНА АДАПТАЦІЯ --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Responsive --- */
 @media (max-width: 768px) {
-    header { 
-        display: flex; 
-        flex-direction: column; 
-        gap: 15px; 
-        margin-top: 80px;
-    }
-    .logo { 
-        order: -1; 
-        width: 60px; 
-        height: 60px; 
-        font-size: 0.9rem;
-    }
+    .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
+    #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
+    #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
     
-    .card { 
-        flex-direction: column; 
-        padding: 20px; 
-        gap: 15px;
-        border-radius: 30px;
-    }
-    .card-img-wrapper { 
-        width: 100%; 
-        min-width: unset; 
-    }
-    .card img {
-        aspect-ratio: 16/9;
-    }
+    header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
+    .main-title { font-size: 2.2rem; }
+    .logo { align-self: center; }
     
-    .card-content h2 { font-size: 1.5rem; width: 80%; }
+    .card { flex-direction: column; text-align: center; padding-top: 60px; } /* Відступ зверху для кнопки */
+    .card img { width: 100%; }
     
-    .expand-btn { 
-        top: 20px; 
-        right: 20px; 
-        width: 40px; 
-        height: 40px; 
-        font-size: 22px; 
-    }
-
-    #menuBtn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        left: auto;
-    }
+    .hero-box-label { border-right: none; border-bottom: 3px solid currentColor; padding-bottom: 10px; margin-bottom: 10px; }
+    .hero-text { padding-left: 0; }
+    
+    .expand-btn { top: 20px; right: 20px; }
 }
 </style>
 </head>
@@ -310,40 +285,31 @@ footer {
 
 <div class="sidebar" id="sidebar">
     <button id="closeBtn" onclick="toggleMenu()">✖</button>
-    <a href="index.html">Головна</a>
+    <a href="news.html">Новини</a>
     <a href="about.html">Про нас</a>
 </div>
 
 <header>
-    <h1 class="main-title">Новини</h1>
+    <h1 class="main-title">Головна</h1>
     <div class="logo">ЛОГО</div>
 </header>
 
 <div class="container">
-    <div class="card">
-        <div class="card-img-wrapper">
-            <img class="news-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='rgba(0,0,0,0.05)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%234b5982'>Фото новини 1</text></svg>" alt="Новина 1">
-        </div>
-        <div class="card-content">
-            <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-            <h2>Новина 1</h2>
-            <div class="info-1">Основна інфа 1</div>
-            <div class="more-info">
-                <p>Детальний опис 2</p>
-            </div>
-        </div>
+    <div class="card hero-card">
+        <div class="hero-box-label">Загальна довідка</div>
+        <div class="hero-text">це наш сайт...</div>
     </div>
 
-    <div class="card">
-        <div class="card-img-wrapper">
-            <img class="news-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='rgba(0,0,0,0.05)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%234b5982'>Фото новини 2</text></svg>" alt="Новина 2">
-        </div>
+    <div class="section-label">Найновіший захід:</div>
+
+    <div class="card" id="eventCard">
+        <button class="expand-btn" onclick="toggleExpand()">+</button>
+        <img id="placeholderImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%234b5982'>Місце під фото</text></svg>" alt="Захід">
         <div class="card-content">
-            <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-            <h2>Новина 2</h2>
-            <div class="info-1">Основна інфа 1</div>
-            <div class="more-info">
-                <p>Детальний опис 2</p>
+            <h2>Заголовок заходу</h2>
+            <p>Короткий опис</p>
+            <div class="more-text">
+                <p>повний опис</p>
             </div>
         </div>
     </div>
@@ -364,30 +330,27 @@ function toggleTheme() {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updatePlaceholders(isDark);
+    updatePlaceholder(isDark);
 }
 
-function updatePlaceholders(isDark) {
-    const images = document.querySelectorAll('.news-img');
+function updatePlaceholder(isDark) {
+    const img = document.getElementById('placeholderImg');
     const color = isDark ? '%23f1e1cd' : '%234b5982';
-    images.forEach((img, index) => {
-        img.src = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='rgba(0,0,0,0.05)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='${color}'>Фото новини ${index + 1}</text></svg>`;
-    });
+    img.src = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='${color}'>Місце під фото</text></svg>`;
+}
+
+function toggleExpand() {
+    document.getElementById('eventCard').classList.toggle('expanded');
 }
 
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('open');
 }
 
-function toggleExpand(btn) {
-    const card = btn.closest('.card');
-    card.classList.toggle('expanded');
-}
-
 window.onload = () => {
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
-        updatePlaceholders(true);
+        updatePlaceholder(true);
     }
 };
 </script>
