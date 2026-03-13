@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Минулі заходи | Учнівське самоврядування</title>
+
+<style>
+/* Усі стилі залишаються абсолютно ідентичними до головної сторінки */
+:root {
+    --bg-light: #f1e1cd;
+    --text-light: #4b5982;
+    --card-bg: rgba(255, 255, 255, 0.3);
+    --card-border: rgba(255, 255, 255, 0.5);
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(180deg, var(--bg-light), #e5d2b8, var(--bg-light));
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    transition: background 0.8s ease, color 0.5s ease;
+    overflow-x: hidden;
+}
+
+body.dark {
+    --bg-light: #4b5982;
+    --text-light: #f1e1cd;
+    --card-bg: rgba(241, 225, 205, 0.1);
+    --card-border: rgba(241, 225, 205, 0.2);
+    background: linear-gradient(180deg, #4b5982, #353f5c, #4b5982) !important;
+}
+
+.controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#themeBtn, #menuBtn {
+    padding: 12px;
+    border-radius: 50px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: inherit;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menuBtn { width: 50px; height: 50px; font-size: 22px; }
+#themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--card-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-right: 1px solid var(--card-border);
+    z-index: 1001;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    padding: 100px 30px 40px;
+    box-shadow: 15px 0 50px rgba(0,0,0,0.2);
+    box-sizing: border-box; 
+    opacity: 0; 
+    visibility: hidden;
+}
+
+.sidebar.open { 
+    left: 0; 
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar a {
+    text-decoration: none;
+    padding: 18px 25px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
+    color: inherit;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.sidebar a:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
+
+#closeBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: inherit;
+    cursor: pointer;
+}
+
+header {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.main-title {
+    grid-column: 2;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+
+.logo {
+    justify-self: end;
+    width: clamp(50px, 10vw, 80px);
+    height: clamp(50px, 10vw, 80px);
+    border-radius: 50%;
+    border: 3px solid currentColor;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.container {
+    width: 95%;
+    max-width: 1100px;
+}
+
+.card {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 40px;
+    border-radius: 40px;
+    padding: clamp(20px, 5vw, 40px);
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--card-border);
+    margin-bottom: 50px;
+    transition: var(--transition);
+    position: relative; 
+}
+
+.card img {
+    width: 40%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 30px;
+    border: 1px dashed currentColor;
+}
+
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.expand-btn {
+    position: absolute;
+    top: 25px; 
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    background: var(--card-bg);
+    backdrop-filter: blur(5px);
+    color: inherit;
+    font-size: 26px;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card.expanded .expand-btn { transform: rotate(45deg); }
+.more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1.6; animation: fadeIn 0.6s ease; }
+.card.expanded .more-text { display: block; }
+
+footer {
+    width: 100%;
+    padding: 60px 20px 40px;
+    background: none;
+    text-align: center;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.social-links a:hover { opacity: 0.7; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+    .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
+    #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
+    #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
+    
+    header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
+    .main-title { font-size: 2.2rem; }
+    .logo { align-self: center; }
+    
+    .card { flex-direction: column; text-align: center; padding-top: 60px; } 
+    .card img { width: 100%; }
+    
+    .expand-btn { top: 20px; right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+    <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
+    <button id="menuBtn" onclick="toggleMenu()">🏠</button>
+</div>
+
+<div class="sidebar" id="sidebar">
+    <button id="closeBtn" onclick="toggleMenu()">✖</button>
+    <a href="index.html">Головна</a>
+    <a href="news.html">Новини</a>
+    <a href="about.html">Про нас</a>
+</div>
+
+<header>
+    <h1 class="main-title">Минулі заходи</h1>
+    <div class="logo">ЛОГО</div>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+        <img class="placeholder-img" src="" alt="Захід">
+        <div class="card-content">
+            <h2>Назва минулого заходу 1</h2>
+            <p>Короткий опис або дата проведення.</p>
+            <div class="more-text">
+                <p>Тут розміщується детальний опис заходу, хто брав участь, які були результати та інші цікаві подробиці.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+        <img class="placeholder-img" src="" alt="Захід">
+        <div class="card-content">
+            <h2>Назва минулого заходу 2</h2>
+            <p>Короткий опис або дата проведення.</p>
+            <div class="more-text">
+                <p>Тут розміщується детальний опис заходу, хто брав участь, які були результати та інші цікаві подробиці.</p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+<footer>
+    <div class="social-links">
+        <a href="https://www.instagram.com/uchnivskesamovriaduvannia?igsh=MXJtNmliZXJoYmZwdA==" target="_blank">INSTAGRAM</a>
+        <a href="https://www.facebook.com/share/1DtXY2x5Us/?mibextid=wwXIfr" target="_blank">FACEBOOK</a>
+        <a href="https://t.me/DNLLepkyi" target="_blank">TELEGRAM</a>
+        <a href="https://www.tiktok.com/@lyceumlepkogo?_r=1&_t=ZS-94d1kkArRpN" target="_blank">TIKTOK</a>
+    </div>
+    <p style="opacity: 0.6; font-size: 0.85rem; font-weight: 600;">&copy; 2026 учнівське самоврядування</p>
+</footer>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updatePlaceholders(isDark);
+}
+
+// Оновлена функція, яка міняє колір заглушок для УСІХ картинок на сторінці відразу
+function updatePlaceholders(isDark) {
+    const color = isDark ? '%23f1e1cd' : '%234b5982';
+    const svgData = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='${color}'>Місце під фото</text></svg>`;
+    
+    document.querySelectorAll('.placeholder-img').forEach(img => {
+        img.src = svgData;
+    });
+}
+
+// Оновлена функція: тепер кнопка сама знаходить свою картку і розгортає її
+function toggleExpand(buttonElement) {
+    buttonElement.closest('.card').classList.toggle('expanded');
+}
+
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+window.onload = () => {
+    const isDark = localStorage.getItem('theme') === 'dark';
+    if (isDark) {
+        document.body.classList.add('dark');
+    }
+    // Завантажуємо правильні заглушки при відкритті сторінки
+    updatePlaceholders(isDark);
+};
+</script>
+
+</body>
+</html>
