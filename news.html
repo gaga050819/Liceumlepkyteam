@@ -209,7 +209,6 @@ header {
 
 .card.expanded .expand-btn { transform: rotate(45deg); }
 
-/* Секція "Більше інфи" */
 .more-info {
     max-height: 0;
     overflow: hidden;
@@ -223,80 +222,31 @@ header {
     margin-top: 15px;
 }
 
-/* --- Footer (Додано посилання у стилі Фото 1) --- */
+/* --- Footer --- */
 footer {
     width: 100%;
-    padding: 60px 20px 40px;
+    padding: 40px;
     text-align: center;
     margin-top: auto;
-    box-sizing: border-box;
 }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-bottom: 30px;
-}
-
-.social-links a {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    transition: var(--transition);
-}
-
-.social-links a:hover {
-    opacity: 0.7;
-}
-
-/* --- МОБІЛЬНА АДАПТАЦІЯ --- */
 @media (max-width: 768px) {
-    header { 
-        display: flex; 
-        flex-direction: column; 
-        gap: 15px; 
-        margin-top: 80px;
-    }
-    .logo { 
-        order: -1; 
-        width: 60px; 
-        height: 60px; 
-        font-size: 0.9rem;
-    }
-    
-    .card { 
-        flex-direction: column; 
-        padding: 20px; 
-        gap: 15px;
-        border-radius: 30px;
-    }
-    .card-img-wrapper { 
-        width: 100%; 
-        min-width: unset; 
-    }
-    .card img {
-        aspect-ratio: 16/9;
-    }
-    
-    .card-content h2 { font-size: 1.5rem; width: 80%; }
-    
-    .expand-btn { 
-        top: 20px; 
-        right: 20px; 
-        width: 40px; 
-        height: 40px; 
-        font-size: 22px; 
-    }
+    header { display: flex; flex-direction: column; gap: 20px; margin-top: 80px; }
+    .logo { order: -1; }
+    .card { flex-direction: column; padding: 20px; }
+    .card-img-wrapper { width: 100%; min-width: unset; }
+    .expand-btn { top: 20px; right: 20px; }
 
-    #menuBtn {
-        position: fixed;
-        top: 20px;
+    /* Розділення кнопок на телефонах */
+    .controls {
+        left: 20px;
         right: 20px;
-        left: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        pointer-events: none; /* Пропускає кліки крізь контейнер */
+    }
+    #themeBtn, #menuBtn {
+        pointer-events: auto; /* Повертає кліки самим кнопкам */
     }
 }
 </style>
@@ -312,6 +262,7 @@ footer {
     <button id="closeBtn" onclick="toggleMenu()">✖</button>
     <a href="index.html">Головна</a>
     <a href="about.html">Про нас</a>
+    <a href="past_events.html">Минулі заходи</a>
 </div>
 
 <header>
@@ -329,7 +280,7 @@ footer {
             <h2>Новина 1</h2>
             <div class="info-1">Основна інфа 1</div>
             <div class="more-info">
-                <p>Детальний опис першої новини. Тут може бути текст про заходи, зустрічі чи інші активності.</p>
+                <p>Детальний опис</p>
             </div>
         </div>
     </div>
@@ -341,21 +292,15 @@ footer {
         <div class="card-content">
             <button class="expand-btn" onclick="toggleExpand(this)">+</button>
             <h2>Новина 2</h2>
-            <div class="info-1">Основна інфа 2</div>
+            <div class="info-1">Основна інфа 1</div>
             <div class="more-info">
-                <p>Детальний опис другої новини. Все адаптується і гарно виглядає на будь-якому екрані.</p>
+                <p>Детальний опис</p>
             </div>
         </div>
     </div>
 </div>
 
 <footer>
-    <div class="social-links">
-        <a href="https://www.instagram.com/uchnivskesamovriaduvannia?igsh=MXJtNmliZXJoYmZwdA==" target="_blank">INSTAGRAM</a>
-        <a href="https://www.facebook.com/share/1DtXY2x5Us/?mibextid=wwXIfr" target="_blank">FACEBOOK</a>
-        <a href="https://t.me/DNLLepkyi" target="_blank">TELEGRAM</a>
-        <a href="https://www.tiktok.com/@lyceumlepkogo?_r=1&_t=ZS-94d1kkArRpN" target="_blank">TIKTOK</a>
-    </div>
     <p style="opacity: 0.6; font-size: 0.85rem; font-weight: 600;">&copy; 2026 учнівське самоврядування</p>
 </footer>
 
