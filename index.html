@@ -170,7 +170,7 @@ header {
     border: 1px solid var(--card-border);
     margin-bottom: 50px;
     transition: var(--transition);
-    position: relative; /* Обов'язково для позиціонування кнопки */
+    position: relative;
 }
 
 .hero-card { align-items: center; justify-content: center; }
@@ -183,7 +183,7 @@ header {
     margin-bottom: 25px;
 }
 
-.card img {
+.card img, .card video {
     width: 40%;
     max-width: 400px;
     height: auto;
@@ -193,6 +193,27 @@ header {
     border: 1px dashed currentColor;
 }
 
+/* СТИЛІ ДЛЯ ГАЛЕРЕЇ (НОВЕ) */
+.gallery-container {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+}
+.gallery-grid img, .gallery-grid video {
+    width: 100%;
+    height: 80px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    aspect-ratio: 1/1;
+}
+
 .card-content {
     flex: 1;
     display: flex;
@@ -200,7 +221,7 @@ header {
     justify-content: center;
 }
 
-/* --- Кнопка ПЛЮСИК (Перенесено згідно з Фото 7240.jpg) --- */
+/* --- Кнопка ПЛЮСИК --- */
 .expand-btn {
     position: absolute;
     top: 25px; 
@@ -209,7 +230,7 @@ header {
     height: 45px;
     border-radius: 50%;
     border: 2px solid currentColor;
-    background: var(--card-bg); /* Трохи фону для видимості поверх фото */
+    background: var(--card-bg);
     backdrop-filter: blur(5px);
     color: inherit;
     font-size: 26px;
@@ -225,7 +246,7 @@ header {
 .more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1.6; animation: fadeIn 0.6s ease; }
 .card.expanded .more-text { display: block; }
 
-/* --- Footer (Стиль як на Фото 1) --- */
+/* --- Footer --- */
 footer {
     width: 100%;
     padding: 60px 20px 40px;
@@ -266,8 +287,8 @@ footer {
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
     
-    .card { flex-direction: column; text-align: center; padding-top: 60px; } /* Відступ зверху для кнопки */
-    .card img { width: 100%; }
+    .card { flex-direction: column; text-align: center; padding-top: 60px; }
+    .card img, .card video, .gallery-container { width: 100%; }
     
     .hero-box-label { border-right: none; border-bottom: 3px solid currentColor; padding-bottom: 10px; margin-bottom: 10px; }
     .hero-text { padding-left: 0; }
@@ -299,33 +320,89 @@ footer {
 <div class="container">
     <div class="card hero-card">
         <div class="hero-box-label">Загальна довідка</div>
-        <div class="hero-text">це наш сайт...</div>
+        <div class="hero-text">Офіційний сайт учнівського самоврядування наукового ліцею.</div>
     </div>
 
-    <div class="section-label">Найближчий захід:</div>
 
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand()">+</button>
-        <img id="placeholderImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%234b5982'>Місце під фото</text></svg>" alt="Захід">
+        <video controls poster="image.jpg">
+            <source src="Videohome1.mov" type="video/mp4">
+        </video>
         <div class="card-content">
-            <h2>Заголовок заходу</h2>
-            <p>Короткий опис</p>
+            <h2>Чотири роки незламності: історія болю, боротьби та віри України.</h2>
+            <p>Символічне відео, створене учнівським самоврядуванням Дрогобицького наукового ліцею імені Богдана Лепкого, яке розповідає про шлях України від миру через біль війни до віри в майбутнє.</p>
             <div class="more-text">
-                <p>повний опис</p>
+                <p><p>Сьогодні минає чотири роки боротьби, болю і незламності українського народу.</p>
+
+<p>Наше відео — це символічна історія України. На початку вона прив’язана стрічкою до миру — як символ того спокійного і світлого життя, яке було до війни. Але війна принесла біль, втрати і сльози.</p>
+
+<p>У кадрі Україна плаче, переживаючи важкі випробування та втрати. Поруч із нею з’являється підтримка — символ Збройних сил України, які щодня стоять на захисті нашої держави, дарують надію та віру.</p>
+
+<p>Наприкінці мир і Україна знову обіймаються, а стрічки перев’язують їх разом. Це символ єдності, сили духу та віри в майбутнє, у той мир, який ми обов’язково збережемо.</p>
+
+<p>Це відео є роботою учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+
+<p>Автор відео — Яна Куриляк.</p>
+<p>Автор ідеї — Мілана Костик.</p>
+
+<p>У зйомці взяли участь: Катерина Яцуляк, Настя Іваник, Мілана Костик, Яна Куриляк.</p>
+
+<p>Пам’ятаємо. Дякуємо. Віримо.</p></p>
             </div>
         </div>
     </div>
 
-    <div class="section-label">Останній захід:</div>
 
     <div class="card" id="lastEventCard">
         <button class="expand-btn" onclick="toggleExpandLast()">+</button>
-        <img id="placeholderImg2" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%234b5982'>Місце під фото</text></svg>" alt="Захід">
-        <div class="card-content">
-            <h2>Заголовок заходу</h2>
-            <p>Короткий опис</p>
+        
+        <div class="gallery-container">
+            <img src="Photo2ghome.jpg" alt="Захід">
+            
             <div class="more-text">
-                <p>повний опис</p>
+                <div class="gallery-grid">
+                    <img src="Photo2ahome.jpg" alt="Фото">
+                    <img src="Photo2bhome.jpg" alt="Фото">                    
+                    <img src="Photo2chome.jpg" alt="Фото">
+                    <img src="Photo2dhome.jpg" alt="Фото">
+                    <img src="Photo2ehome.jpg" alt="Фото">
+                    <img src="Photo2fhome.jpg" alt="Фото">
+                    <img src="Photo2ghome.jpg" alt="Фото">
+
+                    <video controls><source src="Video2ahome.mov" type="video/mp4"></video>
+                    <video controls><source src="Video2chome.mp4" type="video/mp4"></video>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <h2>Пара ліцею 2026</h2>
+            <p>Яскравий конкурс, що об’єднав красу, творчість, емоції та став символічним початком діяльності учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+            <div class="more-text">
+                <p><p>Це був не просто конкурс. Це був початок історії діючого учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+
+<p>На сцені — закохані погляди, щирі усмішки та хвилювання, яке відчувалося навіть у повітрі. У залі — оплески, захоплення і атмосфера справжнього свята.</p>
+
+<p>«Пара ліцею 2026» об’єднала красу, творчість, харизму та щирі емоції. Кожна пара показала свою унікальність, власний стиль і свою історію, наповнивши цей вечір особливою атмосферою молодості, натхнення та радості.</p>
+
+<p>Партнери заходу:</p>
+
+<p>Дякуємо @flowersdr._studio — магазину квітів, де кожен букет створюється з любов’ю. Саме ваші квіти додали ніжності та святкової атмосфери нашій сцені.</p> 
+
+<p>Дякуємо @fotozona_drohobych_vologina — за стильну фотозону, яка стала центром спогадів. Завдяки вам кожна мить цього вечора залишиться не лише в серці, а й у світлинах.</p>
+
+<p>Висловлюємо подяку @festshop.com.ua — магазину святкових стрічок та декору, де народжується атмосфера урочистості. Саме деталі створюють магію.</p>
+
+<p>Щиро дякуємо ювелірному магазину @gold_kabluchka — простору витончених прикрас, які підкреслюють красу кожного моменту.</p>
+
+<p>Особлива подяка @olesia.kuryliak__bakery — де десерти створюються як справжні солодкі історії. Смак цього вечора був таким же вишуканим, як і його атмосфера.</p>
+
+<p>Дякуємо кав’ярні @bonitacoffeetogo — за аромат кави, затишок і тепло, яке відчувається з першої чашки.</p>
+
+<p>Висловлюємо вдячність мережі домашніх напівфабрикатів @galia.baluvana.drohobych — бренду, що асоціюється з турботою, родинним теплом і домашнім смаком.</p>
+
+<p>Та щиро дякуємо косметологічній клініці @kj_cosmetolog Юлії Кухар — простору професійної краси, догляду та впевненості.</p></p>
             </div>
         </div>
     </div>
@@ -346,18 +423,6 @@ function toggleTheme() {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updatePlaceholder(isDark);
-}
-
-function updatePlaceholder(isDark) {
-    const color = isDark ? '%23f1e1cd' : '%234b5982';
-    const svgData = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='${color}'>Місце під фото</text></svg>`;
-    
-    const img1 = document.getElementById('placeholderImg');
-    if(img1) img1.src = svgData;
-    
-    const img2 = document.getElementById('placeholderImg2');
-    if(img2) img2.src = svgData;
 }
 
 function toggleExpand() {
@@ -375,7 +440,6 @@ function toggleMenu() {
 window.onload = () => {
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark');
-        updatePlaceholder(true);
     }
 };
 </script>
