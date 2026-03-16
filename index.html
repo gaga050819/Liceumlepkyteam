@@ -276,6 +276,30 @@ footer {
 .social-links a:hover { opacity: 0.7; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* --- Стилі для розгорнутої картки --- */
+.card.expanded {
+    flex-direction: column; /* Вибудовуємо контент вертикально (один під одним) */
+}
+
+.card.expanded .gallery-container,
+.card.expanded .card-content {
+    width: 100%; /* Дозволяємо тексту та галереї займати всю ширину картки */
+    max-width: 100%;
+}
+
+/* Центруємо головне відео/фото, щоб воно виглядало гармонійно зверху */
+.card.expanded > video,
+.card.expanded .gallery-container > img:first-child {
+    width: 100%;
+    max-width: 500px; 
+    margin: 0 auto 20px auto;
+    display: block;
+}
+
+/* Додаємо трохи простору між сіткою галереї та текстом, що йде під нею */
+.card.expanded .more-text {
+    margin-top: 30px; 
+}
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
@@ -397,7 +421,7 @@ footer {
 
 <p>Дякуємо <a href="https://www.instagram.com/fotozona_drohobych_vologina/" class="mention">@fotozona_drohobych_vologina</a> — за стильну фотозону, яка стала центром спогадів. Завдяки вам кожна мить цього вечора залишиться не лише в серці, а й у світлинах.</p>
 
-<p>Висловлюємо подяку <span class="mention">@festshop.com.ua</span> — магазину святкових стрічок та декору, де народжується атмосфера урочистості. Саме деталі створюють магію.</p>
+<p>Висловлюємо подяку <a href="https://www.instagram.com/accounts/login/?next=%2Ffestshop.com.ua%2F&source=omni_redirect" class="mention">@festshop.com.ua</a> — магазину святкових стрічок та декору, де народжується атмосфера урочистості. Саме деталі створюють магію.</p>
 
 <p>Щиро дякуємо ювелірному магазину <a href="https://www.instagram.com/gold_kabluchka/" class="mention">@gold_kabluchka</a> — простору витончених прикрас, які підкреслюють красу кожного моменту.</p>
 
