@@ -146,6 +146,7 @@ header {
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    overflow: hidden; /* Додано, щоб логотип був круглим */
 }
 
 .container {
@@ -172,7 +173,7 @@ header {
 
 .card.expanded {
     overflow: visible;
-    height: auto; /* Дозволяємо картці розтягуватися */
+    height: auto; 
 }
 
 /* --- ОНОВЛЕНІ СТИЛІ ДЛЯ ФОТО --- */
@@ -181,19 +182,17 @@ header {
     max-width: 400px;
     height: auto;
     aspect-ratio: 4/3;
-    object-fit: cover; /* Початково трохи обрізаємо для симетрії */
+    object-fit: cover; 
     border-radius: 30px;
     border: 1px dashed currentColor;
     transition: var(--transition);
 }
 
-/* Коли картка розгорнута - показуємо фото ПОВНІСТЮ */
 .card.expanded img {
-    aspect-ratio: auto; /* Прибираємо обмеження 4/3 */
-    object-fit: contain; /* Картинка вписується повністю */
-    max-width: 100%; /* Щоб не виходила за межі на мобільних */
+    aspect-ratio: auto; 
+    object-fit: contain; 
+    max-width: 100%; 
 }
-/* ------------------------------- */
 
 .card-content {
     flex: 1;
@@ -289,7 +288,9 @@ footer {
 
 <header>
     <h1 class="main-title">Минулі заходи</h1>
-    <div class="logo">ЛОГО</div>
+    <div class="logo">
+        <img src="Logo1variant.png" alt="Логотип" style="width: 120%; height: 120%; object-fit: cover;">
+    </div>
 </header>
 
 <div class="container">
@@ -302,13 +303,13 @@ footer {
             <p>Атмосферна рольова гра про виживання після катастрофи.</p>
             <a href="https://docs.google.com/forms/d/..." target="_blank" style="color: inherit; font-weight: bold;">Реєстрація тут</a>
             <div class="more-text">
-                <p><p>Світ опинився на межі катастрофи, і лише обрані зможуть потрапити до бункера та отримати шанс на виживання. Кожен учасник отримає свою роль і повинен буде довести, що саме він гідний залишитися. Тема гри — Чорнобиль, тому на вас чекає напружена атмосфера, складні рішення та цікаві сценарії.</p>
-<p>📅 20 березня</p>
-</p>🕒 14:30</p>
-<p>📍 Актова зала</p>
-<p>💰 35 грн</p>
-<p>👥 8–11 класи</p>
-<p>⚠️ Кількість місць обмежена! Чекаємо саме тебе! ☢️</p></p>
+                <p>Світ опинився на межі катастрофи, і лише обрані зможуть потрапити до бункера та отримати шанс на виживання. Кожен учасник отримає свою роль і повинен буде довести, що саме він гідний залишитися. Тема гри — Чорнобиль, тому на вас чекає напружена атмосфера, складні рішення та цікаві сценарії.</p>
+                <p>📅 20 березня</p>
+                <p>🕒 14:30</p>
+                <p>📍 Актова зала</p>
+                <p>💰 35 грн</p>
+                <p>👥 8–11 класи</p>
+                <p>⚠️ Кількість місць обмежена! Чекаємо саме тебе! ☢️</p>
             </div>
         </div>
     </div>
