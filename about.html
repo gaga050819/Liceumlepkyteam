@@ -36,14 +36,14 @@
             background: linear-gradient(180deg, #4b5982, #353f5c, #4b5982) !important;
         }
 
-        /* --- Controls (Стилі як на головній) --- */
+        /* --- Controls --- */
         .controls {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 1000;
             display: flex;
-            flex-direction: column; /* Хатинка під темою на ПК */
+            flex-direction: column; 
             gap: 15px;
         }
 
@@ -142,6 +142,7 @@
             justify-content: center;
             align-items: center;
             font-weight: bold;
+            overflow: hidden; /* Додано, щоб картинка не виходила за межі */
         }
 
         /* --- Content Cards --- */
@@ -214,7 +215,7 @@
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- MOBILE ADJUSTMENTS (Згідно з вашим зразком) --- */
+        /* --- MOBILE ADJUSTMENTS --- */
         @media (max-width: 768px) {
             .controls { 
                 flex-direction: row; 
@@ -228,7 +229,7 @@
                 padding: 0; 
                 position: fixed; 
                 right: 20px; 
-                left: auto; /* Хатинка переїжджає направо */
+                left: auto; 
             }
 
             header { 
@@ -244,7 +245,7 @@
                 flex-direction: column; 
                 align-items: center;
                 text-align: center; 
-                padding: 60px 20px 25px; /* Збільшений відступ зверху для кнопки плюса */
+                padding: 60px 20px 25px; 
                 gap: 20px;
                 border-radius: 30px;
             }
@@ -283,7 +284,9 @@
 
 <header>
     <h1 class="main-title">Про нас</h1>
-    <div class="logo">ЛОГО</div>
+    <div class="logo">
+        <img src="Logo1variant.png" alt="Логотип" style="width: 120%; height: 120%; object-fit: cover;">
+    </div>
 </header>
 
 <div class="container">
@@ -329,7 +332,6 @@ function toggleTheme() {
     const isDark = document.body.classList.contains('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     
-    // Зміна кольору панелі браузера на телефоні залежно від теми
     document.getElementById('theme-color-meta').setAttribute('content', isDark ? '#4b5982' : '#f1e1cd');
 }
 
