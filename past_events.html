@@ -6,7 +6,6 @@
 <title>Минулі заходи | Учнівське самоврядування</title>
 
 <style>
-/* Усі стилі залишаються абсолютно ідентичними до головної сторінки */
 :root {
     --bg-light: #f1e1cd;
     --text-light: #4b5982;
@@ -168,17 +167,33 @@ header {
     margin-bottom: 50px;
     transition: var(--transition);
     position: relative; 
+    overflow: hidden;
 }
 
+.card.expanded {
+    overflow: visible;
+    height: auto; /* Дозволяємо картці розтягуватися */
+}
+
+/* --- ОНОВЛЕНІ СТИЛІ ДЛЯ ФОТО --- */
 .card img {
     width: 40%;
     max-width: 400px;
     height: auto;
     aspect-ratio: 4/3;
-    object-fit: cover;
+    object-fit: cover; /* Початково трохи обрізаємо для симетрії */
     border-radius: 30px;
     border: 1px dashed currentColor;
+    transition: var(--transition);
 }
+
+/* Коли картка розгорнута - показуємо фото ПОВНІСТЮ */
+.card.expanded img {
+    aspect-ratio: auto; /* Прибираємо обмеження 4/3 */
+    object-fit: contain; /* Картинка вписується повністю */
+    max-width: 100%; /* Щоб не виходила за межі на мобільних */
+}
+/* ------------------------------- */
 
 .card-content {
     flex: 1;
@@ -251,7 +266,7 @@ footer {
     .logo { align-self: center; }
     
     .card { flex-direction: column; text-align: center; padding-top: 60px; } 
-    .card img { width: 100%; }
+    .card img { width: 100%; max-width: none; }
     
     .expand-btn { top: 20px; right: 20px; }
 }
@@ -281,12 +296,13 @@ footer {
     
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <img class="placeholder-img" src="" alt="Захід">
+        <img src="Bunker.jpg" alt="Гра Бункер">
         <div class="card-content">
-            <h2>Назва минулого заходу 1</h2>
-            <p>Короткий опис або дата проведення.</p>
+            <h2>☢️ Гра «Бункер» (Чорнобиль)</h2>
+            <p>Атмосферна рольова гра про виживання після катастрофи.</p>
+            <a href="https://docs.google.com/forms/d/..." target="_blank" style="color: inherit; font-weight: bold;">Реєстрація тут</a>
             <div class="more-text">
-                <p>Тут розміщується детальний опис заходу, хто брав участь, які були результати та інші цікаві подробиці.</p>
+                <p>Тут розміщується детальний опис заходу. Тепер, коли ти натиснеш "+", фото змінить свій розмір так, щоб його було видно повністю, а весь цей текст з'явиться нижче без обмежень!</p>
             </div>
         </div>
     </div>
@@ -298,19 +314,19 @@ footer {
             <h2>Назва минулого заходу 2</h2>
             <p>Короткий опис або дата проведення.</p>
             <div class="more-text">
-                <p>Тут розміщується детальний опис заходу, хто брав участь, які були результати та інші цікаві подробиці.</p>
+                <p>Детальний опис другого заходу.</p>
             </div>
         </div>
     </div>
 
-    </div>
+</div>
 
 <footer>
     <div class="social-links">
-        <a href="https://www.instagram.com/uchnivskesamovriaduvannia?igsh=MXJtNmliZXJoYmZwdA==" target="_blank">INSTAGRAM</a>
-        <a href="https://www.facebook.com/share/1DtXY2x5Us/?mibextid=wwXIfr" target="_blank">FACEBOOK</a>
-        <a href="https://t.me/DNLLepkyi" target="_blank">TELEGRAM</a>
-        <a href="https://www.tiktok.com/@lyceumlepkogo?_r=1&_t=ZS-94d1kkArRpN" target="_blank">TIKTOK</a>
+        <a href="https://www.instagram.com/..." target="_blank">INSTAGRAM</a>
+        <a href="https://www.facebook.com/..." target="_blank">FACEBOOK</a>
+        <a href="https://t.me/..." target="_blank">TELEGRAM</a>
+        <a href="https://www.tiktok.com/..." target="_blank">TIKTOK</a>
     </div>
     <p style="opacity: 0.6; font-size: 0.85rem; font-weight: 600;">&copy; 2026 учнівське самоврядування</p>
 </footer>
@@ -323,7 +339,6 @@ function toggleTheme() {
     updatePlaceholders(isDark);
 }
 
-// Оновлена функція, яка міняє колір заглушок для УСІХ картинок на сторінці відразу
 function updatePlaceholders(isDark) {
     const color = isDark ? '%23f1e1cd' : '%234b5982';
     const svgData = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='${color}'>Місце під фото</text></svg>`;
@@ -333,7 +348,6 @@ function updatePlaceholders(isDark) {
     });
 }
 
-// Оновлена функція: тепер кнопка сама знаходить свою картку і розгортає її
 function toggleExpand(buttonElement) {
     buttonElement.closest('.card').classList.toggle('expanded');
 }
@@ -344,14 +358,10 @@ function toggleMenu() {
 
 window.onload = () => {
     const isDark = localStorage.getItem('theme') === 'dark';
-    if (isDark) {
-        document.body.classList.add('dark');
-    }
-    // Завантажуємо правильні заглушки при відкритті сторінки
+    if (isDark) document.body.classList.add('dark');
     updatePlaceholders(isDark);
 };
 </script>
 
 </body>
 </html>
-
