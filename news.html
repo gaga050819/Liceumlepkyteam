@@ -144,6 +144,7 @@ header {
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    overflow: hidden; /* Додано для коректного відображення картинки в колі */
 }
 
 /* --- News Cards --- */
@@ -199,7 +200,7 @@ header {
     height: 45px;
     border-radius: 50%;
     border: 2px solid currentColor;
-    background: var(--card-bg); /* Трохи фону для видимості поверх фото на мобільних */
+    background: var(--card-bg);
     backdrop-filter: blur(5px);
     color: inherit;
     font-size: 26px;
@@ -287,7 +288,9 @@ footer {
 
 <header>
     <h1 class="main-title">Новини</h1>
-    <div class="logo">ЛОГО</div>
+    <div class="logo">
+        <img src="Logo1variant.png" alt="Логотип" style="width: 120%; height: 120%; object-fit: cover;">
+    </div>
 </header>
 
 <div class="container">
