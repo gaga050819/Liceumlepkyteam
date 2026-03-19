@@ -7,6 +7,28 @@
     <title>Про нас - Учнівське самоврядування</title>
 
     <style>
+        #scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: inherit;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    transition: var(--transition);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999;
+}
+#scrollTopBtn.visible { opacity: 1; visibility: visible; }
+#scrollTopBtn:hover { transform: translateY(-3px); }
         :root {
             --bg-light: #f1e1cd;
             --text-light: #4b5982;
@@ -372,7 +394,7 @@
     </style>
 </head>
 <body>
-
+       <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 <div class="controls">
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
     <button id="menuBtn" onclick="toggleMenu()" aria-label="Меню">🏠</button>
@@ -649,6 +671,9 @@ window.onload = () => {
         document.getElementById('theme-color-meta').setAttribute('content', '#4b5982');
     }
 };
+window.addEventListener('scroll', () => {
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300);
+});
 </script>
 
 </body>
