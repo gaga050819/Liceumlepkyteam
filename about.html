@@ -171,7 +171,6 @@
             max-width: 1100px;
         }
 
-        /* --- Рекламний блок --- */
         .ad-wrapper {
             width: 100%;
             box-sizing: border-box;
@@ -221,8 +220,18 @@
             align-items: center;
             font-weight: bold;
             font-size: 0.75rem;
-            object-fit: cover;
             flex-shrink: 0;
+        }
+
+        .photo-real {
+            width: 90px;
+            min-width: 90px;
+            height: 120px;
+            border-radius: 20px;
+            object-fit: cover;
+            object-position: center top;
+            flex-shrink: 0;
+            display: block;
         }
 
         .card-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
@@ -349,6 +358,7 @@
             .logo { align-self: center; justify-self: center; order: -1; }
             .card { flex-direction: column; align-items: center; text-align: center; padding: 50px 20px 25px; gap: 15px; border-radius: 30px; }
             .photo-placeholder { width: 100px; min-width: 100px; }
+            .photo-real { width: 100px; min-width: 100px; height: 133px; }
             .card-content h2 { font-size: 1.4rem; padding-right: 0; }
             .expand-btn { top: 15px; right: 15px; width: 36px; height: 36px; font-size: 22px; }
             #navigatorBtn { bottom: 20px; right: 20px; padding: 12px 18px; font-size: 0.9rem; }
@@ -381,7 +391,6 @@
 
     <div class="container">
 
-        <!-- ✅ Adsterra Native Banner під заголовком -->
         <div class="ad-wrapper">
             <span class="ad-label">Реклама</span>
             <script async="async" data-cfasync="false"
@@ -394,11 +403,11 @@
 
             <div class="card" id="cardKyrulak">
                 <button class="expand-btn" onclick="toggleExpand('cardKyrulak')" aria-label="Розгорнути інформацію">+</button>
-                <div class="photo-placeholder">ФОТО</div>
+                <img src="Kyrulak.jpg" alt="Яна Куриляк" class="photo-real">
                 <div class="card-content">
-                    <h2>Яна Куриляк</h2>
-                    <p>(віцепрезидент)</p>
-                    <div class="more-text"><p>Текст 2</p><p>Текст 3</p></div>
+                    <h2>Яна Іванівна Куриляк</h2>
+                    <p>віцепрезидент</p>
+                    <div class="more-text"><p>Відповідає за координацію учнівських ініціатив, допомагає реалізовувати проєкти та підтримує ефективну роботу команди. Орієнтована на розвиток лідерства, креативності та згуртованості серед учнів.</p></div>
                 </div>
             </div>
 
@@ -407,7 +416,7 @@
                 <div class="photo-placeholder">ФОТО</div>
                 <div class="card-content">
                     <h2>Настя Іваник</h2>
-                    <p>(президент)</p>
+                    <p>президент</p>
                     <div class="more-text"><p>Текст 2</p><p>Текст 3</p></div>
                 </div>
             </div>
@@ -417,7 +426,7 @@
                 <div class="photo-placeholder">ФОТО</div>
                 <div class="card-content">
                     <h2>Маркіян Іванців</h2>
-                    <p>(міністер інформації)</p>
+                    <p>міністер інформації</p>
                     <div class="more-text"><p>Текст 2</p><p>Текст 3</p></div>
                 </div>
             </div>
@@ -494,11 +503,12 @@
 
             <div class="card" id="cardYana2">
                 <button class="expand-btn" onclick="toggleExpand('cardYana2')" aria-label="Розгорнути інформацію">+</button>
-                <div class="photo-placeholder">ФОТО</div>
+                <img src="Jana.jpg" alt="Яна Бунь" class="photo-real">
                 <div class="card-content">
                     <h2>Яна Бунь</h2>
-                    <p>Невідомо</p>
-                    <div class="more-text"><p>Текст 2</p><p>Текст 3</p></div>
+                    <p>Міністер інформації</p>
+                    <div class="more-text"><p>Я комунікативна, добра та креативна. Легко знаходжу спільну мову з людьми, люблю щось організовувати. Беру участь у житті ліцею та учнівського самоврядування, відповідально ставлюся до своїх обов'язків і стараюся доводити справи до кінця.</p>
+    <p>ynyxskk6@gmail.com</p></div>
                 </div>
             </div>
 
