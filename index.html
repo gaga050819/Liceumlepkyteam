@@ -60,7 +60,6 @@ body.dark {
     background: linear-gradient(180deg, #4b5982, #353f5c, #4b5982) !important;
 }
 
-/* --- Controls --- */
 .controls {
     position: fixed;
     top: 20px;
@@ -91,7 +90,6 @@ body.dark {
 #menuBtn { width: 50px; height: 50px; font-size: 22px; }
 #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
 
-/* --- Sidebar --- */
 .sidebar {
     position: fixed;
     top: 0;
@@ -109,16 +107,12 @@ body.dark {
     flex-direction: column;
     padding: 100px 30px 40px;
     box-shadow: 15px 0 50px rgba(0,0,0,0.2);
-    box-sizing: border-box; 
-    opacity: 0; 
+    box-sizing: border-box;
+    opacity: 0;
     visibility: hidden;
 }
 
-.sidebar.open { 
-    left: 0; 
-    opacity: 1;
-    visibility: visible;
-}
+.sidebar.open { left: 0; opacity: 1; visibility: visible; }
 
 .sidebar a {
     text-decoration: none;
@@ -146,7 +140,6 @@ body.dark {
     cursor: pointer;
 }
 
-/* --- Header --- */
 header {
     width: 90%;
     max-width: 1200px;
@@ -177,7 +170,6 @@ header {
     overflow: hidden;
 }
 
-/* --- Cards --- */
 .container {
     width: 95%;
     max-width: 1100px;
@@ -203,10 +195,41 @@ header {
 .hero-box-label { font-size: 1.6rem; font-weight: 800; border-right: 3px solid currentColor; padding-right: 25px; }
 .hero-text { font-size: 1.5rem; padding-left: 25px; font-style: italic; }
 
-.section-label {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 25px;
+/* --- Рекламне вікно --- */
+.ad-block {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 30px;
+    padding: 16px 20px;
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--card-border);
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.ad-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.4;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    align-self: flex-start;
+}
+
+.ad-inner {
+    width: 100%;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.06);
 }
 
 .card img, .card video {
@@ -219,7 +242,6 @@ header {
     border: 1px dashed currentColor;
 }
 
-/* СТИЛІ ДЛЯ ГАЛЕРЕЇ */
 .gallery-container {
     width: 45%;
     display: flex;
@@ -247,10 +269,9 @@ header {
     justify-content: center;
 }
 
-/* --- Кнопка ПЛЮСИК --- */
 .expand-btn {
     position: absolute;
-    top: 25px; 
+    top: 25px;
     right: 25px;
     width: 45px;
     height: 45px;
@@ -272,7 +293,6 @@ header {
 .more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1.6; animation: fadeIn 0.6s ease; }
 .card.expanded .more-text { display: block; }
 
-/* --- Footer --- */
 footer {
     width: 100%;
     padding: 60px 20px 40px;
@@ -303,47 +323,27 @@ footer {
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* --- Стилі для розгорнутої картки --- */
-.card.expanded {
-    flex-direction: column; 
-}
-
+.card.expanded { flex-direction: column; }
 .card.expanded .gallery-container,
-.card.expanded .card-content {
-    width: 100%; 
-    max-width: 100%;
-}
-
+.card.expanded .card-content { width: 100%; max-width: 100%; }
 .card.expanded > video,
-.card.expanded .gallery-container > img:first-child {
-    width: 100%;
-    max-width: 500px; 
-    margin: 0 auto 20px auto;
-    display: block;
-}
+.card.expanded .gallery-container > img:first-child { width: 100%; max-width: 500px; margin: 0 auto 20px auto; display: block; }
+.card.expanded .more-text { margin-top: 30px; }
 
-.card.expanded .more-text {
-    margin-top: 30px; 
-}
-
-/* --- Responsive --- */
 @media (max-width: 768px) {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
     #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
-    
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-    
     .card { flex-direction: column; text-align: center; padding-top: 60px; }
     .card img, .card video, .gallery-container { width: 100%; }
-    
     .hero-box-label { border-right: none; border-bottom: 3px solid currentColor; padding-bottom: 10px; margin-bottom: 10px; }
     .hero-text { padding-left: 0; }
-    
     .expand-btn { top: 20px; right: 20px; }
 }
+
 .mention {
   text-decoration: underline;
   color: white;
@@ -374,12 +374,24 @@ footer {
 </header>
 
 <div class="container">
+
+    <!-- Загальна довідка -->
     <div class="card hero-card">
         <div class="hero-box-label">Загальна довідка</div>
         <div class="hero-text">Офіційний сайт учнівського самоврядування наукового ліцею.</div>
     </div>
 
+    <!-- ✅ Рекламне вікно Adsterra під загальною довідкою -->
+    <div class="ad-block">
+        <span class="ad-label">Реклама</span>
+        <div class="ad-inner">
+            <script async="async" data-cfasync="false"
+                src="https://orcelebration.com/89/c3/5b/89c35b889c6154167bc5287a1c633d77.js">
+            </script>
+        </div>
+    </div>
 
+    <!-- Відео картка -->
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand()">+</button>
         <video controls poster="image.jpg">
@@ -402,13 +414,12 @@ footer {
         </div>
     </div>
 
-
+    <!-- Галерея картка -->
     <div class="card" id="lastEventCard">
         <button class="expand-btn" onclick="toggleExpandLast()">+</button>
         
         <div class="gallery-container">
             <img src="Photo2ghome.jpg" alt="Захід">
-            
             <div class="more-text">
                 <div class="gallery-grid">
                     <img src="Photo2ahome.jpg" alt="Фото">
@@ -432,7 +443,7 @@ footer {
                 <p>На сцені — закохані погляди, щирі усмішки та хвилювання, яке відчувалося навіть у повітрі. У залі — оплески, захоплення і атмосфера справжнього свята.</p>
                 <p>«Пара ліцею 2026» об'єднала красу, творчість, харизму та щирі емоції. Кожна пара показала свою унікальність, власний стиль і свою історію, наповнивши цей вечір особливою атмосферою молодості, натхнення та радості.</p>
                 <p>Партнери заходу:</p>
-                <p>Дякуємо <a href="https://www.instagram.com/reel/DV3P2gmikED/" class="mention">@flowersdr._studio</a> — магазину квітів.</p> 
+                <p>Дякуємо <a href="https://www.instagram.com/reel/DV3P2gmikED/" class="mention">@flowersdr._studio</a> — магазину квітів.</p>
                 <p>Дякуємо <a href="https://www.instagram.com/fotozona_drohobych_vologina/" class="mention">@fotozona_drohobych_vologina</a> — за стильну фотозону.</p>
                 <p>Висловлюємо подяку <a href="https://www.instagram.com/festshop.com.ua/" class="mention">@festshop.com.ua</a> — магазину декору.</p>
                 <p>Щиро дякуємо ювелірному магазину <a href="https://www.instagram.com/gold_kabluchka/" class="mention">@gold_kabluchka</a>.</p>
@@ -486,4 +497,3 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
-
