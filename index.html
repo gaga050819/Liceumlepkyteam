@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Учнівське самоврядування</title>
 
-<!-- Adsterra Popunder реклама -->
-<script src="https://orcelebration.com/89/c3/5b/89c35b889c6154167bc5287a1c633d77.js"></script>
-
 <style>
     #scrollTopBtn {
     position: fixed;
@@ -195,41 +192,22 @@ header {
 .hero-box-label { font-size: 1.6rem; font-weight: 800; border-right: 3px solid currentColor; padding-right: 25px; }
 .hero-text { font-size: 1.5rem; padding-left: 25px; font-style: italic; }
 
-/* --- Рекламне вікно --- */
-.ad-block {
+/* --- Native Banner обгортка --- */
+.ad-wrapper {
     width: 100%;
     box-sizing: border-box;
-    border-radius: 30px;
-    padding: 16px 20px;
-    background: var(--card-bg);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid var(--card-border);
     margin-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
 }
 
-.ad-label {
+.ad-wrapper .ad-label {
     font-size: 0.72rem;
     font-weight: 600;
     opacity: 0.4;
     letter-spacing: 2px;
     text-transform: uppercase;
-    align-self: flex-start;
-}
-
-.ad-inner {
-    width: 100%;
-    min-height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 18px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.06);
+    display: block;
+    margin-bottom: 8px;
+    padding-left: 4px;
 }
 
 .card img, .card video {
@@ -381,14 +359,13 @@ footer {
         <div class="hero-text">Офіційний сайт учнівського самоврядування наукового ліцею.</div>
     </div>
 
-    <!-- ✅ Рекламне вікно Adsterra під загальною довідкою -->
-    <div class="ad-block">
+    <!-- ✅ Adsterra Native Banner — прямо на сторінці -->
+    <div class="ad-wrapper">
         <span class="ad-label">Реклама</span>
-        <div class="ad-inner">
-            <script async="async" data-cfasync="false"
-                src="https://orcelebration.com/89/c3/5b/89c35b889c6154167bc5287a1c633d77.js">
-            </script>
-        </div>
+        <script async="async" data-cfasync="false"
+            src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
+        </script>
+        <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
     </div>
 
     <!-- Відео картка -->
