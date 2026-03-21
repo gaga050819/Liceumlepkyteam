@@ -192,7 +192,6 @@ header {
 .hero-box-label { font-size: 1.6rem; font-weight: 800; border-right: 3px solid currentColor; padding-right: 25px; }
 .hero-text { font-size: 1.5rem; padding-left: 25px; font-style: italic; }
 
-/* --- Рекламний блок (обидва разом) --- */
 .ad-block {
     width: 100%;
     box-sizing: border-box;
@@ -368,31 +367,6 @@ footer {
         <div class="hero-text">Офіційний сайт учнівського самоврядування наукового ліцею.</div>
     </div>
 
-    <!-- Обидва рекламні блоки разом -->
-    <div class="ad-block">
-        <span class="ad-label">Реклама</span>
-
-        <!-- Native Banner -->
-        <script async="async" data-cfasync="false"
-            src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
-        </script>
-        <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
-
-        <!-- Banner 728x90 одразу під Native Banner -->
-        <div class="ad-banner-center">
-            <script>
-              atOptions = {
-                'key' : '059b14656284abaa3d2cc406e7d88414',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-              };
-            </script>
-            <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
-        </div>
-    </div>
-
     <!-- Відео картка -->
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand()">+</button>
@@ -456,6 +430,32 @@ footer {
             </div>
         </div>
     </div>
+
+    <!-- Рекламні блоки — після всіх карток -->
+    <div class="ad-block">
+        <span class="ad-label">Реклама</span>
+
+        <!-- Native Banner -->
+        <script async="async" data-cfasync="false"
+            src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
+        </script>
+        <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
+
+        <!-- Banner 728x90 -->
+        <div class="ad-banner-center">
+            <script>
+              atOptions = {
+                'key' : '059b14656284abaa3d2cc406e7d88414',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
+        </div>
+    </div>
+
 </div>
 
 <footer>
