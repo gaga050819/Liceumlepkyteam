@@ -57,7 +57,6 @@ body.dark {
     background: linear-gradient(180deg, #4b5982, #353f5c, #4b5982) !important;
 }
 
-/* --- Controls --- */
 .controls {
     position: fixed;
     top: 20px;
@@ -88,7 +87,6 @@ body.dark {
 #menuBtn { width: 50px; height: 50px; font-size: 22px; }
 #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
 
-/* --- Sidebar --- */
 .sidebar {
     position: fixed;
     top: 0;
@@ -124,7 +122,6 @@ body.dark {
     font-size: 1.2rem;
     transition: var(--transition);
 }
-
 .sidebar a:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
 
 #closeBtn {
@@ -138,7 +135,6 @@ body.dark {
     cursor: pointer;
 }
 
-/* --- Header --- */
 header {
     width: 90%;
     max-width: 1200px;
@@ -166,13 +162,30 @@ header {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    overflow: hidden; /* Додано для коректного відображення картинки в колі */
+    overflow: hidden;
 }
 
-/* --- News Cards --- */
 .container {
     width: 95%;
     max-width: 1000px;
+}
+
+/* --- Рекламний блок --- */
+.ad-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+
+.ad-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.4;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+    padding-left: 4px;
 }
 
 .card {
@@ -249,7 +262,6 @@ header {
     margin-top: 15px;
 }
 
-/* --- Footer --- */
 footer {
     width: 100%;
     padding: 60px 20px 40px;
@@ -274,19 +286,15 @@ footer {
     letter-spacing: 1px;
     transition: var(--transition);
 }
-
 .social-links a:hover { opacity: 0.7; }
 
-/* --- Responsive --- */
 @media (max-width: 768px) {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
     #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
-
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-
     .card { flex-direction: column; text-align: center; padding-top: 60px; }
     .card-img-wrapper { width: 100%; min-width: unset; }
     .expand-btn { top: 20px; right: 20px; }
@@ -317,6 +325,16 @@ footer {
 </header>
 
 <div class="container">
+
+    <!-- ✅ Adsterra Native Banner під заголовком -->
+    <div class="ad-wrapper">
+        <span class="ad-label">Реклама</span>
+        <script async="async" data-cfasync="false"
+            src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
+        </script>
+        <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
+    </div>
+
     <div class="card">
         <div class="card-img-wrapper">
             <img class="news-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='rgba(0,0,0,0.05)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%234b5982'>Фото новини 1</text></svg>" alt="Новина 1">
@@ -344,6 +362,7 @@ footer {
             </div>
         </div>
     </div>
+
 </div>
 
 <footer>
