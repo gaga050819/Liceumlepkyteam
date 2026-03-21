@@ -172,11 +172,14 @@ header {
     max-width: 1100px;
 }
 
-/* --- Рекламний блок --- */
-.ad-wrapper {
+/* Обидва рекламні блоки разом */
+.ad-block {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .ad-label {
@@ -186,8 +189,14 @@ header {
     letter-spacing: 2px;
     text-transform: uppercase;
     display: block;
-    margin-bottom: 8px;
     padding-left: 4px;
+}
+
+.ad-banner-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
 }
 
 .card {
@@ -207,10 +216,7 @@ header {
     overflow: hidden;
 }
 
-.card.expanded {
-    overflow: visible;
-    height: auto;
-}
+.card.expanded { overflow: visible; height: auto; }
 
 .card img {
     width: 40%;
@@ -223,11 +229,7 @@ header {
     transition: var(--transition);
 }
 
-.card.expanded img {
-    aspect-ratio: auto;
-    object-fit: contain;
-    max-width: 100%;
-}
+.card.expanded img { aspect-ratio: auto; object-fit: contain; max-width: 100%; }
 
 .card-content {
     flex: 1;
@@ -328,13 +330,29 @@ footer {
 
 <div class="container">
 
-    <!-- ✅ Adsterra Native Banner під заголовком -->
-    <div class="ad-wrapper">
+    <!-- Обидва рекламні блоки разом -->
+    <div class="ad-block">
         <span class="ad-label">Реклама</span>
+
+        <!-- Native Banner -->
         <script async="async" data-cfasync="false"
             src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
         </script>
         <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
+
+        <!-- Banner 728x90 одразу під -->
+        <div class="ad-banner-center">
+            <script>
+              atOptions = {
+                'key' : '059b14656284abaa3d2cc406e7d88414',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
+        </div>
     </div>
 
     <div class="card">
