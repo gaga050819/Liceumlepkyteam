@@ -171,10 +171,14 @@
             max-width: 1100px;
         }
 
-        .ad-wrapper {
+        /* Обидва рекламні блоки разом */
+        .ad-block {
             width: 100%;
             box-sizing: border-box;
             margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .ad-label {
@@ -184,8 +188,14 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             display: block;
-            margin-bottom: 8px;
             padding-left: 4px;
+        }
+
+        .ad-banner-center {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            overflow: hidden;
         }
 
         .cards-grid {
@@ -391,12 +401,29 @@
 
     <div class="container">
 
-        <div class="ad-wrapper">
+        <!-- Обидва рекламні блоки разом -->
+        <div class="ad-block">
             <span class="ad-label">Реклама</span>
+
+            <!-- Native Banner -->
             <script async="async" data-cfasync="false"
                 src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
             </script>
             <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
+
+            <!-- Banner 728x90 одразу під -->
+            <div class="ad-banner-center">
+                <script>
+                  atOptions = {
+                    'key' : '059b14656284abaa3d2cc406e7d88414',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                  };
+                </script>
+                <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
+            </div>
         </div>
 
         <div class="cards-grid">
@@ -509,7 +536,7 @@
                     <h2>Яна Бунь</h2>
                     <p>Міністер інформації</p>
                     <div class="more-text"><p>Я комунікативна, добра та креативна. Легко знаходжу спільну мову з людьми, люблю щось організовувати. Беру участь у житті ліцею та учнівського самоврядування, відповідально ставлюся до своїх обов'язків і стараюся доводити справи до кінця.</p>
-    <p>ynyxskk6@gmail.com</p></div>
+                    <p>ynyxskk6@gmail.com</p></div>
                 </div>
             </div>
 
