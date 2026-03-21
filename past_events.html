@@ -198,6 +198,7 @@ header {
     overflow: hidden;
 }
 
+/* ── Card ── */
 .card {
     width: 100%;
     box-sizing: border-box;
@@ -213,28 +214,53 @@ header {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    align-items: flex-start;
 }
 
-.card.expanded { overflow: visible; height: auto; }
-
-.card img {
+/* Media: fixed width, never shrinks past it */
+.card > img,
+.card > video {
     width: 40%;
     max-width: 400px;
+    flex-shrink: 0;         /* don't shrink */
     height: auto;
     aspect-ratio: 4/3;
     object-fit: cover;
     border-radius: 30px;
     border: 1px dashed currentColor;
-    transition: var(--transition);
 }
 
-.card.expanded img { aspect-ratio: auto; object-fit: contain; max-width: 100%; }
-
+/* Text column: takes remaining space, NEVER overflows */
 .card-content {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;           /* critical — prevents overflow */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    word-break: break-word;
+}
+
+/* Expanded: stay side by side, media stretches to match text height */
+.card.expanded {
+    flex-direction: row;
+    overflow: visible;
+    align-items: stretch;
+}
+
+.card.expanded > img,
+.card.expanded > video {
+    width: 40%;
+    max-width: 400px;
+    aspect-ratio: unset;
+    height: auto;
+    align-self: stretch;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.card.expanded .card-content {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .expand-btn {
@@ -255,10 +281,18 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .card.expanded .expand-btn { transform: rotate(45deg); }
-.more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1.6; animation: fadeIn 0.6s ease; }
+
+.more-text {
+    display: none;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    animation: fadeIn 0.6s ease;
+}
 .card.expanded .more-text { display: block; }
 
 footer {
@@ -286,7 +320,6 @@ footer {
     letter-spacing: 1px;
     transition: var(--transition);
 }
-
 .social-links a:hover { opacity: 0.7; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -298,8 +331,9 @@ footer {
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-    .card { flex-direction: column; text-align: center; padding-top: 60px; }
-    .card img { width: 100%; max-width: none; }
+    .card { flex-direction: column; align-items: stretch; text-align: center; padding-top: 60px; }
+    .card > img,
+    .card > video { width: 100%; max-width: none; }
     .expand-btn { top: 20px; right: 20px; }
 }
 </style>
@@ -331,19 +365,21 @@ footer {
 
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <img src="Bunker.jpg" alt="Гра Бункер">
+        <video controls poster="image.jpg">
+            <source src="Bunker.mp4" type="video/mp4">
+        </video>
         <div class="card-content">
-            <h2>☢️ Гра «Бункер» (Чорнобиль)</h2>
-            <p>Атмосферна рольова гра про виживання після катастрофи.</p>
-            <a href="https://docs.google.com/forms/d/..." target="_blank" style="color: inherit; font-weight: bold;">Реєстрація тут</a>
+            <h2>☢️ Гра «Бункер» уже відбулася — і це було неймовірно! 🔥</h2>
+            <p>Учасники опинилися в умовах, де потрібно було швидко думати, аргументувати свою позицію та приймати непрості рішення. Кожен проявив себе по-своєму: хтось — як стратег, хтось — як лідер, а хтось — як справжній командний гравець 👏</p>
             <div class="more-text">
-                <p>Світ опинився на межі катастрофи, і лише обрані зможуть потрапити до бункера та отримати шанс на виживання. Кожен учасник отримає свою роль і повинен буде довести, що саме він гідний залишитися. Тема гри — Чорнобиль, тому на вас чекає напружена атмосфера, складні рішення та цікаві сценарії.</p>
-                <p>📅 20 березня</p>
-                <p>🕒 14:30</p>
-                <p>📍 Актова зала</p>
-                <p>💰 35 грн</p>
-                <p>👥 8–11 класи</p>
-                <p>⚠️ Кількість місць обмежена! Чекаємо саме тебе! ☢️</p>
+                <p>Дякуємо всім, хто долучився — ви створили атмосферу, яку неможливо забути 💛</p>
+                <p>🏆 Переможцями гри стали:</p>
+                <p>Саша Мартинюк</p>
+                <p>Жапалеу Денис</p>
+                <p>Маркіян Возний</p>
+                <p>Аня Червак</p>
+                <p>Богумила Сабріна</p>
+                <p>✨ Окрему відзнаку отримав Олександр Коломієць — від колеги по грі «Бункер» пані Олени Ващенко.</p>
             </div>
         </div>
     </div>
@@ -394,14 +430,10 @@ footer {
     <!-- Рекламні блоки — після всіх карток -->
     <div class="ad-block">
         <span class="ad-label">Реклама</span>
-
-        <!-- Native Banner -->
         <script async="async" data-cfasync="false"
             src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
         </script>
         <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
-
-        <!-- Banner 728x90 -->
         <div class="ad-banner-center">
             <script>
               atOptions = {
@@ -433,15 +465,6 @@ function toggleTheme() {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updatePlaceholders(isDark);
-}
-
-function updatePlaceholders(isDark) {
-    const color = isDark ? '%23f1e1cd' : '%234b5982';
-    const svgData = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='${color}'>Місце під фото</text></svg>`;
-    document.querySelectorAll('.placeholder-img').forEach(img => {
-        img.src = svgData;
-    });
 }
 
 function toggleExpand(buttonElement) {
@@ -455,7 +478,6 @@ function toggleMenu() {
 window.onload = () => {
     const isDark = localStorage.getItem('theme') === 'dark';
     if (isDark) document.body.classList.add('dark');
-    updatePlaceholders(isDark);
 };
 window.addEventListener('scroll', () => {
     document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300);
