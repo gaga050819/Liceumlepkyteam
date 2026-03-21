@@ -172,11 +172,13 @@ header {
     max-width: 1100px;
 }
 
+/* ── Card base ── */
 .card {
     width: 100%;
     box-sizing: border-box;
     display: flex;
     gap: 40px;
+    align-items: flex-start;
     border-radius: 40px;
     padding: clamp(20px, 5vw, 40px);
     background: var(--card-bg);
@@ -218,9 +220,12 @@ header {
     overflow: hidden;
 }
 
-.card img, .card video {
+/* Media: fixed 40% width, never shrinks */
+.card > img,
+.card > video {
     width: 40%;
     max-width: 400px;
+    flex-shrink: 0;
     height: auto;
     aspect-ratio: 4/3;
     object-fit: cover;
@@ -228,12 +233,16 @@ header {
     border: 1px dashed currentColor;
 }
 
+/* Gallery container */
 .gallery-container {
-    width: 45%;
+    width: 40%;
+    max-width: 400px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -246,13 +255,17 @@ header {
     border-radius: 15px;
     border: 1px solid var(--card-border);
     aspect-ratio: 1/1;
+    object-fit: cover;
 }
 
+/* Text column */
 .card-content {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    word-break: break-word;
 }
 
 .expand-btn {
@@ -273,11 +286,37 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .card.expanded .expand-btn { transform: rotate(45deg); }
+
 .more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1.6; animation: fadeIn 0.6s ease; }
 .card.expanded .more-text { display: block; }
+
+/* ── Expanded: stay side by side, media stretches to match text ── */
+.card.expanded {
+    align-items: stretch;
+}
+
+.card.expanded > img,
+.card.expanded > video {
+    aspect-ratio: unset;
+    height: auto;
+    align-self: stretch;
+    object-fit: cover;
+}
+
+.card.expanded .gallery-container {
+    align-self: stretch;
+}
+
+.card.expanded .gallery-container > img:first-child {
+    width: 100%;
+    aspect-ratio: unset;
+    height: 200px;
+    object-fit: cover;
+}
 
 footer {
     width: 100%;
@@ -309,13 +348,6 @@ footer {
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.card.expanded { flex-direction: column; }
-.card.expanded .gallery-container,
-.card.expanded .card-content { width: 100%; max-width: 100%; }
-.card.expanded > video,
-.card.expanded .gallery-container > img:first-child { width: 100%; max-width: 500px; margin: 0 auto 20px auto; display: block; }
-.card.expanded .more-text { margin-top: 30px; }
-
 @media (max-width: 768px) {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
@@ -324,7 +356,7 @@ footer {
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
     .card { flex-direction: column; text-align: center; padding-top: 60px; }
-    .card img, .card video, .gallery-container { width: 100%; }
+    .card > img, .card > video, .gallery-container { width: 100%; max-width: none; }
     .hero-box-label { border-right: none; border-bottom: 3px solid currentColor; padding-bottom: 10px; margin-bottom: 10px; }
     .hero-text { padding-left: 0; }
     .expand-btn { top: 20px; right: 20px; }
@@ -435,13 +467,11 @@ footer {
     <div class="ad-block">
         <span class="ad-label">Реклама</span>
 
-        <!-- Native Banner -->
         <script async="async" data-cfasync="false"
             src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
         </script>
         <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
 
-        <!-- Banner 728x90 -->
         <div class="ad-banner-center">
             <script>
               atOptions = {
