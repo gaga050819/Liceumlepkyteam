@@ -104,16 +104,12 @@ body.dark {
     flex-direction: column;
     padding: 100px 30px 40px;
     box-shadow: 15px 0 50px rgba(0,0,0,0.2);
-    box-sizing: border-box; 
-    opacity: 0; 
+    box-sizing: border-box;
+    opacity: 0;
     visibility: hidden;
 }
 
-.sidebar.open { 
-    left: 0; 
-    opacity: 1;
-    visibility: visible;
-}
+.sidebar.open { left: 0; opacity: 1; visibility: visible; }
 
 .sidebar a {
     text-decoration: none;
@@ -168,12 +164,30 @@ header {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    overflow: hidden; /* Додано, щоб логотип був круглим */
+    overflow: hidden;
 }
 
 .container {
     width: 95%;
     max-width: 1100px;
+}
+
+/* --- Рекламний блок --- */
+.ad-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 50px;
+}
+
+.ad-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.4;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+    padding-left: 4px;
 }
 
 .card {
@@ -189,31 +203,30 @@ header {
     border: 1px solid var(--card-border);
     margin-bottom: 50px;
     transition: var(--transition);
-    position: relative; 
+    position: relative;
     overflow: hidden;
 }
 
 .card.expanded {
     overflow: visible;
-    height: auto; 
+    height: auto;
 }
 
-/* --- ОНОВЛЕНІ СТИЛІ ДЛЯ ФОТО --- */
 .card img {
     width: 40%;
     max-width: 400px;
     height: auto;
     aspect-ratio: 4/3;
-    object-fit: cover; 
+    object-fit: cover;
     border-radius: 30px;
     border: 1px dashed currentColor;
     transition: var(--transition);
 }
 
 .card.expanded img {
-    aspect-ratio: auto; 
-    object-fit: contain; 
-    max-width: 100%; 
+    aspect-ratio: auto;
+    object-fit: contain;
+    max-width: 100%;
 }
 
 .card-content {
@@ -225,7 +238,7 @@ header {
 
 .expand-btn {
     position: absolute;
-    top: 25px; 
+    top: 25px;
     right: 25px;
     width: 45px;
     height: 45px;
@@ -281,14 +294,11 @@ footer {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
     #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
-    
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-    
-    .card { flex-direction: column; text-align: center; padding-top: 60px; } 
+    .card { flex-direction: column; text-align: center; padding-top: 60px; }
     .card img { width: 100%; max-width: none; }
-    
     .expand-btn { top: 20px; right: 20px; }
 }
 </style>
@@ -317,7 +327,16 @@ footer {
 </header>
 
 <div class="container">
-    
+
+    <!-- ✅ Adsterra Native Banner під заголовком -->
+    <div class="ad-wrapper">
+        <span class="ad-label">Реклама</span>
+        <script async="async" data-cfasync="false"
+            src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
+        </script>
+        <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
+    </div>
+
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
         <img src="Bunker.jpg" alt="Гра Бункер">
@@ -346,40 +365,40 @@ footer {
             <h2>Благодійна дискотека</h2>
             <p>У ліцеї відбулася благодійна дискотека для учнів 5–11 класів, де вдалося поєднати веселу атмосферу та важливу справу — допомогу ЗСУ.</p>
             <div class="more-text">
-                <p><p>У четвер, 19 лютого, в актовій залі відбулася благодійна дискотека для учнів 5–11 класів. Захід був організований у двох частинах: спочатку для учнів 5–7 класів, а згодом — для 8–11 класів.</p>
-
-<p>На учасників чекала сучасна музика, драйвова атмосфера та можливість весело провести час у колі друзів. Дискотека об’єднала учнів різного віку та подарувала багато позитивних емоцій.</p>
-
-<p>Особливо важливо, що захід мав благодійну мету — усі зібрані кошти були передані танковому батальйону 156 ОМБр на ремонт безпілотників.</p> 
-
-<p>Дякуємо всім, хто долучився 💜</p></p>
+                <p>У четвер, 19 лютого, в актовій залі відбулася благодійна дискотека для учнів 5–11 класів. Захід був організований у двох частинах: спочатку для учнів 5–7 класів, а згодом — для 8–11 класів.</p>
+                <p>На учасників чекала сучасна музика, драйвова атмосфера та можливість весело провести час у колі друзів. Дискотека об'єднала учнів різного віку та подарувала багато позитивних емоцій.</p>
+                <p>Особливо важливо, що захід мав благодійну мету — усі зібрані кошти були передані танковому батальйону 156 ОМБр на ремонт безпілотників.</p>
+                <p>Дякуємо всім, хто долучився 💜</p>
             </div>
         </div>
     </div>
+
     <div class="card">
-            <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-             <img src="Kabinet.jpg" alt="Kabinet.jpg">
-            <div class="card-content">
-                <h2>«Найатмосферніший кабінет року»</h2>
-                <p>У школі провели конкурс на найкраще зимове оформлення класів, де учні проявили креативність і командну роботу.</p>
-                <div class="more-text"><p>У навчальному закладі було організовано конкурс «Найатмосферніший кабінет року», під час якого учні оформлювали свої кабінети у зимово-святковій тематиці. Учасники подавали фото готових робіт і відео процесу створення декору. Оцінювання відбувалося за критеріями креативності, атмосферності, акуратності, безпеки та командної роботи. Конкурс допоміг створити святкову атмосферу в школі та згуртувати учнівські колективи.</p>
-               </div>
+        <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+        <img src="Kabinet.jpg" alt="Kabinet.jpg">
+        <div class="card-content">
+            <h2>«Найатмосферніший кабінет року»</h2>
+            <p>У школі провели конкурс на найкраще зимове оформлення класів, де учні проявили креативність і командну роботу.</p>
+            <div class="more-text">
+                <p>У навчальному закладі було організовано конкурс «Найатмосферніший кабінет року», під час якого учні оформлювали свої кабінети у зимово-святковій тематиці. Учасники подавали фото готових робіт і відео процесу створення декору. Оцінювання відбувалося за критеріями креативності, атмосферності, акуратності, безпеки та командної роботи. Конкурс допоміг створити святкову атмосферу в школі та згуртувати учнівські колективи.</p>
             </div>
         </div>
-       <div class="card">
-            <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-             <img src="Logobest.jpg" alt="Logobest.jpg">
-            <div class="card-content">
-                <h2>«Найатмосферніший кабінет року»</h2>
-                <p>У ліцеї відбувся конкурс на створення логотипу учнівського самоврядування, де учні змогли проявити свою креативність і запропонувати власні ідеї символу ліцею.</p>
-                <div class="more-text"><p>У навчальному закладі провели конкурс «Найкращий логотип учнівського самоврядування», метою якого було створення унікального символу та розвиток творчих здібностей учнів. 
+    </div>
 
-<p>Учасники представили власні дизайни логотипів, які оцінювалися за креативністю, оригінальністю, естетичністю та відповідністю тематиці. Усі роботи вирізнялися цікавими ідеями та індивідуальним підходом.</p> 
-
-<p>Переможців було нагороджено, а найкращий логотип стане символом учнівського самоврядування ліцею.<p></p>
-               </div>
+    <div class="card">
+        <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+        <img src="Logobest.jpg" alt="Logobest.jpg">
+        <div class="card-content">
+            <h2>«Найкращий логотип учнівського самоврядування»</h2>
+            <p>У ліцеї відбувся конкурс на створення логотипу учнівського самоврядування, де учні змогли проявити свою креативність і запропонувати власні ідеї символу ліцею.</p>
+            <div class="more-text">
+                <p>У навчальному закладі провели конкурс «Найкращий логотип учнівського самоврядування», метою якого було створення унікального символу та розвиток творчих здібностей учнів.</p>
+                <p>Учасники представили власні дизайни логотипів, які оцінювалися за креативністю, оригінальністю, естетичністю та відповідністю тематиці. Усі роботи вирізнялися цікавими ідеями та індивідуальним підходом.</p>
+                <p>Переможців було нагороджено, а найкращий логотип стане символом учнівського самоврядування ліцею.</p>
             </div>
         </div>
+    </div>
+
 </div>
 
 <footer>
@@ -403,7 +422,6 @@ function toggleTheme() {
 function updatePlaceholders(isDark) {
     const color = isDark ? '%23f1e1cd' : '%234b5982';
     const svgData = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='rgba(0,0,0,0.1)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='${color}'>Місце під фото</text></svg>`;
-    
     document.querySelectorAll('.placeholder-img').forEach(img => {
         img.src = svgData;
     });
