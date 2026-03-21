@@ -170,11 +170,14 @@ header {
     max-width: 1000px;
 }
 
-/* --- Рекламний блок --- */
-.ad-wrapper {
+/* Обидва рекламні блоки разом */
+.ad-block {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .ad-label {
@@ -184,8 +187,14 @@ header {
     letter-spacing: 2px;
     text-transform: uppercase;
     display: block;
-    margin-bottom: 8px;
     padding-left: 4px;
+}
+
+.ad-banner-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
 }
 
 .card {
@@ -326,18 +335,34 @@ footer {
 
 <div class="container">
 
-    <!-- ✅ Adsterra Native Banner під заголовком -->
-    <div class="ad-wrapper">
+    <!-- Обидва рекламні блоки разом -->
+    <div class="ad-block">
         <span class="ad-label">Реклама</span>
+
+        <!-- Native Banner -->
         <script async="async" data-cfasync="false"
             src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
         </script>
         <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
+
+        <!-- Banner 728x90 одразу під -->
+        <div class="ad-banner-center">
+            <script>
+              atOptions = {
+                'key' : '059b14656284abaa3d2cc406e7d88414',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
+        </div>
     </div>
 
     <div class="card">
         <div class="card-img-wrapper">
-        <img src="Underconstruction.png" alt="Розробляється" style="width: 100%; height: 100%">
+            <img src="Underconstruction.png" alt="Розробляється" style="width: 100%; height: 100%">
         </div>
         <div class="card-content">
             <button class="expand-btn" onclick="toggleExpand(this)">+</button>
