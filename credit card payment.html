@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Конкурс - Учнівське самоврядування</title>
-
+<title>Скринька ідей - Учнівське самоврядування</title>
 <style>
 :root {
     --bg-light: #f1e1cd;
@@ -13,7 +12,6 @@
     --card-border: rgba(255, 255, 255, 0.5);
     --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -26,7 +24,6 @@ body {
     transition: background 0.8s ease, color 0.5s ease;
     overflow-x: hidden;
 }
-
 body.dark {
     --bg-light: #4b5982;
     --text-light: #f1e1cd;
@@ -34,8 +31,6 @@ body.dark {
     --card-border: rgba(241, 225, 205, 0.2);
     background: linear-gradient(180deg, #4b5982, #353f5c, #4b5982) !important;
 }
-
-/* --- Контроли (Хатка та Тема) --- */
 .controls {
     position: fixed;
     top: 20px;
@@ -45,7 +40,6 @@ body.dark {
     flex-direction: column;
     gap: 15px;
 }
-
 #themeBtn, #menuBtn {
     padding: 12px;
     border-radius: 50px;
@@ -62,11 +56,8 @@ body.dark {
     justify-content: center;
     align-items: center;
 }
-
 #menuBtn { width: 50px; height: 50px; font-size: 22px; }
 #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
-
-/* --- Sidebar (Меню) --- */
 .sidebar {
     position: fixed;
     top: 0;
@@ -84,11 +75,10 @@ body.dark {
     flex-direction: column;
     padding: 100px 30px 40px;
     box-shadow: 15px 0 50px rgba(0,0,0,0.2);
-    box-sizing: border-box; 
-    opacity: 0; 
+    box-sizing: border-box;
+    opacity: 0;
     visibility: hidden;
 }
-
 .sidebar.open { left: 0; opacity: 1; visibility: visible; }
 .sidebar a {
     text-decoration: none;
@@ -103,7 +93,6 @@ body.dark {
     transition: var(--transition);
 }
 .sidebar a:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
-
 #closeBtn {
     position: absolute;
     top: 30px;
@@ -114,15 +103,12 @@ body.dark {
     color: inherit;
     cursor: pointer;
 }
-
-/* --- Контейнер та Картка --- */
 .container {
     width: 95%;
     max-width: 800px;
     margin-top: 100px;
     margin-bottom: 50px;
 }
-
 .card {
     width: 100%;
     box-sizing: border-box;
@@ -132,16 +118,13 @@ body.dark {
     border: 1px solid var(--card-border);
     border-radius: 40px;
 }
-
 .card img {
     width: 100%;
     border-radius: 30px;
     margin-bottom: 25px;
+    display: block;
 }
-
-/* --- Форма та Поля --- */
 .form-group { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-
 .form-input {
     width: 100%;
     box-sizing: border-box;
@@ -152,31 +135,18 @@ body.dark {
     color: var(--text-light);
     font-size: 1rem;
     font-family: inherit;
+    outline: none;
 }
-
-textarea.form-input {
-    resize: vertical;
-    min-height: 150px;
-}
-
-.form-input::placeholder {
-    color: var(--text-light);
-    opacity: 0.8;
-}
-
-body.dark .form-input {
-    background: rgba(0, 0, 0, 0.2);
-    border-color: rgba(241, 225, 205, 0.2);
-}
-
-.monobank-btn {
+textarea.form-input { resize: vertical; min-height: 150px; }
+.form-input::placeholder { color: var(--text-light); opacity: 0.8; }
+body.dark .form-input { background: rgba(0,0,0,0.2); border-color: rgba(241,225,205,0.2); }
+.submit-btn {
     display: block;
     text-align: center;
     background: #000;
-    color: #fff !important;
+    color: #fff;
     padding: 18px;
     border-radius: 20px;
-    text-decoration: none;
     font-weight: bold;
     margin-top: 15px;
     transition: var(--transition);
@@ -184,11 +154,22 @@ body.dark .form-input {
     cursor: pointer;
     font-size: 1rem;
     width: 100%;
+    font-family: inherit;
 }
-
-.monobank-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-.monobank-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
+.submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.success-msg {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(17,153,142,0.15);
+    border: 1px solid rgba(17,153,142,0.3);
+    color: #11998e;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 15px;
+}
 @media (max-width: 768px) {
     #menuBtn { position: fixed; right: 20px; left: auto; }
 }
@@ -212,26 +193,28 @@ body.dark .form-input {
 
 <div class="container">
     <div class="card">
-        <img src="Forskrynkaidey.png" alt="Фото конкурсу" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'50%\' height=\'50%\' fill=\'rgba(0,0,0,0.1)\'/><text x=\'20%\' y=\'20%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'20\' fill=\'gray\'>Фото конкурсу</text></svg>'">
-        
-        <h2>Скринька ідей</h2>
-        <p>Заповніть дані, і після натискання кнопки ми отримаєм вашу ідею.</p>
+        <img src="Forskrynkaidey.png" alt="Скринька ідей">
 
-        <form action="https://formspree.io/f/xlgpankd" method="POST" class="form-group" id="contestForm">
-            <input type="text" name="Ім'я" class="form-input" placeholder="Ім’я (необов'язково)">
-            <input type="text" name="Прізвище" class="form-input" placeholder="Прізвище (необов'язково)">
-            <input type="text" name="Клас" class="form-input" placeholder="Клас (необов'язково)">
-            
-            <input type="email" name="email" class="form-input" placeholder="Ваша електронна пошта (необов'язково)">
-            
-            <input type="hidden" name="Скринька" value="Скринька ідей">
-            
+        <h2>Скринька ідей</h2>
+        <p>Заповніть дані, і після натискання кнопки ми отримаємо вашу ідею.</p>
+
+        <form id="ideaForm" class="form-group">
+            <input type="hidden" name="access_key" value="e8a2b6b2-a256-4cde-bd25-acf647d0d522">
+            <input type="hidden" name="subject" value="Нова ідея — Скринька ідей">
+            <input type="hidden" name="from_name" value="Скринька ідей">
+
+            <input type="text" name="name" class="form-input" placeholder="Ім'я (необов'язково)">
+            <input type="text" name="surname" class="form-input" placeholder="Прізвище (необов'язково)">
+            <input type="text" name="class" class="form-input" placeholder="Клас (необов'язково)">
+            <input type="email" name="email" class="form-input" placeholder="Електронна пошта (необов'язково)">
             <textarea name="message" class="form-input" placeholder="Напишіть сюди свою ідею..." required></textarea>
 
-            <button type="submit" id="submitBtn" class="monobank-btn">
-                Відправити ідею
-            </button>
+            <button type="submit" id="submitBtn" class="submit-btn">✉️ Відправити ідею</button>
         </form>
+
+        <div class="success-msg" id="successMsg">
+            ✅ Дякуємо! Вашу ідею отримано.
+        </div>
     </div>
 </div>
 
@@ -240,48 +223,44 @@ function toggleTheme() {
     document.body.classList.toggle('dark');
     localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 }
-
 function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('open');
 }
-
-const form = document.getElementById('contestForm');
-const btn = document.getElementById('submitBtn');
-
-form.addEventListener("submit", async function(event) {
-    event.preventDefault(); 
-    
-    btn.disabled = true;
-    btn.innerText = "Відправка даних...";
-
-    const formData = new FormData(form);
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-            // ПЕРЕХІД НА МОНОБАНК
-            // Встав тут своє посилання на Банку:
-            window.location.href = "";
-        } else {
-            alert("Помилка відправки. Спробуйте ще раз.");
-            btn.disabled = false;
-            btn.innerText = "Вибачте, помилка відправлення ):";
-        }
-    } catch (error) {
-        alert("Помилка мережі. Перевірте інтернет.");
-        btn.disabled = false;
-        btn.innerText = "Вибачте, помилка відправлення ):";
-    }
-});
-
-window.onload = () => {
+window.onload = function() {
     if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
 };
+
+document.getElementById('ideaForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Відправка...';
+
+    var data = new FormData(this);
+    var obj = {};
+    data.forEach(function(v, k) { obj[k] = v; });
+
+    try {
+        var res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(obj)
+        });
+        var json = await res.json();
+        if (json.success) {
+            document.getElementById('ideaForm').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        } else {
+            alert('Помилка відправки. Спробуйте ще раз.');
+            btn.disabled = false;
+            btn.textContent = '✉️ Відправити ідею';
+        }
+    } catch(err) {
+        alert('Помилка мережі. Перевірте інтернет.');
+        btn.disabled = false;
+        btn.textContent = '✉️ Відправити ідею';
+    }
+});
 </script>
 
 </body>
