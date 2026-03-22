@@ -766,7 +766,7 @@ body.dev-active [data-dev-id] {
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand()">+</button>
         <video controls poster="image.jpg">
-            <source src="Videohome1.mp4" type="video/mp4">
+            <source src="Videohome1.mp4" type="video/mp4" data-dev-src="video-main">
         </video>
         <div class="card-content">
             <h2 data-dev-id="video-title">Чотири роки незламності: історія болю, боротьби та віри України.</h2>
@@ -789,18 +789,18 @@ body.dev-active [data-dev-id] {
         <button class="expand-btn" onclick="toggleExpandLast()">+</button>
         
         <div class="gallery-container">
-            <img src="Photo2ghome.jpg" alt="Захід">
+            <img src="Photo2ghome.jpg" alt="Захід" data-dev-src="gallery-main">
             <div class="more-text">
                 <div class="gallery-grid">
-                    <img src="Photo2ahome.jpg" alt="Фото">
-                    <img src="Photo2bhome.jpg" alt="Фото">                    
-                    <img src="Photo2chome.jpg" alt="Фото">
-                    <img src="Photo2dhome.jpg" alt="Фото">
-                    <img src="Photo2ehome.jpg" alt="Фото">
-                    <img src="Photo2fhome.jpg" alt="Фото">
-                    <img src="Photo2ghome.jpg" alt="Фото">
-                    <video controls><source src="Video2ahome.mp4" type="video/mp4"></video>
-                    <video controls><source src="Video2chome.mp4" type="video/mp4"></video>
+                    <img src="Photo2ahome.jpg" alt="Фото" data-dev-src="gallery-1">
+                    <img src="Photo2bhome.jpg" alt="Фото" data-dev-src="gallery-2">                    
+                    <img src="Photo2chome.jpg" alt="Фото" data-dev-src="gallery-3">
+                    <img src="Photo2dhome.jpg" alt="Фото" data-dev-src="gallery-4">
+                    <img src="Photo2ehome.jpg" alt="Фото" data-dev-src="gallery-5">
+                    <img src="Photo2fhome.jpg" alt="Фото" data-dev-src="gallery-6">
+                    <img src="Photo2ghome.jpg" alt="Фото" data-dev-src="gallery-7">
+                    <video controls><source src="Video2ahome.mp4" type="video/mp4" data-dev-src="gallery-vid1"></video>
+                    <video controls><source src="Video2chome.mp4" type="video/mp4" data-dev-src="gallery-vid2"></video>
                 </div>
             </div>
         </div>
@@ -959,6 +959,20 @@ var DEV_META = {
     'footer-copy':   { label: 'Футер — копірайт',     section: 'Футер' }
 };
 
+var DEV_MEDIA = {
+    'video-main':   { label: 'Головне відео (.mp4)',  section: 'Медіа' },
+    'gallery-main': { label: 'Галерея — головне фото', section: 'Медіа' },
+    'gallery-1':    { label: 'Галерея — фото 1',      section: 'Медіа' },
+    'gallery-2':    { label: 'Галерея — фото 2',      section: 'Медіа' },
+    'gallery-3':    { label: 'Галерея — фото 3',      section: 'Медіа' },
+    'gallery-4':    { label: 'Галерея — фото 4',      section: 'Медіа' },
+    'gallery-5':    { label: 'Галерея — фото 5',      section: 'Медіа' },
+    'gallery-6':    { label: 'Галерея — фото 6',      section: 'Медіа' },
+    'gallery-7':    { label: 'Галерея — фото 7',      section: 'Медіа' },
+    'gallery-vid1': { label: 'Галерея — відео 1 (.mp4)', section: 'Медіа' },
+    'gallery-vid2': { label: 'Галерея — відео 2 (.mp4)', section: 'Медіа' },
+};
+var dpOriginalSrcs = {};
 var dpOriginalTexts = {};
 var dpOpen = false;
 
@@ -995,6 +1009,31 @@ function dpInit() {
         });
         container.appendChild(sec);
     });
+
+    // ── Media section ──
+    var mediaSec = document.createElement('div');
+    mediaSec.className = 'dp-section';
+    mediaSec.innerHTML = '<div class="dp-section-label">Медіа (назви файлів)</div>';
+
+    document.querySelectorAll('[data-dev-src]').forEach(function(el) {
+        var id = el.getAttribute('data-dev-src');
+        if (!DEV_MEDIA[id]) return;
+        var src = el.getAttribute('src') || '';
+        dpOriginalSrcs[id] = src;
+        var isImg = el.tagName === 'IMG';
+
+        var div = document.createElement('div');
+        div.className = 'dp-field';
+        div.innerHTML =
+            '<div class="dp-field-label">' +
+            (isImg ? '🖼 ' : '🎬 ') + DEV_MEDIA[id].label +
+            ' <span class="dp-tag">src</span>' +
+            '<span class="dp-mod-badge">змінено</span></div>' +
+            (isImg ? '<img src="' + dpEsc(src) + '" style="width:100%;max-height:72px;object-fit:cover;border-radius:6px;margin:6px 12px 0;display:block;" data-prev="' + id + '">' : '') +
+            '<input type="text" data-src-id="' + id + '" oninput="dpSrcInput(this)" value="' + dpEsc(src) + '" placeholder="назва файлу або URL">';
+        mediaSec.appendChild(div);
+    });
+    container.appendChild(mediaSec);
 }
 
 function dpEsc(s) {
@@ -1006,6 +1045,24 @@ function dpInput(inp) {
     var el = document.querySelector('[data-dev-id="' + id + '"]');
     if (el && !el.querySelector('a')) el.innerText = inp.value;
     inp.closest('.dp-field').classList.toggle('modified', inp.value !== dpOriginalTexts[id]);
+    document.getElementById('dpCount').textContent = document.querySelectorAll('.dp-field.modified').length;
+}
+
+function dpSrcInput(inp) {
+    var id = inp.getAttribute('data-src-id');
+    var el = document.querySelector('[data-dev-src="' + id + '"]');
+    if (!el) return;
+    var val = inp.value.trim();
+    el.setAttribute('src', val);
+    if (el.tagName === 'SOURCE') {
+        var vid = el.closest('video');
+        if (vid) vid.load();
+    } else if (el.tagName === 'IMG') {
+        el.src = val;
+        var prev = document.querySelector('[data-prev="' + id + '"]');
+        if (prev) prev.src = val;
+    }
+    inp.closest('.dp-field').classList.toggle('modified', val !== dpOriginalSrcs[id]);
     document.getElementById('dpCount').textContent = document.querySelectorAll('.dp-field.modified').length;
 }
 
@@ -1033,6 +1090,22 @@ function dpReset() {
         inp.closest('.dp-field').classList.remove('modified');
     });
     document.getElementById('dpCount').textContent = '0';
+    // Reset media
+    document.querySelectorAll('[data-src-id]').forEach(function(inp) {
+        var id = inp.getAttribute('data-src-id');
+        var orig = dpOriginalSrcs[id] || '';
+        inp.value = orig;
+        inp.closest('.dp-field').classList.remove('modified');
+        var el = document.querySelector('[data-dev-src="' + id + '"]');
+        if (!el) return;
+        el.setAttribute('src', orig);
+        if (el.tagName === 'SOURCE') { var v = el.closest('video'); if (v) v.load(); }
+        else if (el.tagName === 'IMG') {
+            el.src = orig;
+            var prev = document.querySelector('[data-prev="' + id + '"]');
+            if (prev) prev.src = orig;
+        }
+    });
 }
 
 // Secret trigger: 5 fast clicks on footer copyright
