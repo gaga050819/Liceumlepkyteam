@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Конкурс - Учнівське самоврядування</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 :root {
@@ -255,7 +256,14 @@ form.addEventListener("submit", async function(event) {
 
     const hCaptcha = form.querySelector('textarea[name=h-captcha-response]')?.value;
     if (!hCaptcha) {
-        alert("Будь ласка, підтвердіть, що ви не робот (капча).");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ой!',
+            text: 'Будь ласка, підтвердіть, що ви не робот (капча).',
+            confirmButtonText: 'Зрозуміло',
+            confirmButtonColor: '#4b5982',
+            borderRadius: '20px',
+        });
         return;
     }
 
@@ -274,19 +282,39 @@ form.addEventListener("submit", async function(event) {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            btn.innerText = "✅ Ідею надіслано!";
             form.reset();
-            // Якщо потрібен перехід — розкоментуй і встав посилання:
-            // window.location.href = "https://...";
-        } else {
-            alert("Помилка відправки: " + (data.message || "Спробуйте ще раз."));
             btn.disabled = false;
-            btn.innerText = "Вибачте, помилка відправлення ):";
+            btn.innerText = "Відправити ідею";
+            Swal.fire({
+                icon: 'success',
+                title: '🎉 Ідею надіслано!',
+                text: 'Дякуємо! Ми обов\'язково розглянемо вашу пропозицію.',
+                confirmButtonText: 'Чудово!',
+                confirmButtonColor: '#4b5982',
+                timer: 4000,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Помилка',
+                text: data.message || 'Щось пішло не так. Спробуйте ще раз.',
+                confirmButtonText: 'Спробувати знову',
+                confirmButtonColor: '#4b5982',
+            });
+            btn.disabled = false;
+            btn.innerText = "Відправити ідею";
         }
     } catch (error) {
-        alert("Помилка мережі. Перевірте інтернет.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Помилка мережі',
+            text: 'Перевірте підключення до інтернету та спробуйте ще раз.',
+            confirmButtonText: 'Зрозуміло',
+            confirmButtonColor: '#4b5982',
+        });
         btn.disabled = false;
-        btn.innerText = "Вибачте, помилка відправлення ):";
+        btn.innerText = "Відправити ідею";
     }
 });
 
