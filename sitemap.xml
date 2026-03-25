@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://gaga050819.github.io/Liceumlepkyteam/index.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://gaga050819.github.io/Liceumlepkyteam/about.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gaga050819.github.io/Liceumlepkyteam/news.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gaga050819.github.io/Liceumlepkyteam/past_events.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gaga050819.github.io/Liceumlepkyteam/credit%20card%20payment.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <priority>0.5</priority>
+  </url>
+</urlset>
