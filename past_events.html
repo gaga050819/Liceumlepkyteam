@@ -222,7 +222,7 @@ header {
 .card > video {
     width: 40%;
     max-width: 400px;
-    flex-shrink: 0;         /* don't shrink */
+    flex-shrink: 0;
     height: auto;
     aspect-ratio: 4/3;
     object-fit: cover;
@@ -230,17 +230,17 @@ header {
     border: 1px dashed currentColor;
 }
 
-/* Text column: takes remaining space, NEVER overflows */
+/* Text column */
 .card-content {
     flex: 1 1 0;
-    min-width: 0;           /* critical — prevents overflow */
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     word-break: break-word;
 }
 
-/* Expanded: stay side by side, media stretches to match text height */
+/* Expanded */
 .card.expanded {
     flex-direction: row;
     overflow: visible;
@@ -295,6 +295,60 @@ header {
 }
 .card.expanded .more-text { display: block; }
 
+/* ── Gallery card ── */
+.gallery-container {
+    width: 40%;
+    max-width: 400px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    border: 1px dashed currentColor;
+    overflow: hidden;
+}
+
+.gallery-container > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+}
+
+.gallery-grid img,
+.gallery-grid video {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+}
+
+.card.expanded .gallery-container {
+    width: 40%;
+    max-width: 400px;
+    align-self: stretch;
+    aspect-ratio: unset;
+}
+
+.card.expanded .gallery-container > img {
+    aspect-ratio: unset;
+    height: 250px;
+}
+
+.mention {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px dashed currentColor;
+    transition: var(--transition);
+}
+.mention:hover { opacity: 0.7; }
+
 footer {
     width: 100%;
     padding: 60px 20px 40px;
@@ -331,10 +385,67 @@ footer {
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-    .card { flex-direction: column; align-items: stretch; text-align: center; padding-top: 60px; }
+
+    /* Cards: завжди колонка на мобільному */
+    .card {
+        flex-direction: column !important;
+        align-items: stretch;
+        text-align: left;
+        padding-top: 60px;
+        gap: 20px;
+    }
     .card > img,
-    .card > video { width: 100%; max-width: none; }
-    .expand-btn { top: 20px; right: 20px; }
+    .card > video {
+        width: 100% !important;
+        max-width: none !important;
+        aspect-ratio: 16/9;
+        border-radius: 20px;
+    }
+
+    /* Картка з галереєю */
+    .gallery-container {
+        width: 100% !important;
+        max-width: none !important;
+        border-radius: 20px;
+    }
+    .gallery-container > img {
+        aspect-ratio: 16/9;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+    }
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        padding: 6px;
+    }
+    .gallery-grid img,
+    .gallery-grid video {
+        border-radius: 8px;
+    }
+
+    /* Expanded на мобільному — теж колонка */
+    .card.expanded {
+        flex-direction: column !important;
+        align-items: stretch;
+    }
+    .card.expanded > img,
+    .card.expanded > video {
+        width: 100% !important;
+        max-width: none !important;
+        aspect-ratio: 16/9;
+        align-self: auto;
+    }
+    .card.expanded .gallery-container {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .card.expanded .gallery-container > img {
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+
+    .card-content { text-align: left; }
+    .expand-btn { top: 15px; right: 15px; }
 }
 </style>
 </head>
@@ -363,6 +474,71 @@ footer {
 
 <div class="container">
 
+    <!-- ══ НОВА КАРТКА 1: Відео «Чотири роки незламності» ══ -->
+    <div class="card" id="eventCard">
+        <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+        <video controls poster="image.jpg">
+            <source src="Videohome1.mp4" type="video/mp4" data-dev-src="video-main">
+        </video>
+        <div class="card-content">
+            <h2 data-dev-id="video-title">Чотири роки незламності: історія болю, боротьби та віри України.</h2>
+            <p data-dev-id="video-desc">Символічне відео, створене учнівським самоврядуванням Дрогобицького наукового ліцею імені Богдана Лепкого, яке розповідає про шлях України від миру через біль війни до віри в майбутнє.</p>
+            <div class="more-text">
+                <p data-dev-id="video-p1">Сьогодні минає чотири роки боротьби, болю і незламності українського народу.</p>
+                <p data-dev-id="video-p2">Наше відео — це символічна історія України. На початку вона прив'язана стрічкою до миру — як символ того спокійного і світлого життя, яке було до війни. Але війна принесла біль, втрати і сльози.</p>
+                <p data-dev-id="video-p3">У кадрі Україна плаче, переживаючи важкі випробування та втрати. Поруч із нею з'являється підтримка — символ Збройних сил України, які щодня стоять на захисті нашої держави, дарують надію та віру.</p>
+                <p data-dev-id="video-p4">Наприкінці мир і Україна знову обіймаються, а стрічки перев'язують їх разом. Це символ єдності, сили духу та віри в майбутнє, у той мир, який ми обов'язково збережемо.</p>
+                <p data-dev-id="video-p5">Це відео є роботою учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+                <p data-dev-id="video-author1">Автор відео — Яна Куриляк.</p>
+                <p data-dev-id="video-author2">Автор ідеї — Мілана Костик.</p>
+                <p data-dev-id="video-crew">У зйомці взяли участь: Катерина Яцуляк, Настя Іваник, Мілана Костик, Яна Куриляк.</p>
+                <p data-dev-id="video-end">Пам'ятаємо. Дякуємо. Віримо.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ НОВА КАРТКА 2: «Пара ліцею 2026» з галереєю ══ -->
+    <div class="card" id="lastEventCard">
+        <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+
+        <div class="gallery-container">
+            <img src="Photo2ghome.jpg" alt="Захід" data-dev-src="gallery-main">
+            <div class="more-text">
+                <div class="gallery-grid">
+                    <img src="Photo2ahome.jpg" alt="Фото" data-dev-src="gallery-1">
+                    <img src="Photo2bhome.jpg" alt="Фото" data-dev-src="gallery-2">
+                    <img src="Photo2chome.jpg" alt="Фото" data-dev-src="gallery-3">
+                    <img src="Photo2dhome.jpg" alt="Фото" data-dev-src="gallery-4">
+                    <img src="Photo2ehome.jpg" alt="Фото" data-dev-src="gallery-5">
+                    <img src="Photo2fhome.jpg" alt="Фото" data-dev-src="gallery-6">
+                    <img src="Photo2ghome.jpg" alt="Фото" data-dev-src="gallery-7">
+                    <video controls><source src="Video2ahome.mp4" type="video/mp4" data-dev-src="gallery-vid1"></video>
+                    <video controls><source src="Video2chome.mp4" type="video/mp4" data-dev-src="gallery-vid2"></video>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <h2 data-dev-id="event-title">Пара ліцею 2026</h2>
+            <p data-dev-id="event-desc">Яскравий конкурс, що об'єднав красу, творчість, емоції та став символічним початком діяльності учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+            <div class="more-text">
+                <p data-dev-id="event-p1">Це був не просто конкурс. Це був початок історії діючого учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+                <p data-dev-id="event-p2">На сцені — закохані погляди, щирі усмішки та хвилювання, яке відчувалося навіть у повітрі. У залі — оплески, захоплення і атмосфера справжнього свята.</p>
+                <p data-dev-id="event-p3">«Пара ліцею 2026» об'єднала красу, творчість, харизму та щирі емоції. Кожна пара показала свою унікальність, власний стиль і свою історію, наповнивши цей вечір особливою атмосферою молодості, натхнення та радості.</p>
+                <p data-dev-id="event-partners">Партнери заходу:</p>
+                <p data-dev-id="event-p4">Дякуємо <a href="https://www.instagram.com/reel/DV3P2gmikED/" class="mention">@flowersdr._studio</a> — магазину квітів.</p>
+                <p data-dev-id="event-p5">Дякуємо <a href="https://www.instagram.com/fotozona_drohobych_vologina/" class="mention">@fotozona_drohobych_vologina</a> — за стильну фотозону.</p>
+                <p data-dev-id="event-p6">Висловлюємо подяку <a href="https://www.instagram.com/festshop.com.ua/" class="mention">@festshop.com.ua</a> — магазину декору.</p>
+                <p data-dev-id="event-p7">Щиро дякуємо ювелірному магазину <a href="https://www.instagram.com/gold_kabluchka/" class="mention">@gold_kabluchka</a>.</p>
+                <p data-dev-id="event-p8">Особлива подяка <a href="https://www.instagram.com/olesia.kuryliak__bakery/" class="mention">@olesia.kuryliak__bakery</a>.</p>
+                <p data-dev-id="event-p9">Дякуємо кав'ярні <a href="https://www.instagram.com/bonitacoffeetogo/" class="mention">@bonitacoffeetogo</a>.</p>
+                <p data-dev-id="event-p10">Висловлюємо вдячність мережі <a href="https://www.instagram.com/galia.baluvana.drohobych/" class="mention">@galia.baluvana.drohobych</a>.</p>
+                <p data-dev-id="event-p11">Та щиро дякуємо косметологічній клініці <a href="https://www.instagram.com/kj_cosmetolog/" class="mention">@kj_cosmetolog</a> Юлії Кухар.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Існуючі картки ══ -->
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
         <video controls poster="image.jpg">
