@@ -388,9 +388,10 @@ footer {
 
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand()">+</button>
-        <video controls poster="image.jpg">
-            <source src="Videohome1.mp4" type="video/mp4" data-dev-src="video-main">
-        </video>
+        <video controls preload="metadata" style="border-radius: 20px; width: 100%;">
+    <source src="Videohome1.mp4#t=0.1" type="video/mp4" data-dev-src="video-main">
+    Ваш браузер не підтримує відео.
+    </video>
         <div class="card-content">
             <h2 data-dev-id="video-title">Чотири роки незламності: історія болю, боротьби та віри України.</h2>
             <p data-dev-id="video-desc">Символічне відео, створене учнівським самоврядуванням Дрогобицького наукового ліцею імені Богдана Лепкого, яке розповідає про шлях України від миру через біль війни до віри в майбутнє.</p>
@@ -411,23 +412,28 @@ footer {
     <div class="card" id="lastEventCard">
         <button class="expand-btn" onclick="toggleExpandLast()">+</button>
         
-        <div class="gallery-container">
-            <img src="Photo2ghome.jpg" alt="Захід" data-dev-src="gallery-main">
-            <div class="more-text">
-                <div class="gallery-grid">
-                    <img src="Photo2ahome.jpg" alt="Фото" data-dev-src="gallery-1">
-                    <img src="Photo2bhome.jpg" alt="Фото" data-dev-src="gallery-2">                    
-                    <img src="Photo2chome.jpg" alt="Фото" data-dev-src="gallery-3">
-                    <img src="Photo2dhome.jpg" alt="Фото" data-dev-src="gallery-4">
-                    <img src="Photo2ehome.jpg" alt="Фото" data-dev-src="gallery-5">
-                    <img src="Photo2fhome.jpg" alt="Фото" data-dev-src="gallery-6">
-                    <img src="Photo2ghome.jpg" alt="Фото" data-dev-src="gallery-7">
-                    <video controls><source src="Video2ahome.mp4" type="video/mp4" data-dev-src="gallery-vid1"></video>
-                    <video controls><source src="Video2chome.mp4" type="video/mp4" data-dev-src="gallery-vid2"></video>
-                </div>
-            </div>
+       <div class="gallery-container">
+    <img src="Photo2ghome.jpg" alt="Захід" data-dev-src="gallery-main">
+    <div class="more-text">
+        <div class="gallery-grid">
+            <img src="Photo2ahome.jpg" alt="Фото" data-dev-src="gallery-1">
+            <img src="Photo2bhome.jpg" alt="Фото" data-dev-src="gallery-2">                    
+            <img src="Photo2chome.jpg" alt="Фото" data-dev-src="gallery-3">
+            <img src="Photo2dhome.jpg" alt="Фото" data-dev-src="gallery-4">
+            <img src="Photo2ehome.jpg" alt="Фото" data-dev-src="gallery-5">
+            <img src="Photo2fhome.jpg" alt="Фото" data-dev-src="gallery-6">
+            <img src="Photo2ghome.jpg" alt="Фото" data-dev-src="gallery-7">
+            
+            <video controls preload="metadata">
+                <source src="Video2ahome.mp4#t=0.1" type="video/mp4" data-dev-src="gallery-vid1">
+            </video>
+            
+            <video controls preload="metadata">
+                <source src="Video2chome.mp4#t=0.1" type="video/mp4" data-dev-src="gallery-vid2">
+            </video>
         </div>
-
+    </div>
+</div>
         <div class="card-content">
             <h2 data-dev-id="event-title">Пара ліцею 2026</h2>
             <p data-dev-id="event-desc">Яскравий конкурс, що об'єднав красу, творчість, емоції та став символічним початком діяльності учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
