@@ -477,9 +477,10 @@ footer {
     <!-- ══ НОВА КАРТКА 1: Відео «Чотири роки незламності» ══ -->
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <video controls poster="image.jpg">
-            <source src="Videohome1.mp4" type="video/mp4" data-dev-src="video-main">
-        </video>
+        <video controls preload="metadata" style="border-radius: 20px; width: 100%;">
+    <source src="Videohome1.mp4#t=0.5" type="video/mp4" data-dev-src="video-main">
+    Ваш браузер не підтримує відео.
+    </video>
         <div class="card-content">
             <h2 data-dev-id="video-title">Чотири роки незламності: історія болю, боротьби та віри України.</h2>
             <p data-dev-id="video-desc">Символічне відео, створене учнівським самоврядуванням Дрогобицького наукового ліцею імені Богдана Лепкого, яке розповідає про шлях України від миру через біль війни до віри в майбутнє.</p>
@@ -512,8 +513,12 @@ footer {
                     <img src="Photo2ehome.jpg" alt="Фото" data-dev-src="gallery-5">
                     <img src="Photo2fhome.jpg" alt="Фото" data-dev-src="gallery-6">
                     <img src="Photo2ghome.jpg" alt="Фото" data-dev-src="gallery-7">
-                    <video controls><source src="Video2ahome.mp4" type="video/mp4" data-dev-src="gallery-vid1"></video>
-                    <video controls><source src="Video2chome.mp4" type="video/mp4" data-dev-src="gallery-vid2"></video>
+                     <video controls preload="metadata">
+                <source src="Video2ahome.mp4#t=0.1" type="video/mp4" data-dev-src="gallery-vid1">
+            </video>
+            <video controls preload="metadata">
+                <source src="Video2chome.mp4#t=0.1" type="video/mp4" data-dev-src="gallery-vid2">
+            </video>
                 </div>
             </div>
         </div>
@@ -541,9 +546,10 @@ footer {
     <!-- ══ Існуючі картки ══ -->
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <video controls poster="image.jpg">
-            <source src="Bunker.mp4" type="video/mp4">
-        </video>
+        <video controls preload="metadata" style="border-radius: 20px; width: 100%; height: auto; object-fit: cover;">
+    <source src="Bunker.mp4#t=0.5" type="video/mp4">
+    Ваш браузер не підтримує відео.
+    </video>
         <div class="card-content">
             <h2>☢️ Гра «Бункер» уже відбулася — і це було неймовірно! 🔥</h2>
             <p>Учасники опинилися в умовах, де потрібно було швидко думати, аргументувати свою позицію та приймати непрості рішення. Кожен проявив себе по-своєму: хтось — як стратег, хтось — як лідер, а хтось — як справжній командний гравець 👏</p>
@@ -562,9 +568,10 @@ footer {
 
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <video controls poster="image.jpg">
-            <source src="Video1aprojects.mp4" type="video/mp4">
-        </video>
+        <video controls preload="metadata" style="border-radius: 20px; width: 100%; object-fit: cover;">
+    <source src="Video1aprojects.mp4#t=0.5" type="video/mp4">
+    Ваш браузер не підтримує відео.
+    </video>
         <div class="card-content">
             <h2>Благодійна дискотека</h2>
             <p>У ліцеї відбулася благодійна дискотека для учнів 5–11 класів, де вдалося поєднати веселу атмосферу та важливу справу — допомогу ЗСУ.</p>
