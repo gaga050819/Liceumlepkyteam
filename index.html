@@ -8,6 +8,21 @@
 <link rel="icon" href="favicon.png">
 <title>Учнівське самоврядування | Науковий ліцей імені Богдана Лепкого</title>
 <style>
+#versionBox {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  font-size: 13px;
+  opacity: 0.6;
+  color: #ccc;
+}
+#versionBox {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}
 :root {
     --bg: #f1e1cd;
     --text: #4b5982;
@@ -355,6 +370,9 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
     <a href="past_events.html">Проєкти</a>
     <a href="about.html">Про нас</a>
     <a href="skrynkaidey.html">Скринька ідей</a>
+    <div id="versionBox">
+  Версія: <span id="version"></span>
+</div>
 </div>
 
 <header>
@@ -715,6 +733,10 @@ function dpToast(msg,type){var t=document.getElementById('dp-toast');t.textConte
 dpInit();
 var c = document.querySelector('[data-dev-id="footer-copy"]');
 if(c) c.addEventListener('click', _dpTrigger);
+</script>
+<script src="config.js"></script>
+<script>
+  document.getElementById("version").textContent = SITE_VERSION;
 </script>
 </body>
 </html>
