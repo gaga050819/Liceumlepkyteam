@@ -3,376 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Минулі заходи | Учнівське самоврядування</title>
-
+<meta name="theme-color" content="#f1e1cd" id="theme-color-meta">
+<title>Проєкти | Учнівське самоврядування</title>
 <style>
-    #scrollTopBtn {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    color: inherit;
-    font-size: 22px;
-    cursor: pointer;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    transition: var(--transition);
-    opacity: 0;
-    visibility: hidden;
-    z-index: 999;
-}
-#scrollTopBtn.visible { opacity: 1; visibility: visible; }
-#scrollTopBtn:hover { transform: translateY(-3px); }
 :root {
-    --bg-light: #f1e1cd;
-    --text-light: #4b5982;
-    --card-bg: rgba(255, 255, 255, 0.3);
-    --card-border: rgba(255, 255, 255, 0.5);
-    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --bg: #f1e1cd;
+    --text: #4b5982;
+    --card-bg: rgba(255,255,255,0.3);
+    --card-border: rgba(255,255,255,0.5);
+    --tr: all 0.4s cubic-bezier(0.25,0.8,0.25,1);
 }
-
+*,*::before,*::after { box-sizing: border-box; }
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(180deg, var(--bg-light), #e5d2b8, var(--bg-light));
-    color: var(--text-light);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: linear-gradient(180deg, var(--bg), #e5d2b8, var(--bg));
+    color: var(--text);
+    display: flex; flex-direction: column; align-items: center;
     min-height: 100vh;
     transition: background 0.8s ease, color 0.5s ease;
     overflow-x: hidden;
 }
-
 body.dark {
-    --bg-light: #4b5982;
-    --text-light: #f1e1cd;
-    --card-bg: rgba(241, 225, 205, 0.1);
-    --card-border: rgba(241, 225, 205, 0.2);
-    background: linear-gradient(180deg, #4b5982, #353f5c, #4b5982) !important;
+    --bg: #4b5982;
+    --text: #f1e1cd;
+    --card-bg: rgba(241,225,205,0.1);
+    --card-border: rgba(241,225,205,0.2);
+    background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) !important;
 }
 
 .controls {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    position: fixed; top: 20px; left: 20px;
+    z-index: 1000; display: flex; flex-direction: column; gap: 15px;
 }
-
 #themeBtn, #menuBtn {
-    padding: 12px;
-    border-radius: 50px;
+    padding: 12px; border-radius: 50px;
     border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    color: inherit;
-    cursor: pointer;
-    font-weight: 600;
+    background: var(--card-bg); backdrop-filter: blur(15px);
+    color: inherit; cursor: pointer; font-weight: 600;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    transition: var(--transition);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    transition: var(--tr);
+    display: flex; justify-content: center; align-items: center;
 }
-
 #menuBtn { width: 50px; height: 50px; font-size: 22px; }
-#themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
+@media (hover:hover) {
+    #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
+}
 
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    max-width: 300px;
-    height: 100vh;
-    background: var(--card-bg);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    position: fixed; top: 0; left: -100%;
+    width: 100%; max-width: 300px; height: 100vh;
+    background: var(--card-bg); backdrop-filter: blur(40px);
     border-right: 1px solid var(--card-border);
-    z-index: 1001;
-    transition: var(--transition);
-    display: flex;
-    flex-direction: column;
+    z-index: 1001; transition: var(--tr);
+    display: flex; flex-direction: column;
     padding: 100px 30px 40px;
     box-shadow: 15px 0 50px rgba(0,0,0,0.2);
-    box-sizing: border-box;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0; visibility: hidden;
 }
-
 .sidebar.open { left: 0; opacity: 1; visibility: visible; }
-
 .sidebar a {
-    text-decoration: none;
-    padding: 18px 25px;
-    margin-bottom: 20px;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none; padding: 18px 25px; margin-bottom: 20px;
+    border-radius: 25px; background: rgba(255,255,255,0.1);
     border: 1px solid var(--card-border);
-    color: inherit;
-    font-weight: 700;
-    font-size: 1.2rem;
-    transition: var(--transition);
+    color: inherit; font-weight: 700; font-size: 1.2rem; transition: var(--tr);
 }
-
-.sidebar a:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
-
+@media (hover:hover) {
+    .sidebar a:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
+}
 #closeBtn {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: inherit;
-    cursor: pointer;
+    position: absolute; top: 30px; right: 30px;
+    background: none; border: none; font-size: 28px; color: inherit; cursor: pointer;
 }
 
 header {
-    width: 90%;
-    max-width: 1200px;
-    margin: 40px 0;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
+    width: 90%; max-width: 1200px; margin: 40px 0;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
 }
-
 .main-title {
     grid-column: 2;
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    font-weight: 900;
-    text-align: center;
-    margin: 0;
+    font-size: clamp(2rem,8vw,3.5rem);
+    font-weight: 900; text-align: center; margin: 0;
 }
-
 .logo {
     justify-self: end;
-    width: clamp(50px, 10vw, 80px);
-    height: clamp(50px, 10vw, 80px);
-    border-radius: 50%;
-    border: 3px solid currentColor;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    overflow: hidden;
+    width: clamp(50px,10vw,80px); height: clamp(50px,10vw,80px);
+    border-radius: 50%; border: 3px solid currentColor;
+    display: flex; justify-content: center; align-items: center;
+    font-weight: bold; overflow: hidden;
 }
 
-.container {
-    width: 95%;
-    max-width: 1100px;
-}
+.container { width: 95%; max-width: 1100px; }
 
-.ad-block {
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.ad-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    opacity: 0.4;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    display: block;
-    padding-left: 4px;
-}
-
-.ad-banner-center {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    overflow: hidden;
-}
-
-/* ── Card ── */
 .card {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    gap: 40px;
-    border-radius: 40px;
-    padding: clamp(20px, 5vw, 40px);
-    background: var(--card-bg);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    width: 100%; display: flex; gap: 40px;
+    border-radius: 40px; padding: clamp(20px,5vw,40px);
+    background: var(--card-bg); backdrop-filter: blur(25px);
     border: 1px solid var(--card-border);
-    margin-bottom: 50px;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    align-items: flex-start;
+    margin-bottom: 50px; transition: var(--tr);
+    position: relative; overflow: hidden; align-items: flex-start;
 }
-
-/* Media: fixed width, never shrinks past it */
-.card > img,
-.card > video {
-    width: 40%;
-    max-width: 400px;
-    flex-shrink: 0;
-    height: auto;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    border-radius: 30px;
-    border: 1px dashed currentColor;
+.card > img, .card > video {
+    width: 40%; max-width: 400px; flex-shrink: 0;
+    height: auto; aspect-ratio: 4/3; object-fit: cover;
+    border-radius: 30px; border: 1px dashed currentColor;
 }
-
-/* Text column */
 .card-content {
-    flex: 1 1 0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    word-break: break-word;
+    flex: 1 1 0; min-width: 0;
+    display: flex; flex-direction: column; justify-content: flex-start; word-break: break-word;
 }
-
-/* Expanded */
-.card.expanded {
-    flex-direction: row;
-    overflow: visible;
-    align-items: stretch;
-}
-
-.card.expanded > img,
-.card.expanded > video {
-    width: 40%;
-    max-width: 400px;
-    aspect-ratio: unset;
-    height: auto;
-    align-self: stretch;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.card.expanded .card-content {
-    flex: 1 1 0;
-    min-width: 0;
+.card.expanded { overflow: visible; align-items: stretch; }
+.card.expanded > img, .card.expanded > video {
+    width: 40%; max-width: 400px;
+    aspect-ratio: unset; height: auto; align-self: stretch; object-fit: cover;
 }
 
 .expand-btn {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
+    position: absolute; top: 25px; right: 25px;
+    width: 45px; height: 45px; border-radius: 50%;
     border: 2px solid currentColor;
-    background: var(--card-bg);
-    backdrop-filter: blur(5px);
-    color: inherit;
-    font-size: 26px;
-    cursor: pointer;
-    transition: var(--transition);
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
+    background: var(--card-bg); backdrop-filter: blur(5px);
+    color: inherit; font-size: 26px; cursor: pointer;
+    transition: var(--tr); z-index: 10;
+    display: flex; justify-content: center; align-items: center; flex-shrink: 0;
 }
-
 .card.expanded .expand-btn { transform: rotate(45deg); }
-
-.more-text {
-    display: none;
-    margin-top: 20px;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    animation: fadeIn 0.6s ease;
-}
+.more-text { display: none; margin-top: 20px; font-size: 1.1rem; line-height: 1.6; animation: fadeIn 0.6s ease; }
 .card.expanded .more-text { display: block; }
 
-/* ── Gallery card ── */
 .gallery-container {
-    width: 40%;
-    max-width: 400px;
-    flex-shrink: 0;
-    border-radius: 30px;
-    border: 1px dashed currentColor;
-    overflow: hidden;
+    width: 40%; max-width: 400px; flex-shrink: 0;
+    border-radius: 30px; border: 1px dashed currentColor; overflow: hidden;
 }
-
 .gallery-container > img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    display: block;
+    width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; display: block;
 }
-
 .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 10px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px;
 }
-
-.gallery-grid img,
-.gallery-grid video {
-    width: 100%;
-    border-radius: 12px;
-    object-fit: cover;
-    aspect-ratio: 4/3;
+.gallery-grid img, .gallery-grid video {
+    width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 4/3;
 }
-
-.card.expanded .gallery-container {
-    width: 40%;
-    max-width: 400px;
-    align-self: stretch;
-    aspect-ratio: unset;
-}
-
-.card.expanded .gallery-container > img {
-    aspect-ratio: unset;
-    height: 250px;
-}
+.card.expanded .gallery-container { width: 40%; max-width: 400px; align-self: stretch; }
+.card.expanded .gallery-container > img { aspect-ratio: unset; height: 250px; }
 
 .mention {
-    color: inherit;
-    font-weight: 700;
-    text-decoration: none;
-    border-bottom: 1px dashed currentColor;
-    transition: var(--transition);
+    color: inherit; font-weight: 700; text-decoration: none;
+    border-bottom: 1px dashed currentColor; transition: var(--tr);
 }
 .mention:hover { opacity: 0.7; }
 
-footer {
-    width: 100%;
-    padding: 60px 20px 40px;
-    background: none;
-    text-align: center;
-    margin-top: auto;
-    box-sizing: border-box;
+.ad-block { width: 100%; margin-bottom: 50px; display: flex; flex-direction: column; gap: 12px; }
+.ad-label {
+    font-size: 0.72rem; font-weight: 600; opacity: 0.4;
+    letter-spacing: 2px; text-transform: uppercase; display: block; padding-left: 4px;
 }
+.ad-banner-center { display: flex; justify-content: center; width: 100%; overflow: hidden; }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-bottom: 35px;
+#scrollTopBtn {
+    position: fixed; bottom: 30px; left: 30px;
+    width: 50px; height: 50px; border-radius: 50%;
+    border: 1px solid var(--card-border); background: var(--card-bg);
+    backdrop-filter: blur(15px); color: inherit; font-size: 22px;
+    cursor: pointer; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    transition: var(--tr); opacity: 0; visibility: hidden; z-index: 999;
 }
+#scrollTopBtn.visible { opacity: 1; visibility: visible; }
+#scrollTopBtn:hover { transform: translateY(-3px); }
 
+footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: auto; }
+.social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 35px; }
 .social-links a {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    transition: var(--transition);
+    text-decoration: none; color: inherit; font-weight: 700;
+    font-size: 1rem; letter-spacing: 1px; transition: var(--tr);
 }
 .social-links a:hover { opacity: 0.7; }
 
@@ -385,72 +188,23 @@ footer {
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-
-    /* Cards: завжди колонка на мобільному */
-    .card {
-        flex-direction: column !important;
-        align-items: stretch;
-        text-align: left;
-        padding-top: 60px;
-        gap: 20px;
-    }
-    .card > img,
-    .card > video {
-        width: 100% !important;
-        max-width: none !important;
-        aspect-ratio: 16/9;
-        border-radius: 20px;
-    }
-
-    /* Картка з галереєю */
-    .gallery-container {
-        width: 100% !important;
-        max-width: none !important;
-        border-radius: 20px;
-    }
-    .gallery-container > img {
-        aspect-ratio: 16/9;
-        width: 100%;
-        border-radius: 20px 20px 0 0;
-    }
-    .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-        padding: 6px;
-    }
-    .gallery-grid img,
-    .gallery-grid video {
-        border-radius: 8px;
-    }
-
-    /* Expanded на мобільному — теж колонка */
-    .card.expanded {
-        flex-direction: column !important;
-        align-items: stretch;
-    }
-    .card.expanded > img,
-    .card.expanded > video {
-        width: 100% !important;
-        max-width: none !important;
-        aspect-ratio: 16/9;
-        align-self: auto;
-    }
-    .card.expanded .gallery-container {
-        width: 100% !important;
-        max-width: none !important;
-    }
-    .card.expanded .gallery-container > img {
-        height: auto;
-        aspect-ratio: 16/9;
-    }
-
-    .card-content { text-align: left; }
+    .card { flex-direction: column !important; align-items: stretch; padding-top: 60px; gap: 20px; }
+    .card > img, .card > video { width: 100% !important; max-width: none !important; aspect-ratio: 16/9; border-radius: 20px; }
+    .gallery-container { width: 100% !important; max-width: none !important; border-radius: 20px; }
+    .gallery-container > img { aspect-ratio: 16/9; border-radius: 20px 20px 0 0; }
+    .gallery-grid { gap: 6px; padding: 6px; }
+    .gallery-grid img, .gallery-grid video { border-radius: 8px; }
+    .card.expanded { flex-direction: column !important; align-items: stretch; }
+    .card.expanded > img, .card.expanded > video { width: 100% !important; max-width: none !important; aspect-ratio: 16/9; align-self: auto; }
+    .card.expanded .gallery-container { width: 100% !important; max-width: none !important; }
+    .card.expanded .gallery-container > img { height: auto; aspect-ratio: 16/9; }
     .expand-btn { top: 15px; right: 15px; }
 }
 </style>
 </head>
 <body>
 <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
 <div class="controls">
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
     <button id="menuBtn" onclick="toggleMenu()">🏠</button>
@@ -468,88 +222,77 @@ footer {
 <header>
     <h1 class="main-title">Проєкти</h1>
     <div class="logo">
-        <img src="Logo1variant.png" alt="Логотип" style="width: 120%; height: 120%; object-fit: cover;">
+        <img src="Logo1variant.png" alt="Логотип" style="width:120%;height:120%;object-fit:cover;">
     </div>
 </header>
 
 <div class="container">
 
-    <!-- ══ НОВА КАРТКА 1: Відео «Чотири роки незламності» ══ -->
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <video controls preload="metadata" style="border-radius: 20px; width: 100%;">
-    <source src="Videohome1.mp4#t=0.5" type="video/mp4" data-dev-src="video-main">
-    Ваш браузер не підтримує відео.
-    </video>
+        <video controls preload="metadata" style="border-radius:20px;width:100%;">
+            <source src="Videohome1.mp4#t=0.5" type="video/mp4">
+        </video>
         <div class="card-content">
-            <h2 data-dev-id="video-title">Чотири роки незламності: історія болю, боротьби та віри України.</h2>
-            <p data-dev-id="video-desc">Символічне відео, створене учнівським самоврядуванням Дрогобицького наукового ліцею імені Богдана Лепкого, яке розповідає про шлях України від миру через біль війни до віри в майбутнє.</p>
+            <h2>Чотири роки незламності: історія болю, боротьби та віри України.</h2>
+            <p>Символічне відео, створене учнівським самоврядуванням Дрогобицького наукового ліцею імені Богдана Лепкого, яке розповідає про шлях України від миру через біль війни до віри в майбутнє.</p>
             <div class="more-text">
-                <p data-dev-id="video-p1">Сьогодні минає чотири роки боротьби, болю і незламності українського народу.</p>
-                <p data-dev-id="video-p2">Наше відео — це символічна історія України. На початку вона прив'язана стрічкою до миру — як символ того спокійного і світлого життя, яке було до війни. Але війна принесла біль, втрати і сльози.</p>
-                <p data-dev-id="video-p3">У кадрі Україна плаче, переживаючи важкі випробування та втрати. Поруч із нею з'являється підтримка — символ Збройних сил України, які щодня стоять на захисті нашої держави, дарують надію та віру.</p>
-                <p data-dev-id="video-p4">Наприкінці мир і Україна знову обіймаються, а стрічки перев'язують їх разом. Це символ єдності, сили духу та віри в майбутнє, у той мир, який ми обов'язково збережемо.</p>
-                <p data-dev-id="video-p5">Це відео є роботою учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
-                <p data-dev-id="video-author1">Автор відео — Яна Куриляк.</p>
-                <p data-dev-id="video-author2">Автор ідеї — Мілана Костик.</p>
-                <p data-dev-id="video-crew">У зйомці взяли участь: Катерина Яцуляк, Настя Іваник, Мілана Костик, Яна Куриляк.</p>
-                <p data-dev-id="video-end">Пам'ятаємо. Дякуємо. Віримо.</p>
+                <p>Сьогодні минає чотири роки боротьби, болю і незламності українського народу.</p>
+                <p>Наше відео — це символічна історія України. На початку вона прив'язана стрічкою до миру — як символ того спокійного і світлого життя, яке було до війни. Але війна принесла біль, втрати і сльози.</p>
+                <p>У кадрі Україна плаче, переживаючи важкі випробування та втрати. Поруч із нею з'являється підтримка — символ Збройних сил України, які щодня стоять на захисті нашої держави, дарують надію та віру.</p>
+                <p>Наприкінці мир і Україна знову обіймаються, а стрічки перев'язують їх разом. Це символ єдності, сили духу та віри в майбутнє, у той мир, який ми обов'язково збережемо.</p>
+                <p>Це відео є роботою учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+                <p>Автор відео — Яна Куриляк.</p>
+                <p>Автор ідеї — Мілана Костик.</p>
+                <p>У зйомці взяли участь: Катерина Яцуляк, Настя Іваник, Мілана Костик, Яна Куриляк.</p>
+                <p>Пам'ятаємо. Дякуємо. Віримо.</p>
             </div>
         </div>
     </div>
 
-    <!-- ══ НОВА КАРТКА 2: «Пара ліцею 2026» з галереєю ══ -->
     <div class="card" id="lastEventCard">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-
         <div class="gallery-container">
-            <img src="Photo2ghome.jpg" alt="Захід" data-dev-src="gallery-main">
+            <img src="Photo2ghome.jpg" alt="Захід">
             <div class="more-text">
                 <div class="gallery-grid">
-                    <img src="Photo2ahome.jpg" alt="Фото" data-dev-src="gallery-1">
-                    <img src="Photo2bhome.jpg" alt="Фото" data-dev-src="gallery-2">
-                    <img src="Photo2chome.jpg" alt="Фото" data-dev-src="gallery-3">
-                    <img src="Photo2dhome.jpg" alt="Фото" data-dev-src="gallery-4">
-                    <img src="Photo2ehome.jpg" alt="Фото" data-dev-src="gallery-5">
-                    <img src="Photo2fhome.jpg" alt="Фото" data-dev-src="gallery-6">
-                    <img src="Photo2ghome.jpg" alt="Фото" data-dev-src="gallery-7">
-                     <video controls preload="metadata">
-                <source src="Video2ahome.mp4#t=0.1" type="video/mp4" data-dev-src="gallery-vid1">
-            </video>
-            <video controls preload="metadata">
-                <source src="Video2chome.mp4#t=0.1" type="video/mp4" data-dev-src="gallery-vid2">
-            </video>
+                    <img src="Photo2ahome.jpg" alt="Фото">
+                    <img src="Photo2bhome.jpg" alt="Фото">
+                    <img src="Photo2chome.jpg" alt="Фото">
+                    <img src="Photo2dhome.jpg" alt="Фото">
+                    <img src="Photo2ehome.jpg" alt="Фото">
+                    <img src="Photo2fhome.jpg" alt="Фото">
+                    <img src="Photo2ghome.jpg" alt="Фото">
+                    <video controls preload="metadata"><source src="Video2ahome.mp4#t=0.1" type="video/mp4"></video>
+                    <video controls preload="metadata"><source src="Video2chome.mp4#t=0.1" type="video/mp4"></video>
                 </div>
             </div>
         </div>
-
         <div class="card-content">
-            <h2 data-dev-id="event-title">Пара ліцею 2026</h2>
-            <p data-dev-id="event-desc">Яскравий конкурс, що об'єднав красу, творчість, емоції та став символічним початком діяльності учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+            <h2>Пара ліцею 2026</h2>
+            <p>Яскравий конкурс, що об'єднав красу, творчість, емоції та став символічним початком діяльності учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
             <div class="more-text">
-                <p data-dev-id="event-p1">Це був не просто конкурс. Це був початок історії діючого учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
-                <p data-dev-id="event-p2">На сцені — закохані погляди, щирі усмішки та хвилювання, яке відчувалося навіть у повітрі. У залі — оплески, захоплення і атмосфера справжнього свята.</p>
-                <p data-dev-id="event-p3">«Пара ліцею 2026» об'єднала красу, творчість, харизму та щирі емоції. Кожна пара показала свою унікальність, власний стиль і свою історію, наповнивши цей вечір особливою атмосферою молодості, натхнення та радості.</p>
-                <p data-dev-id="event-partners">Партнери заходу:</p>
-                <p data-dev-id="event-p4">Дякуємо <a href="https://www.instagram.com/reel/DV3P2gmikED/" class="mention">@flowersdr._studio</a> — магазину квітів.</p>
-                <p data-dev-id="event-p5">Дякуємо <a href="https://www.instagram.com/fotozona_drohobych_vologina/" class="mention">@fotozona_drohobych_vologina</a> — за стильну фотозону.</p>
-                <p data-dev-id="event-p6">Висловлюємо подяку <a href="https://www.instagram.com/festshop.com.ua/" class="mention">@festshop.com.ua</a> — магазину декору.</p>
-                <p data-dev-id="event-p7">Щиро дякуємо ювелірному магазину <a href="https://www.instagram.com/gold_kabluchka/" class="mention">@gold_kabluchka</a>.</p>
-                <p data-dev-id="event-p8">Особлива подяка <a href="https://www.instagram.com/olesia.kuryliak__bakery/" class="mention">@olesia.kuryliak__bakery</a>.</p>
-                <p data-dev-id="event-p9">Дякуємо кав'ярні <a href="https://www.instagram.com/bonitacoffeetogo/" class="mention">@bonitacoffeetogo</a>.</p>
-                <p data-dev-id="event-p10">Висловлюємо вдячність мережі <a href="https://www.instagram.com/galia.baluvana.drohobych/" class="mention">@galia.baluvana.drohobych</a>.</p>
-                <p data-dev-id="event-p11">Та щиро дякуємо косметологічній клініці <a href="https://www.instagram.com/kj_cosmetolog/" class="mention">@kj_cosmetolog</a> Юлії Кухар.</p>
+                <p>Це був не просто конкурс. Це був початок історії діючого учнівського самоврядування Дрогобицького наукового ліцею імені Богдана Лепкого.</p>
+                <p>На сцені — закохані погляди, щирі усмішки та хвилювання, яке відчувалося навіть у повітрі. У залі — оплески, захоплення і атмосфера справжнього свята.</p>
+                <p>«Пара ліцею 2026» об'єднала красу, творчість, харизму та щирі емоції. Кожна пара показала свою унікальність, власний стиль і свою історію, наповнивши цей вечір особливою атмосферою молодості, натхнення та радості.</p>
+                <p>Партнери заходу:</p>
+                <p>Дякуємо <a href="https://www.instagram.com/reel/DV3P2gmikED/" class="mention">@flowersdr._studio</a> — магазину квітів.</p>
+                <p>Дякуємо <a href="https://www.instagram.com/fotozona_drohobych_vologina/" class="mention">@fotozona_drohobych_vologina</a> — за стильну фотозону.</p>
+                <p>Висловлюємо подяку <a href="https://www.instagram.com/festshop.com.ua/" class="mention">@festshop.com.ua</a> — магазину декору.</p>
+                <p>Щиро дякуємо ювелірному магазину <a href="https://www.instagram.com/gold_kabluchka/" class="mention">@gold_kabluchka</a>.</p>
+                <p>Особлива подяка <a href="https://www.instagram.com/olesia.kuryliak__bakery/" class="mention">@olesia.kuryliak__bakery</a>.</p>
+                <p>Дякуємо кав'ярні <a href="https://www.instagram.com/bonitacoffeetogo/" class="mention">@bonitacoffeetogo</a>.</p>
+                <p>Висловлюємо вдячність мережі <a href="https://www.instagram.com/galia.baluvana.drohobych/" class="mention">@galia.baluvana.drohobych</a>.</p>
+                <p>Та щиро дякуємо косметологічній клініці <a href="https://www.instagram.com/kj_cosmetolog/" class="mention">@kj_cosmetolog</a> Юлії Кухар.</p>
             </div>
         </div>
     </div>
 
-    <!-- ══ Існуючі картки ══ -->
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <video controls preload="metadata" style="border-radius: 20px; width: 100%; height: auto; object-fit: cover;">
-    <source src="Bunker.mp4#t=0.5" type="video/mp4">
-    Ваш браузер не підтримує відео.
-    </video>
+        <video controls preload="metadata" style="border-radius:20px;width:100%;height:auto;object-fit:cover;">
+            <source src="Bunker.mp4#t=0.5" type="video/mp4">
+        </video>
         <div class="card-content">
             <h2>☢️ Гра «Бункер» уже відбулася — і це було неймовірно! 🔥</h2>
             <p>Учасники опинилися в умовах, де потрібно було швидко думати, аргументувати свою позицію та приймати непрості рішення. Кожен проявив себе по-своєму: хтось — як стратег, хтось — як лідер, а хтось — як справжній командний гравець 👏</p>
@@ -568,10 +311,9 @@ footer {
 
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <video controls preload="metadata" style="border-radius: 20px; width: 100%; object-fit: cover;">
-    <source src="Video1aprojects.mp4#t=0.5" type="video/mp4">
-    Ваш браузер не підтримує відео.
-    </video>
+        <video controls preload="metadata" style="border-radius:20px;width:100%;object-fit:cover;">
+            <source src="Video1aprojects.mp4#t=0.5" type="video/mp4">
+        </video>
         <div class="card-content">
             <h2>Благодійна дискотека</h2>
             <p>У ліцеї відбулася благодійна дискотека для учнів 5–11 класів, де вдалося поєднати веселу атмосферу та важливу справу — допомогу ЗСУ.</p>
@@ -586,7 +328,7 @@ footer {
 
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <img src="Kabinet.jpg" alt="Kabinet.jpg">
+        <img src="Kabinet.jpg" alt="Найатмосферніший кабінет">
         <div class="card-content">
             <h2>«Найатмосферніший кабінет року»</h2>
             <p>У школі провели конкурс на найкраще зимове оформлення класів, де учні проявили креативність і командну роботу.</p>
@@ -598,7 +340,7 @@ footer {
 
     <div class="card">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
-        <img src="Logobest.jpg" alt="Logobest.jpg">
+        <img src="Logobest.jpg" alt="Найкращий логотип">
         <div class="card-content">
             <h2>«Найкращий логотип учнівського самоврядування»</h2>
             <p>У ліцеї відбувся конкурс на створення логотипу учнівського самоврядування, де учні змогли проявити свою креативність і запропонувати власні ідеї символу ліцею.</p>
@@ -610,23 +352,12 @@ footer {
         </div>
     </div>
 
-    <!-- Рекламні блоки — після всіх карток -->
     <div class="ad-block">
         <span class="ad-label">Реклама</span>
-        <script async="async" data-cfasync="false"
-            src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js">
-        </script>
+        <script async data-cfasync="false" src="https://orcelebration.com/fb2abd269611a6072a2e28a65a15a6a9/invoke.js"></script>
         <div id="container-fb2abd269611a6072a2e28a65a15a6a9"></div>
         <div class="ad-banner-center">
-            <script>
-              atOptions = {
-                'key' : '059b14656284abaa3d2cc406e7d88414',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-              };
-            </script>
+            <script>atOptions={'key':'059b14656284abaa3d2cc406e7d88414','format':'iframe','height':90,'width':728,'params':{}};</script>
             <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
         </div>
     </div>
@@ -635,37 +366,35 @@ footer {
 
 <footer>
     <div class="social-links">
-        <a href="https://www.instagram.com/..." target="_blank">INSTAGRAM</a>
-        <a href="https://www.facebook.com/..." target="_blank">FACEBOOK</a>
-        <a href="https://t.me/..." target="_blank">TELEGRAM</a>
-        <a href="https://www.tiktok.com/..." target="_blank">TIKTOK</a>
+        <a href="https://www.instagram.com/uchnivskesamovriaduvannia" target="_blank">INSTAGRAM</a>
+        <a href="https://www.facebook.com/share/1DtXY2x5Us/" target="_blank">FACEBOOK</a>
+        <a href="https://t.me/DNLLepkyi" target="_blank">TELEGRAM</a>
+        <a href="https://www.tiktok.com/@lyceumlepkogo" target="_blank">TIKTOK</a>
     </div>
-    <p style="opacity: 0.6; font-size: 0.85rem; font-weight: 600;">&copy; 2026 учнівське самоврядування</p>
+    <p style="opacity:0.6;font-size:0.85rem;font-weight:600;">&copy; 2026 учнівське самоврядування</p>
 </footer>
 
 <script>
+const body = document.body;
+const sidebar = document.getElementById('sidebar');
+const scrollBtn = document.getElementById('scrollTopBtn');
+const themeMeta = document.getElementById('theme-color-meta');
+
 function toggleTheme() {
-    document.body.classList.toggle('dark');
-    const isDark = document.body.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    body.classList.toggle('dark');
+    const dark = body.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    themeMeta.content = dark ? '#4b5982' : '#f1e1cd';
 }
+function toggleMenu() { sidebar.classList.toggle('open'); }
+function toggleExpand(btn) { btn.closest('.card').classList.toggle('expanded'); }
 
-function toggleExpand(buttonElement) {
-    buttonElement.closest('.card').classList.toggle('expanded');
+window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', scrollY > 300));
+
+if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    themeMeta.content = '#4b5982';
 }
-
-function toggleMenu() {
-    document.getElementById('sidebar').classList.toggle('open');
-}
-
-window.onload = () => {
-    const isDark = localStorage.getItem('theme') === 'dark';
-    if (isDark) document.body.classList.add('dark');
-};
-window.addEventListener('scroll', () => {
-    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300);
-});
 </script>
-
 </body>
 </html>
