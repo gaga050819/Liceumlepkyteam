@@ -1,0 +1,1 @@
+var SITE_VERSION = "v1.0";
