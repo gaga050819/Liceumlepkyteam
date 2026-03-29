@@ -7,6 +7,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
+#versionBox {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  font-size: 13px;
+  opacity: 0.6;
+  color: #ccc;
+}
 :root {
     --bg-light: #f1e1cd;
     --text-light: #4b5982;
@@ -205,6 +213,9 @@ body.dark .form-input {
     <a href="about.html">Про нас</a>
     <a href="past_events.html">Проєкти</a>
     <a href="credit card payment.html">Скринька ідей</a>
+    <div id="versionBox">
+  Версія: <span id="version"></span>
+    </div>
 </div>
 
 <div class="container">
@@ -324,5 +335,9 @@ window.onload = () => {
 </script>
 
 <script src="https://web3forms.com/client/script.js" async defer></script>
+<script src="config.js"></script>
+<script>
+  document.getElementById("version").textContent = SITE_VERSION;
+</script>
 </body>
 </html>
