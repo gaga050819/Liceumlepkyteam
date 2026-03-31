@@ -1,1 +1,1 @@
-const SITE_VERSION = "v1.5";
+const SITE_VERSION = "v1.6";
