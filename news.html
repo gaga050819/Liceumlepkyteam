@@ -277,10 +277,11 @@ if (localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark');
     themeMeta.content = '#4b5982';
 }
-</script>
-<script src="config.js"></script>
+  <script src="./config.js"></script>
 <script>
-  document.getElementById("version").textContent = SITE_VERSION;
+window.addEventListener("load", () => {
+  document.getElementById("version").textContent = window.SITE_VERSION || "no version";
+});
 </script>
 </body>
 </html>
