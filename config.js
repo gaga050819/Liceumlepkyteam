@@ -1,1 +1,1 @@
-const SITE_VERSION = "v1.6";
+window.SITE_VERSION = "v1.6";
