@@ -64,7 +64,8 @@ background: var(--card-bg); backdrop-filter: blur(40px);
 border-right: 1px solid var(--card-border);
 z-index: 1001; transition: var(--tr);
 display: flex; flex-direction: column;
-padding: 100px 30px 40px;
+padding: 100px 30px calc(40px + env(safe-area-inset-bottom));
+overflow-y: auto;
 box-shadow: 15px 0 50px rgba(0,0,0,0.2);
 opacity: 0; visibility: hidden;
 }
