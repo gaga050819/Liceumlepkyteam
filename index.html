@@ -228,6 +228,14 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
 .bug-box textarea:focus { border-color: var(--text); }
 .bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
 .bug-send {
+    if (text.trim().length === 0) {
+        alert("Будь ласка, опишіть проблему.");
+        return;
+    }
+     if (text.length > 500) {
+        alert("Занадто довге повідомлення (макс. 500 символів).");
+        return; 
+    }
     flex: 2; padding: 16px; border-radius: 18px; border: none;
     background: var(--text); color: var(--bg);
     font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s;
