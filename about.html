@@ -4,18 +4,10 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3060369291416814"
 crossorigin="anonymous"></script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#f1e1cd" id="theme-color-meta">
 <title>Про нас | Команда самоврядування ліцею</title>
 <style>
-#versionBox {
-  position: absolute;
-  bottom: 15px;
-  left: 20px;
-  font-size: 13px;
-  opacity: 0.6;
-  color: #ccc;
-}
 :root {
     --bg: #f1e1cd;
     --text: #4b5982;
@@ -36,16 +28,13 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 80%, #000), var(--bg)) fixed;
     color: var(--text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex; flex-direction: column; align-items: center;
     min-height: 100vh;
     transition: background 0.8s ease, color 0.5s ease;
     overflow-x: hidden;
 }
 body.dark { background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) fixed !important; }
 
-/* Controls */
 .controls {
     position: fixed; top: 20px; left: 20px;
     z-index: 1000; display: flex; flex-direction: column; gap: 15px;
@@ -53,8 +42,7 @@ body.dark { background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) fixed !i
 #themeBtn, #menuBtn {
     padding: 12px; border-radius: 50px;
     border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
+    background: var(--card-bg); backdrop-filter: blur(15px);
     color: inherit; cursor: pointer; font-weight: 600;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     transition: var(--tr);
@@ -65,19 +53,20 @@ body.dark { background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) fixed !i
     #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
 }
 
-/* Sidebar */
+/* iOS sidebar fix */
 .sidebar {
     position: fixed; top: 0; left: -100%;
-    width: 100%; max-width: 300px; height: 100vh;
-    background: var(--card-bg);
-    backdrop-filter: blur(40px);
+    width: 100%; max-width: 300px;
+    height: 100vh; height: -webkit-fill-available;
+    background: var(--card-bg); backdrop-filter: blur(40px);
     border-right: 1px solid var(--card-border);
     z-index: 1001; transition: var(--tr);
     display: flex; flex-direction: column;
-    padding: 100px 30px 40px;
+    padding: 100px 30px 0;
     opacity: 0; visibility: hidden;
 }
 .sidebar.open { left: 0; opacity: 1; visibility: visible; }
+.sidebar-links { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
 .sidebar a {
     text-decoration: none; padding: 18px 25px; margin-bottom: 20px;
     border-radius: 25px; background: rgba(255,255,255,0.1);
@@ -91,8 +80,11 @@ body.dark { background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) fixed !i
     position: absolute; top: 30px; right: 30px;
     background: none; border: none; font-size: 28px; color: inherit; cursor: pointer;
 }
+#versionBox {
+    padding: 15px 20px calc(15px + env(safe-area-inset-bottom));
+    font-size: 13px; opacity: 0.6; flex-shrink: 0;
+}
 
-/* Header */
 header {
     width: 90%; max-width: 1200px;
     margin: 60px 0 40px;
@@ -111,14 +103,12 @@ header {
     font-weight: bold; overflow: hidden;
 }
 
-/* Cards */
 .container { width: 90%; max-width: 1100px; }
 .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
 .card {
     width: 100%; display: flex; gap: 20px;
     border-radius: 40px; padding: clamp(20px,3vw,30px);
-    background: var(--card-bg);
-    backdrop-filter: blur(25px);
+    background: var(--card-bg); backdrop-filter: blur(25px);
     border: 1px solid var(--card-border);
     position: relative; transition: var(--tr);
 }
@@ -131,7 +121,7 @@ header {
 .photo-real {
     width: 90px; min-width: 90px; height: 120px;
     border-radius: 20px; object-fit: cover; object-position: center top;
-    flex-shrink: 0; display: block;
+    flex-shrink: 0; display: block; cursor: zoom-in;
 }
 .card-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
 .card-content h2 { font-size: 1.3rem; margin: 0 0 5px; padding-right: 40px; }
@@ -153,7 +143,26 @@ header {
 }
 .card.expanded .more-text { display: block; }
 
-/* Ad block */
+/* Lightbox */
+#lightbox {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92); z-index: 9000;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(10px);
+}
+#lightbox.open { display: flex; }
+#lightbox img {
+    max-width: 94vw; max-height: 94vh;
+    border-radius: 16px; object-fit: contain;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+#lightbox-close {
+    position: absolute; top: 20px; right: 24px;
+    background: rgba(255,255,255,0.15); border: none; color: white;
+    font-size: 32px; cursor: pointer; border-radius: 50%;
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+}
+
 .ad-block { width: 100%; margin: 30px 0; display: flex; flex-direction: column; gap: 12px; }
 .ad-label {
     font-size: 0.72rem; font-weight: 600; opacity: 0.4;
@@ -161,7 +170,6 @@ header {
 }
 .ad-banner-center { display: flex; justify-content: center; width: 100%; overflow: hidden; }
 
-/* Navigator */
 #navigatorBtn {
     position: fixed; bottom: 30px; right: 30px; z-index: 999;
     padding: 14px 22px; border-radius: 50px;
@@ -198,7 +206,6 @@ header {
 #navigatorDropdown::-webkit-scrollbar { width: 4px; }
 #navigatorDropdown::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
 
-/* Scroll top */
 #scrollTopBtn {
     position: fixed; bottom: 30px; left: 30px;
     width: 50px; height: 50px; border-radius: 50%;
@@ -210,17 +217,57 @@ header {
 #scrollTopBtn.visible { opacity: 1; visibility: visible; }
 #scrollTopBtn:hover { transform: translateY(-3px); }
 
-/* Footer */
-footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: auto; }
+/* Bug report */
+#bugModal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 9500;
+    align-items: flex-end; justify-content: center;
+    backdrop-filter: blur(8px);
+}
+#bugModal.open { display: flex; }
+.bug-box {
+    width: 100%; max-width: 500px;
+    background: var(--bg); border-radius: 30px 30px 0 0;
+    padding: 30px 28px calc(35px + env(safe-area-inset-bottom));
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.bug-box h3 { margin: 0 0 8px; font-size: 1.4rem; font-weight: 800; }
+.bug-box p { margin: 0 0 20px; font-size: 0.95rem; opacity: 0.7; }
+.bug-box textarea {
+    width: 100%; border-radius: 18px; border: 1.5px solid var(--card-border);
+    background: var(--card-bg); color: var(--text);
+    padding: 16px; font-size: 1rem; font-family: inherit;
+    resize: none; outline: none; min-height: 120px; transition: border-color 0.2s;
+}
+.bug-box textarea:focus { border-color: var(--text); }
+.bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
+.bug-send {
+    flex: 2; padding: 16px; border-radius: 18px; border: none;
+    background: var(--text); color: var(--bg);
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+}
+.bug-send:disabled { opacity: 0.5; }
+.bug-cancel {
+    flex: 1; padding: 16px; border-radius: 18px;
+    border: 1.5px solid var(--card-border); background: none;
+    color: var(--text); font-size: 1rem; cursor: pointer;
+}
+#bugTrigger {
+    background: none; border: none; cursor: pointer;
+    font-size: 0.8rem; font-weight: 600; opacity: 0.5;
+    color: var(--text); display: block; margin: 10px auto 0;
+}
+#bugTrigger:hover { opacity: 1; }
+
+footer { width: 100%; padding: 40px 20px 40px; text-align: center; margin-top: auto; }
 .social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; }
 .social-links a { text-decoration: none; color: inherit; font-weight: 700; transition: 0.3s; font-size: 0.9rem; letter-spacing: 1px; }
 .social-links a:hover { opacity: 0.7; }
 
-/* Animations */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Responsive */
 @media (max-width: 1200px) { .cards-grid { grid-template-columns: 1fr; } }
 @media (max-width: 768px) {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
@@ -238,22 +285,43 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
 </style>
 </head>
 <body>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+    <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- Bug modal -->
+<div id="bugModal" onclick="if(event.target===this)closeBug()">
+    <div class="bug-box">
+        <h3>🐞Повідомити про баг🐞</h3>
+        <p>Опишіть проблему, яку ви знайшли на сайті</p>
+        <textarea id="bugText" placeholder="Наприклад: фото не відкривається..."></textarea>
+        <div class="bug-box-btns">
+            <button class="bug-cancel" onclick="closeBug()">Скасувати</button>
+            <button class="bug-send" onclick="sendBug()">📨 Надіслати</button>
+        </div>
+    </div>
+</div>
+
 <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
 <div class="controls">
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
-    <button id="menuBtn" onclick="toggleMenu()" aria-label="Меню">🏠</button>
+    <button id="menuBtn" onclick="toggleMenu()">🏠</button>
 </div>
 
 <div class="sidebar" id="sidebar">
-    <button id="closeBtn" onclick="toggleMenu()" aria-label="Закрити">✖</button>
-    <a href="index.html">Головна</a>
-    <a href="news.html">Новини</a>
-    <a href="past_events.html">Проєкти</a>
-    <a href="about.html">Про нас</a>
-    <a href="skrynkaidey.html">Скринька ідей</a>
-    <div id="versionBox">
-  Версія: <span id="version"></span>
+    <button id="closeBtn" onclick="toggleMenu()">✖</button>
+    <div class="sidebar-links">
+        <a href="index.html">Головна</a>
+        <a href="news.html">Новини</a>
+        <a href="past_events.html">Проєкти</a>
+        <a href="about.html">Про нас</a>
+        <a href="skrynkaidey.html">Скринька ідей</a>
     </div>
+    <div id="versionBox">Версія: <span id="version"></span></div>
 </div>
 
 <header>
@@ -267,8 +335,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
     <div class="cards-grid">
 
         <div class="card" id="cardNasta">
-            <button class="expand-btn" onclick="toggleExpand('cardNasta')" aria-label="Розгорнути">+</button>
-            <img src="Ivanuk.jpg" alt="Настя Іваник" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardNasta')">+</button>
+            <img src="Ivanuk.jpg" alt="Настя Іваник" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Анастасія Іваник</h2>
                 <p>президент</p>
@@ -277,8 +345,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardKyrulak">
-            <button class="expand-btn" onclick="toggleExpand('cardKyrulak')" aria-label="Розгорнути">+</button>
-            <img src="Kyrulak.jpg" alt="Яна Куриляк" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardKyrulak')">+</button>
+            <img src="Kyrulak.jpg" alt="Яна Куриляк" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Яна Куриляк</h2>
                 <p>віцепрезидент</p>
@@ -287,8 +355,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardMarkian">
-            <button class="expand-btn" onclick="toggleExpand('cardMarkian')" aria-label="Розгорнути">+</button>
-            <img src="Markian.jpg" alt="Маркіян Іванців" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardMarkian')">+</button>
+            <img src="Markian.jpg" alt="Маркіян Іванців" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Маркіян Іванців</h2>
                 <p>член міністерства інформації</p>
@@ -297,8 +365,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardYaryna">
-            <button class="expand-btn" onclick="toggleExpand('cardYaryna')" aria-label="Розгорнути">+</button>
-            <img src="Yaryna2.jpg" alt="Ярина Чопик" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardYaryna')">+</button>
+            <img src="Yaryna2.jpg" alt="Ярина Чопик" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Ярина Чопик</h2>
                 <p>Міністр освіти</p>
@@ -307,8 +375,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardMilana">
-            <button class="expand-btn" onclick="toggleExpand('cardMilana')" aria-label="Розгорнути">+</button>
-            <img src="Svitlana.jpg" alt="Мілана Костик" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardMilana')">+</button>
+            <img src="Svitlana.jpg" alt="Мілана Костик" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Мілана Костик</h2>
                 <p>Міністр культури і дозвілля</p>
@@ -317,8 +385,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardRostyk">
-            <button class="expand-btn" onclick="toggleExpand('cardRostyk')" aria-label="Розгорнути">+</button>
-            <img src="Gey.jpg" alt="Ростик Дюк" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardRostyk')">+</button>
+            <img src="Gey.jpg" alt="Ростик Дюк" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Ростислав Дюк</h2>
                 <p>Міністр фінансів</p>
@@ -327,8 +395,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardSabrina">
-            <button class="expand-btn" onclick="toggleExpand('cardSabrina')" aria-label="Розгорнути">+</button>
-            <img src="Sabrina67.jpg" alt="Сабіна Богумила" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardSabrina')">+</button>
+            <img src="Sabrina67.jpg" alt="Сабіна Богумила" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Сабріна Богумила</h2>
                 <p>Міністр Милосердя</p>
@@ -337,8 +405,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardYana2">
-            <button class="expand-btn" onclick="toggleExpand('cardYana2')" aria-label="Розгорнути">+</button>
-            <img src="Jana.jpg" alt="Яна Бунь" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardYana2')">+</button>
+            <img src="Jana.jpg" alt="Яна Бунь" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Яна Бунь</h2>
                 <p>Міністр інформації</p>
@@ -347,8 +415,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardMatvij">
-            <button class="expand-btn" onclick="toggleExpand('cardMatvij')" aria-label="Розгорнути">+</button>
-            <img src="Marviy.jpg" alt="Матвій Кушлик" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardMatvij')">+</button>
+            <img src="Marviy.jpg" alt="Матвій Кушлик" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Матвій Кушлик</h2>
                 <p>член міністерства освіти</p>
@@ -357,8 +425,8 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardMarichka">
-            <button class="expand-btn" onclick="toggleExpand('cardMarichka')" aria-label="Розгорнути">+</button>
-            <img src="Marichka.jpg" alt="Марічка Томенюк" class="photo-real">
+            <button class="expand-btn" onclick="toggleExpand('cardMarichka')">+</button>
+            <img src="Marichka.jpg" alt="Марічка Томенюк" class="photo-real" onclick="openLightbox(this.src)">
             <div class="card-content">
                 <h2>Марічка Томенюк</h2>
                 <p>Секретар</p>
@@ -367,73 +435,45 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         </div>
 
         <div class="card" id="cardMarta">
-            <button class="expand-btn" onclick="toggleExpand('cardMarta')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardMarta')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Марта Харів</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Марта Харів</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
         <div class="card" id="cardDenys">
-            <button class="expand-btn" onclick="toggleExpand('cardDenys')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardDenys')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Денис Красінський</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Денис Красінський</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
         <div class="card" id="cardSaha">
-            <button class="expand-btn" onclick="toggleExpand('cardSaha')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardSaha')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Саша Ілляш</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Саша Ілляш</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
         <div class="card" id="cardIgor">
-            <button class="expand-btn" onclick="toggleExpand('cardIgor')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardIgor')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Ігор Герльовський</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Ігор Герльовський</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
         <div class="card" id="cardVika">
-            <button class="expand-btn" onclick="toggleExpand('cardVika')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardVika')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Вікторія Грицай</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Вікторія Грицай</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
         <div class="card" id="cardKata">
-            <button class="expand-btn" onclick="toggleExpand('cardKata')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardKata')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Катя Яцуляк</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Катя Яцуляк</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
         <div class="card" id="cardMarta2">
-            <button class="expand-btn" onclick="toggleExpand('cardMarta2')" aria-label="Розгорнути">+</button>
+            <button class="expand-btn" onclick="toggleExpand('cardMarta2')">+</button>
             <div class="photo-placeholder">ФОТО</div>
-            <div class="card-content">
-                <h2>Марта Грицьків</h2>
-                <p>Невідомо</p>
-                <div class="more-text"><p>Текст 2</p></div>
-            </div>
+            <div class="card-content"><h2>Марта Грицьків</h2><p>Невідомо</p><div class="more-text"><p>Текст 2</p></div></div>
         </div>
 
     </div>
@@ -448,7 +488,6 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
 </div>
 
 <button id="navigatorBtn" onclick="toggleNavigator()">👥 Люди</button>
-
 <div id="navigatorDropdown">
     <div class="nav-dropdown-title">Перейти до</div>
     <button onclick="scrollToCard('cardNasta')">Настя Іваник</button>
@@ -478,6 +517,7 @@ footer { width: 100%; padding: 40px 20px 100px; text-align: center; margin-top: 
         <a href="https://www.tiktok.com/@lyceumlepkogo?_r=1&_t=ZS-94d1kkArRpN" target="_blank">TIKTOK</a>
     </div>
     <p style="opacity:0.6;font-size:0.85rem;font-weight:600;">&copy; 2026 учнівське самоврядування</p>
+    <button id="bugTrigger" onclick="openBug()">🐞Повідомити про баг🐞</button>
 </footer>
 
 <script>
@@ -493,7 +533,6 @@ function toggleTheme() {
     localStorage.setItem('theme', dark ? 'dark' : 'light');
     themeMeta.content = dark ? '#4b5982' : '#f1e1cd';
 }
-
 function toggleMenu() { sidebar.classList.toggle('open'); }
 function toggleExpand(id) { document.getElementById(id).classList.toggle('expanded'); }
 function toggleNavigator() { dropdown.classList.toggle('open'); }
@@ -511,19 +550,44 @@ document.addEventListener('click', e => {
     if (!document.getElementById('navigatorBtn').contains(e.target) && !dropdown.contains(e.target))
         dropdown.classList.remove('open');
 });
+window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', scrollY > 300));
+if (localStorage.getItem('theme') === 'dark') { body.classList.add('dark'); themeMeta.content = '#4b5982'; }
 
-window.addEventListener('scroll', () => {
-    scrollBtn.classList.toggle('visible', scrollY > 300);
-});
-
-if (localStorage.getItem('theme') === 'dark') {
-    body.classList.add('dark');
-    themeMeta.content = '#4b5982';
+// Lightbox
+function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
 }
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// Bug report
+const BUG_TELEGRAM_TOKEN = '8450851710:AAGsC5O72ab-C8ZWw2guCc7bGMX0rRbhhZI';
+const BUG_CHAT_ID = '6190541661';
+function openBug() { document.getElementById('bugModal').classList.add('open'); }
+function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
+async function sendBug() {
+    const text = document.getElementById('bugText').value.trim();
+    const btn = document.querySelector('.bug-send');
+    if (!text) return;
+    btn.disabled = true; btn.innerText = '⏳...';
+    try {
+        const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: 'Баг (about.html):\n'+text})
+        });
+        if (r.ok) { closeBug(); alert('✅ Надіслано!'); }
+        else alert('❌ Помилка');
+    } catch(e) { alert('❌ Немає з\'єднання'); }
+    finally { btn.disabled = false; btn.innerText = '📨 Надіслати'; }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLightbox(); closeBug(); } });
 </script>
 <script src="config.js"></script>
-<script>
-  document.getElementById("version").textContent = SITE_VERSION;
-</script>
+<script>document.getElementById("version").textContent = SITE_VERSION;</script>
 </body>
 </html>
