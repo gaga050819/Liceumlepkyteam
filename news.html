@@ -39,7 +39,7 @@ body.dark {
     --card-bg: rgba(241,225,205,0.1);  
     --card-border: rgba(241,225,205,0.2);  
     background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) !important;  
-}  /* Controls */
+}
 .controls {
 position: fixed; top: 20px; left: 20px;
 z-index: 1000; display: flex; flex-direction: column; gap: 15px;
@@ -57,8 +57,6 @@ display: flex; justify-content: center; align-items: center;
 @media (hover:hover) {
 #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
 }
-
-/* Sidebar */
 .sidebar {
 position: fixed; top: 0; left: -100%;
 width: 100%; max-width: 300px; height: 100vh;
@@ -85,8 +83,6 @@ color: inherit; font-weight: 700; font-size: 1.2rem; transition: var(--tr);
 position: absolute; top: 30px; right: 30px;
 background: none; border: none; font-size: 28px; color: inherit; cursor: pointer;
 }
-
-/* Header */
 header {
 width: 90%; max-width: 1200px; margin: 40px 0;
 display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
@@ -103,8 +99,6 @@ border-radius: 50%; border: 3px solid currentColor;
 display: flex; justify-content: center; align-items: center;
 font-weight: bold; overflow: hidden;
 }
-
-/* Cards */
 .container { width: 95%; max-width: 1000px; }
 .card {
 display: flex; gap: 30px; border-radius: 40px; padding: 30px;
@@ -116,11 +110,11 @@ margin-bottom: 30px; transition: var(--tr); position: relative;
 .card img {
 width: 100%; height: 100%; object-fit: cover;
 border-radius: 25px; border: 1px dashed currentColor; aspect-ratio: 16/10;
+cursor: zoom-in;
 }
 .card-content { flex: 1; display: flex; flex-direction: column; padding-top: 10px; }
 .card-content h2 { margin: 0 0 10px; font-size: 1.8rem; }
 .info-1 { font-size: 1.1rem; opacity: 0.9; }
-
 .expand-btn {
 position: absolute; top: 25px; right: 25px;
 width: 45px; height: 45px; border-radius: 50%;
@@ -136,16 +130,12 @@ max-height: 0; overflow: hidden;
 transition: all 0.5s ease; opacity: 0;
 }
 .card.expanded .more-info { max-height: 800px; opacity: 1; margin-top: 15px; }
-
-/* Ad block */
 .ad-block { width: 100%; margin-bottom: 30px; display: flex; flex-direction: column; gap: 12px; }
 .ad-label {
 font-size: 0.72rem; font-weight: 600; opacity: 0.4;
 letter-spacing: 2px; text-transform: uppercase; display: block; padding-left: 4px;
 }
 .ad-banner-center { display: flex; justify-content: center; width: 100%; overflow: hidden; }
-
-/* Scroll top */
 #scrollTopBtn {
 position: fixed; bottom: 30px; left: 30px;
 width: 50px; height: 50px; border-radius: 50%;
@@ -156,8 +146,6 @@ transition: var(--tr); opacity: 0; visibility: hidden; z-index: 999;
 }
 #scrollTopBtn.visible { opacity: 1; visibility: visible; }
 #scrollTopBtn:hover { transform: translateY(-3px); }
-
-/* Footer */
 footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: auto; }
 .social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 35px; }
 .social-links a {
@@ -165,6 +153,65 @@ text-decoration: none; color: inherit; font-weight: 700;
 font-size: 1rem; letter-spacing: 1px; transition: var(--tr);
 }
 .social-links a:hover { opacity: 0.7; }
+
+/* Lightbox */
+#lightbox {
+display: none; position: fixed; inset: 0;
+background: rgba(0,0,0,0.92); z-index: 9000;
+align-items: center; justify-content: center;
+backdrop-filter: blur(10px);
+}
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 94vw; max-height: 94vh; border-radius: 16px; object-fit: contain; }
+#lightbox-close {
+position: absolute; top: 20px; right: 24px;
+background: rgba(255,255,255,0.15); border: none; color: white;
+font-size: 32px; cursor: pointer; border-radius: 50%;
+width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+}
+
+/* Bug report */
+#bugTrigger {
+background: none; border: none; cursor: pointer;
+font-size: 0.8rem; font-weight: 600; opacity: 0.5;
+color: var(--text); display: block; margin: 10px auto 0;
+}
+#bugTrigger:hover { opacity: 1; }
+#bugModal {
+display: none; position: fixed; inset: 0;
+background: rgba(0,0,0,0.6); z-index: 9500;
+align-items: flex-end; justify-content: center;
+backdrop-filter: blur(8px);
+}
+#bugModal.open { display: flex; }
+.bug-box {
+width: 100%; max-width: 500px;
+background: var(--bg); border-radius: 30px 30px 0 0;
+padding: 30px 28px calc(35px + env(safe-area-inset-bottom));
+box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.bug-box h3 { margin: 0 0 8px; font-size: 1.4rem; font-weight: 800; }
+.bug-box p { margin: 0 0 20px; font-size: 0.95rem; opacity: 0.7; }
+.bug-box textarea {
+width: 100%; border-radius: 18px; border: 1.5px solid var(--card-border);
+background: var(--card-bg); color: var(--text);
+padding: 16px; font-size: 1rem; font-family: inherit;
+resize: none; outline: none; min-height: 120px;
+}
+.bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
+.bug-send {
+flex: 2; padding: 16px; border-radius: 18px; border: none;
+background: var(--text); color: var(--bg);
+font-size: 1rem; font-weight: 700; cursor: pointer;
+}
+.bug-send:disabled { opacity: 0.5; }
+.bug-cancel {
+flex: 1; padding: 16px; border-radius: 18px;
+border: 1.5px solid var(--card-border); background: none;
+color: var(--text); font-size: 1rem; cursor: pointer;
+}
 
 @media (max-width: 768px) {
 .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
@@ -178,30 +225,51 @@ header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 7
 .expand-btn { top: 20px; right: 20px; }
 }
 </style>
-
 </head>  
-<body>  
-<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>  <div class="controls">  
+<body>
+
+<div id="lightbox" onclick="closeLightbox()">
+    <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="bugModal" onclick="if(event.target===this)closeBug()">
+    <div class="bug-box">
+        <h3>🐛 Повідомити про баг</h3>
+        <p>Опишіть проблему на сайті</p>
+        <textarea id="bugText" placeholder="Наприклад: фото не відкривається..."></textarea>
+        <div class="bug-box-btns">
+            <button class="bug-cancel" onclick="closeBug()">Скасувати</button>
+            <button class="bug-send" onclick="sendBug()">📨 Надіслати</button>
+        </div>
+    </div>
+</div>
+
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+<div class="controls">  
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>  
     <button id="menuBtn" onclick="toggleMenu()">🏠</button>  
-</div>  <div class="sidebar" id="sidebar">  
+</div>
+<div class="sidebar" id="sidebar">  
     <button id="closeBtn" onclick="toggleMenu()">✖</button>  
     <a href="index.html">Головна</a>  
     <a href="news.html">Новини</a>  
     <a href="past_events.html">Проєкти</a>  
     <a href="about.html">Про нас</a>  
     <a href="skrynkaidey.html">Скринька ідей</a>  
-    <div id="versionBox">  
-  Версія: <span id="version"></span>  
-    </div>  
-</div>  <header>  
+    <div id="versionBox">Версія: <span id="version"></span></div>  
+</div>
+<header>  
     <h1 class="main-title">Новини</h1>  
     <div class="logo">  
         <img src="Logo1variant.png" alt="Логотип" style="width:120%;height:120%;object-fit:cover;">  
     </div>  
-</header>  <div class="container">  <div class="card">  
+</header>
+<div class="container">
+
+<div class="card">  
     <div class="card-img-wrapper">  
-        <img src="Underconstruction.png" alt="День науки">  
+        <img src="Underconstruction.png" alt="День науки" onclick="openLightbox(this.src)">  
     </div>  
     <div class="card-content">  
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>  
@@ -215,7 +283,7 @@ header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 7
 
 <div class="card">  
     <div class="card-img-wrapper">  
-        <img src="Underconstruction.png" alt="Хто розумніший">  
+        <img src="Underconstruction.png" alt="Хто розумніший" onclick="openLightbox(this.src)">  
     </div>  
     <div class="card-content">  
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>  
@@ -235,15 +303,19 @@ header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 7
     </div>  
 </div>
 
-</div>  <footer>  
+</div>
+<footer>  
     <div class="social-links">  
         <a href="https://www.instagram.com/uchnivskesamovriaduvannia?igsh=MXJtNmliZXJoYmZwdA==" target="_blank">INSTAGRAM</a>  
         <a href="https://www.facebook.com/share/1DtXY2x5Us/?mibextid=wwXIfr" target="_blank">FACEBOOK</a>  
         <a href="https://t.me/DNLLepkyi" target="_blank">TELEGRAM</a>  
         <a href="https://www.tiktok.com/@lyceumlepkogo?_r=1&_t=ZS-94d1kkArRpN" target="_blank">TIKTOK</a>  
     </div>  
-    <p style="opacity:0.6;font-size:0.85rem;font-weight:600;">&copy; 2026 учнівське самоврядування</p>  
-</footer>  <script>  
+    <p style="opacity:0.6;font-size:0.85rem;font-weight:600;">&copy; 2026 учнівське самоврядування</p>
+    <button id="bugTrigger" onclick="openBug()">🐞 Повідомити про баг 🐞</button>
+</footer>
+
+<script>  
 const body = document.body;  
 const scrollBtn = document.getElementById('scrollTopBtn');  
 const sidebar = document.getElementById('sidebar');  
@@ -257,14 +329,41 @@ function toggleTheme() {
 }  
 function toggleMenu() { sidebar.classList.toggle('open'); }  
 function toggleExpand(btn) { btn.closest('.card').classList.toggle('expanded'); }  
-  
 window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', scrollY > 300));  
-  
-if (localStorage.getItem('theme') === 'dark') {  
-    body.classList.add('dark');  
-    themeMeta.content = '#4b5982';  
-}  
-</script>  <script src="config.js"></script>  <script>  
-  document.getElementById("version").textContent = SITE_VERSION;  
-</script>  </body>  
+if (localStorage.getItem('theme') === 'dark') { body.classList.add('dark'); themeMeta.content = '#4b5982'; }
+
+function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+const BUG_TELEGRAM_TOKEN = '8450851710:AAGsC5O72ab-C8ZWw2guCc7bGMX0rRbhhZI';
+const BUG_CHAT_ID = '6190541661';
+function openBug() { document.getElementById('bugModal').classList.add('open'); }
+function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
+async function sendBug() {
+    const text = document.getElementById('bugText').value.trim();
+    const btn = document.querySelector('.bug-send');
+    if (!text) return;
+    btn.disabled = true; btn.innerText = '⏳...';
+    try {
+        const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: '🐛 Баг (news.html):\n'+text})
+        });
+        if (r.ok) { closeBug(); alert('✅ Надіслано!'); }
+        else alert('❌ Помилка');
+    } catch(e) { alert('❌ Немає з\'єднання'); }
+    finally { btn.disabled=false; btn.innerText='📨 Надіслати'; }
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeLightbox();closeBug();} });
+</script>
+<script src="config.js"></script>  
+<script>document.getElementById("version").textContent = SITE_VERSION;</script>
+</body>  
 </html>
