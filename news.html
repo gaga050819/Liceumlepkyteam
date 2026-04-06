@@ -13,7 +13,7 @@ crossorigin="anonymous"></script>
   left: 20px;
   font-size: 13px;
   opacity: 0.6;
-  color: #ccc;
+  color: var(--text);
 }
 :root {  
     --bg: #f1e1cd;  
@@ -58,16 +58,16 @@ display: flex; justify-content: center; align-items: center;
 #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
 }
 .sidebar {
-position: fixed; top: 0; left: -100%;
-width: 100%; max-width: 300px; height: 100vh;
-background: var(--card-bg); backdrop-filter: blur(40px);
-border-right: 1px solid var(--card-border);
-z-index: 1001; transition: var(--tr);
-display: flex; flex-direction: column;
-padding: 100px 30px calc(40px + env(safe-area-inset-bottom));
-overflow-y: auto;
-box-shadow: 15px 0 50px rgba(0,0,0,0.2);
-opacity: 0; visibility: hidden;
+    position: fixed; top: 0; left: -100%;
+    width: 100%; max-width: 300px;
+    height: 100vh; height: -webkit-fill-available;
+    background: var(--card-bg); backdrop-filter: blur(40px);
+    border-right: 1px solid var(--card-border);
+    z-index: 1001; transition: var(--tr);
+    display: flex; flex-direction: column;
+    padding: 100px 30px 0;
+    box-shadow: 15px 0 50px rgba(0,0,0,0.2);
+    opacity: 0; visibility: hidden;
 }
 .sidebar.open { left: 0; opacity: 1; visibility: visible; }
 .sidebar a {
@@ -235,7 +235,7 @@ header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 7
 
 <div id="bugModal" onclick="if(event.target===this)closeBug()">
     <div class="bug-box">
-        <h3>🐛 Повідомити про баг</h3>
+        <h3>🐞 Повідомити про баг🐞 </h3>
         <p>Опишіть проблему на сайті</p>
         <textarea id="bugText" placeholder="Наприклад: фото не відкривається..."></textarea>
         <div class="bug-box-btns">
