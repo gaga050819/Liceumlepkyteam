@@ -8,6 +8,95 @@ crossorigin="anonymous"></script>
 <meta name="theme-color" content="#f1e1cd" id="theme-color-meta">
 <title>Проєкти | Учнівське самоврядування</title>
 <style>
+/* Lightbox */
+.lightbox-trigger { cursor: zoom-in; }
+#lightbox {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92); z-index: 9000;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(10px);
+}
+#lightbox.open { display: flex; }
+#lightbox img {
+    max-width: 94vw; max-height: 94vh;
+    border-radius: 16px; object-fit: contain;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+#lightbox-close {
+    position: absolute; top: 20px; right: 24px;
+    background: rgba(255,255,255,0.15); border: none; color: white;
+    font-size: 32px; cursor: pointer; border-radius: 50%;
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+}
+.ad-block { width: 100%; margin-bottom: 50px; display: flex; flex-direction: column; gap: 12px; }
+.ad-label {
+    font-size: 0.72rem; font-weight: 600; opacity: 0.4;
+    letter-spacing: 2px; text-transform: uppercase; display: block; padding-left: 4px;
+}
+.ad-banner-center { display: flex; justify-content: center; width: 100%; overflow: hidden; }
+footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: auto; }
+.social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 35px; }
+.social-links a {
+    text-decoration: none; color: inherit; font-weight: 700;
+    font-size: 1rem; letter-spacing: 1px; transition: var(--tr);
+}
+.social-links a:hover { opacity: 0.7; }
+.mention { text-decoration: underline; color: white; }
+#scrollTopBtn {
+    position: fixed; bottom: 30px; left: 30px;
+    width: 50px; height: 50px; border-radius: 50%;
+    border: 1px solid var(--card-border); background: var(--card-bg);
+    backdrop-filter: blur(15px); color: inherit; font-size: 22px;
+    cursor: pointer; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    transition: var(--tr); opacity: 0; visibility: hidden; z-index: 999;
+}
+#scrollTopBtn.visible { opacity: 1; visibility: visible; }
+#scrollTopBtn:hover { transform: translateY(-3px); }
+#bugBtn {
+    background: none; border: none; cursor: pointer;
+    font-size: 1rem; font-weight: 600; opacity: 0.5;
+    color: var(--text); transition: var(--tr);
+    display: block; margin: 10px auto 0;
+}
+#bugBtn:hover { opacity: 1; transform: none; }
+#bugBtn:hover { transform: translateY(-5px); }
+#bugModal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 9500;
+    align-items: flex-end; justify-content: center;
+    backdrop-filter: blur(8px);
+}
+#bugModal.open { display: flex; }
+.bug-box {
+    width: 100%; max-width: 500px;
+    background: var(--bg); border-radius: 30px 30px 0 0;
+    padding: 30px 28px calc(35px + env(safe-area-inset-bottom));
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.bug-box h3 { margin: 0 0 8px; font-size: 1.4rem; font-weight: 800; }
+.bug-box p { margin: 0 0 20px; font-size: 0.95rem; opacity: 0.7; }
+.bug-box textarea {
+    width: 100%; border-radius: 18px; border: 1.5px solid var(--card-border);
+    background: var(--card-bg); color: var(--text);
+    padding: 16px; font-size: 1rem; font-family: inherit;
+    resize: none; outline: none; min-height: 120px; transition: border-color 0.2s;
+}
+.bug-box textarea:focus { border-color: var(--text); }
+.bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
+.bug-send {
+    flex: 2; padding: 16px; border-radius: 18px; border: none;
+    background: var(--text); color: var(--bg);
+    font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+}
+.bug-send:disabled { opacity: 0.5; cursor: not-allowed; }
+.bug-cancel {
+    flex: 1; padding: 16px; border-radius: 18px;
+    border: 1.5px solid var(--card-border); background: none;
+    color: var(--text); font-size: 1rem; cursor: pointer; transition: 0.2s;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 768px) {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
