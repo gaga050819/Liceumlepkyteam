@@ -8,6 +8,28 @@ crossorigin="anonymous"></script>
 <meta name="theme-color" content="#f1e1cd" id="theme-color-meta">
 <title>Проєкти | Учнівське самоврядування</title>
 <style>
+@media (max-width: 768px) {
+    .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
+    #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
+    #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
+    header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
+    .main-title { font-size: 2.2rem; }
+    .logo { align-self: center; }
+    .card {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 60px;
+        gap: 20px;
+    }
+    .card > img,
+    .card > video,
+    .gallery-container,
+    .card-content { width: 100% !important; max-width: none !important; }
+    .card > video { aspect-ratio: 16/9 !important; height: auto !important; }
+    .hero-box-label { border-right: none; border-bottom: 3px solid currentColor; padding-bottom: 10px; margin-bottom: 10px; padding-right: 0; }
+    .hero-text { padding-left: 0; }
+    .expand-btn { top: 15px; right: 15px; }
+}
 /* ===================== Lightbox ===================== */
 #lightbox {
     display: none; position: fixed; inset: 0;
