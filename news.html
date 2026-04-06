@@ -354,7 +354,7 @@ async function sendBug() {
     try {
         const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
             method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: '🐛 Баг (news.html):\n'+text})
+            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: 'Баг (news.html):\n'+text})
         });
         if (r.ok) { closeBug(); alert('✅ Надіслано!'); }
         else alert('❌ Помилка');
