@@ -203,7 +203,6 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
         <a href="past_events.html">Проєкти</a>
         <a href="about.html">Про нас</a>
         <a href="skrynkaidey.html">Скринька ідей</a>
-        <a href="Konkyrs.html">Конкурс</a>
     </div>
     <div id="versionBox">Версія: <span id="version"></span></div>
 </div>
@@ -242,11 +241,11 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
             <div class="form-row">
                 <div class="form-field">
                     <label>Ім'я</label>
-                    <input type="text" id="f-name" placeholder="Наприклад: Михайло">
+                    <input type="text" id="f-name" placeholder="Наприклад: Маркіян">
                 </div>
                 <div class="form-field">
                     <label>Прізвище</label>
-                    <input type="text" id="f-surname" placeholder="Наприклад: Дякович">
+                    <input type="text" id="f-surname" placeholder="Наприклад: Іванців">
                 </div>
             </div>
             <div class="form-field">
@@ -303,9 +302,10 @@ const firebaseConfig = {
     appId: "1:869952269827:web:c15cf5553e2e43a2062836"
 };
 
+// Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getDatabase();
+const auth = getAuth(app);
+const db = getDatabase(app);
 const provider = new GoogleAuthProvider();
 
 document.getElementById('google-btn').onclick = () => {
@@ -314,7 +314,7 @@ document.getElementById('google-btn').onclick = () => {
             signOut(auth);
             alert('❌ Використовуйте лише @gmail.com акаунт');
         }
-    }).catch(e => alert('Помилка: ' + e.message));
+    }).catch(e => alert('Помилка входу: ' + e.message));
 };
 
 document.getElementById('logout-btn').onclick = () => signOut(auth);
@@ -331,32 +331,40 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-window.sendForm = () => {
+window.sendForm = async () => {
     const user = auth.currentUser;
     if (!user) return;
+    
     const name = document.getElementById('f-name').value.trim();
     const surname = document.getElementById('f-surname').value.trim();
     const cls = document.getElementById('f-class').value.trim();
-    const text = document.getElementById('f-text').value.trim();
 
-    if (!name || !surname || !cls || !text) {
+    if (!name || !surname || !cls) {
         alert('Будь ласка, заповніть всі поля');
         return;
     }
 
-    push(ref(db, 'registrations'), {
-        name, surname, class: cls, text,
-        email: user.email,
-        time: Date.now()
-    }).then(() => {
+    try {
+        await push(ref(db, 'registrations'), {
+            name, 
+            surname, 
+            class: cls, 
+            email: user.email,
+            time: Date.now()
+        });
+        
         document.getElementById('f-name').value = '';
         document.getElementById('f-surname').value = '';
         document.getElementById('f-class').value = '';
-        document.getElementById('f-text').value = '';
+        
         const msg = document.getElementById('form-success');
         msg.style.display = 'block';
         setTimeout(() => msg.style.display = 'none', 4000);
-    });
+        
+    } catch (error) {
+        console.error("Помилка запису в базу:", error);
+        alert("Помилка при надсиланні: " + error.message);
+    }
 };
 </script>
 
