@@ -105,6 +105,45 @@ header {
     font-weight: bold; overflow: hidden;
 }
 .container { width: 95%; max-width: 680px; padding-bottom: 60px; }
+
+/* Telegram warning */
+.tg-warning {
+    background: var(--card-bg); backdrop-filter: blur(25px);
+    border: 1px solid var(--card-border);
+    border-radius: 40px; padding: 40px 30px;
+    text-align: center; margin-bottom: 30px;
+}
+.tg-warning-icon { font-size: 3.5rem; margin-bottom: 16px; }
+.tg-warning h2 { margin: 0 0 8px; font-size: 1.5rem; font-weight: 900; }
+.tg-warning p { margin: 0 0 24px; opacity: 0.7; font-size: 0.95rem; line-height: 1.5; }
+.tg-steps {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 20px 24px;
+    text-align: left; margin-bottom: 24px;
+}
+body.dark .tg-steps { background: rgba(241,225,205,0.06); }
+.tg-steps-title { font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.5; margin-bottom: 14px; }
+.tg-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 12px; font-size: 0.95rem; line-height: 1.4;
+}
+.tg-step:last-child { margin-bottom: 0; }
+.tg-step-num {
+    min-width: 26px; height: 26px; border-radius: 50%;
+    background: var(--text); color: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800; flex-shrink: 0;
+}
+.tg-copy-btn {
+    width: 100%; padding: 15px; border: none; border-radius: 20px;
+    background: var(--text); color: var(--bg);
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: var(--tr); display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.tg-copy-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+/* Login card */
 .login-card {
     background: var(--card-bg); backdrop-filter: blur(25px);
     border: 1px solid var(--card-border);
@@ -147,19 +186,16 @@ header {
 .form-row { display: flex; gap: 12px; }
 .form-field { flex: 1; margin-bottom: 14px; }
 .form-field label { display: block; font-size: 0.8rem; font-weight: 700; opacity: 0.6; margin-bottom: 6px; padding-left: 4px; }
-.form-field input, .form-field textarea {
+.form-field input {
     width: 100%;
     background: rgba(255,255,255,0.2); border: 1.5px solid var(--card-border);
     border-radius: 18px; padding: 14px 16px;
     color: var(--text); font-size: 0.95rem; font-family: inherit;
     outline: none; transition: border-color 0.2s;
 }
-body.dark .form-field input, body.dark .form-field textarea {
-    background: rgba(241,225,205,0.08);
-}
-.form-field input:focus, .form-field textarea:focus { border-color: var(--text); }
-.form-field textarea { resize: none; min-height: 100px; }
-.form-field input::placeholder, .form-field textarea::placeholder { opacity: 0.5; }
+body.dark .form-field input { background: rgba(241,225,205,0.08); }
+.form-field input:focus { border-color: var(--text); }
+.form-field input::placeholder { opacity: 0.5; }
 .action-btn {
     width: 100%; padding: 16px; border: none; border-radius: 25px;
     background: var(--text); color: var(--bg);
@@ -168,12 +204,11 @@ body.dark .form-field input, body.dark .form-field textarea {
 }
 .action-btn:hover { transform: translateY(-2px); opacity: 0.9; }
 .action-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
 .success-msg {
-    display: none; text-align: center; padding: 20px;
-    font-size: 1rem; font-weight: 700; color: #16a34a;
+    display: none; text-align: center; padding: 30px 20px;
+    font-size: 1.1rem; font-weight: 700;
 }
-body.dark .success-msg { color: #4ade80; }
+.success-msg .success-icon { font-size: 3rem; display: block; margin-bottom: 10px; }
 footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; }
 .social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 35px; }
 .social-links a { text-decoration: none; color: inherit; font-weight: 700; font-size: 1rem; letter-spacing: 1px; transition: var(--tr); }
@@ -220,9 +255,35 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
     </div>
 </header>
 
-<div class="container">
+<div class="container" id="main-container">
 
-    <div id="login-block" class="login-card">
+    <!-- Telegram iOS warning -->
+    <div id="tg-warning-block" style="display:none;" class="tg-warning">
+        <div class="tg-warning-icon">🌐</div>
+        <h2>Відкрийте у Safari</h2>
+        <p>Вхід через Google недоступний у вбудованому браузері Telegram на iOS. Будь ласка, відкрийте цю сторінку в Safari.</p>
+        <div class="tg-steps">
+            <div class="tg-steps-title">Як це зробити</div>
+            <div class="tg-step">
+                <div class="tg-step-num">1</div>
+                <span>Натисніть <strong>•••</strong> у правому верхньому куті екрана</span>
+            </div>
+            <div class="tg-step">
+                <div class="tg-step-num">2</div>
+                <span>Оберіть <strong>«Відкрити в Safari»</strong></span>
+            </div>
+            <div class="tg-step">
+                <div class="tg-step-num">3</div>
+                <span>Увійдіть через Google та заповніть форму</span>
+            </div>
+        </div>
+        <button class="tg-copy-btn" onclick="copyLink()">
+            <span id="copy-btn-text">📋 Скопіювати посилання</span>
+        </button>
+    </div>
+
+    <!-- Login -->
+    <div id="login-block" class="login-card" style="display:none;">
         <h2>🔐 Увійдіть щоб продовжити</h2>
         <p>Для реєстрації потрібен Gmail-акаунт</p>
         <button class="google-btn" id="google-btn">
@@ -232,14 +293,15 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
         <p style="font-size:0.8rem;opacity:0.5;margin-top:15px;">Приймаються лише @gmail.com акаунти</p>
     </div>
 
+    <!-- App -->
     <div id="app-block" style="display:none;">
-        <div class="user-info" id="user-info">
+        <div class="user-info">
             <img id="user-photo" src="" alt="">
             <span id="user-name"></span>
             <button class="logout-btn" id="logout-btn">Вийти</button>
         </div>
 
-        <div class="form-card" id="form-card-ui">
+        <div class="form-card">
             <div id="form-inputs">
                 <div class="form-row">
                     <div class="form-field">
@@ -257,9 +319,13 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
                 </div>
                 <button class="action-btn" id="submit-btn" onclick="sendForm()">📨 Надіслати заявку</button>
             </div>
-            <div class="success-msg" id="form-success">✅ Дякуємо! Вашу заявку отримано.</div>
+            <div class="success-msg" id="form-success">
+                <span class="success-icon">✅</span>
+                Дякуємо! Вашу заявку успішно отримано.
+            </div>
         </div>
     </div>
+
 </div>
 
 <footer>
@@ -284,17 +350,39 @@ function toggleTheme() {
     themeMeta.content = dark ? '#4b5982' : '#f1e1cd';
 }
 function toggleMenu() { sidebar.classList.toggle('open'); }
-
 if (localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark');
     themeMeta.content = '#4b5982';
+}
+
+function copyLink() {
+    const url = window.location.href;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+            document.getElementById('copy-btn-text').textContent = '✅ Скопійовано!';
+            setTimeout(() => document.getElementById('copy-btn-text').textContent = '📋 Скопіювати посилання', 2500);
+        });
+    }
+}
+
+// Detect Telegram iOS
+const isTelegram = /Telegram/i.test(navigator.userAgent);
+const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+if (isTelegram && isIOS) {
+    document.getElementById('tg-warning-block').style.display = 'block';
 }
 </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+import {
+    getAuth, signInWithRedirect, signInWithPopup,
+    getRedirectResult, signOut,
+    GoogleAuthProvider, onAuthStateChanged,
+    browserLocalPersistence, setPersistence
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCyRjdbRjQonfqNX-hY1XSdM2og2xeyngs",
@@ -310,47 +398,93 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
 
-document.getElementById('google-btn').onclick = () => {
-    signInWithPopup(auth, provider).then(result => {
-        if (!result.user.email.endsWith('@gmail.com')) {
-            signOut(auth);
-            alert('❌ Використовуйте лише @gmail.com акаунт');
+const isTgIOS = /Telegram/i.test(navigator.userAgent) && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+await setPersistence(auth, browserLocalPersistence).catch(console.error);
+
+// Зберігаємо URL перед редіректом і повертаємось після
+const REDIRECT_KEY = 'auth_redirect_url';
+
+try {
+    const result = await getRedirectResult(auth);
+    if (result?.user) {
+        const savedUrl = sessionStorage.getItem(REDIRECT_KEY);
+        if (savedUrl) {
+            sessionStorage.removeItem(REDIRECT_KEY);
+            if (window.location.href !== savedUrl) {
+                window.location.replace(savedUrl);
+            }
         }
-    }).catch(e => alert('Помилка входу: ' + e.message));
-};
+        if (!result.user.email.endsWith('@gmail.com')) {
+            await signOut(auth);
+            alert('❌ Тільки @gmail.com акаунти');
+        }
+    }
+} catch(e) { console.log('Redirect result:', e.code); }
 
-document.getElementById('logout-btn').onclick = () => signOut(auth);
+document.getElementById('google-btn')?.addEventListener('click', async () => {
+    sessionStorage.setItem(REDIRECT_KEY, window.location.href);
+    if (isMobile && !isTgIOS) {
+        await signInWithRedirect(auth, provider);
+    } else {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            if (!result.user.email.endsWith('@gmail.com')) {
+                await signOut(auth);
+                alert('❌ Тільки @gmail.com акаунти');
+            }
+        } catch(e) {
+            if (e.code !== 'auth/popup-closed-by-user') alert('Помилка: ' + e.message);
+        }
+    }
+});
+
+document.getElementById('logout-btn')?.addEventListener('click', () => signOut(auth));
 
 onAuthStateChanged(auth, (user) => {
+    const tgBlock = document.getElementById('tg-warning-block');
+    const loginBlock = document.getElementById('login-block');
+    const appBlock = document.getElementById('app-block');
+
+    if (isTgIOS) {
+        tgBlock.style.display = 'block';
+        loginBlock.style.display = 'none';
+        appBlock.style.display = 'none';
+        return;
+    }
+
     if (user && user.email.endsWith('@gmail.com')) {
-        document.getElementById('login-block').style.display = 'none';
-        document.getElementById('app-block').style.display = 'block';
+        tgBlock.style.display = 'none';
+        loginBlock.style.display = 'none';
+        appBlock.style.display = 'block';
         document.getElementById('user-photo').src = user.photoURL || '';
         document.getElementById('user-name').textContent = user.displayName || user.email;
 
-        // Нова перевірка: чи вже є запис для цього UID
-        const checkRef = ref(db, 'registrations/' + user.uid);
-        onValue(checkRef, (snapshot) => {
-            if (snapshot.exists()) {
-                document.getElementById('form-inputs').style.display = 'none';
-                document.getElementById('form-success').style.display = 'block';
-                document.getElementById('form-success').textContent = "✅ Ви вже зареєстровані!";
+        onValue(ref(db, 'registrations/' + user.uid), (snap) => {
+            const inputs = document.getElementById('form-inputs');
+            const success = document.getElementById('form-success');
+            if (snap.exists()) {
+                inputs.style.display = 'none';
+                success.style.display = 'block';
             } else {
-                document.getElementById('form-inputs').style.display = 'block';
-                document.getElementById('form-success').style.display = 'none';
+                inputs.style.display = 'block';
+                success.style.display = 'none';
             }
-        });
+        }, { onlyOnce: true });
+
     } else {
-        document.getElementById('login-block').style.display = 'block';
-        document.getElementById('app-block').style.display = 'none';
+        tgBlock.style.display = 'none';
+        loginBlock.style.display = 'block';
+        appBlock.style.display = 'none';
     }
 });
 
 window.sendForm = async () => {
     const user = auth.currentUser;
     if (!user) return;
-    
     const name = document.getElementById('f-name').value.trim();
     const surname = document.getElementById('f-surname').value.trim();
     const cls = document.getElementById('f-class').value.trim();
@@ -362,32 +496,24 @@ window.sendForm = async () => {
     }
 
     btn.disabled = true;
-    btn.textContent = "Надсилання...";
+    btn.textContent = '⏳ Надсилання...';
 
     try {
         await set(ref(db, 'registrations/' + user.uid), {
-            name, 
-            surname, 
-            class: cls, 
-            email: user.email,
-            time: Date.now()
+            name, surname, class: cls,
+            email: user.email, time: Date.now()
         });
-        
         document.getElementById('form-inputs').style.display = 'none';
-        const msg = document.getElementById('form-success');
-        msg.style.display = 'block';
-        msg.textContent = "✅ Дякуємо! Вашу заявку отримано.";
-        
-    } catch (error) {
-        console.error("Помилка запису:", error);
-        alert("Помилка: " + error.message);
+        document.getElementById('form-success').style.display = 'block';
+    } catch(e) {
+        alert('Помилка: ' + e.message);
         btn.disabled = false;
-        btn.textContent = "📨 Надіслати заявку";
+        btn.textContent = '📨 Надіслати заявку';
     }
 };
 </script>
 
 <script src="config.js"></script>
-<script>document.getElementById("version").textContent = SITE_VERSION;</script>
+<script>if(typeof SITE_VERSION!=='undefined') document.getElementById("version").textContent = SITE_VERSION;</script>
 </body>
 </html>
