@@ -167,6 +167,8 @@ body.dark .form-field input, body.dark .form-field textarea {
     transition: var(--tr); box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 .action-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
 .success-msg {
     display: none; text-align: center; padding: 20px;
     font-size: 1rem; font-weight: 700; color: #16a34a;
@@ -237,22 +239,24 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
             <button class="logout-btn" id="logout-btn">Вийти</button>
         </div>
 
-        <div class="form-card">
-            <div class="form-row">
-                <div class="form-field">
-                    <label>Ім'я</label>
-                    <input type="text" id="f-name" placeholder="Наприклад: Маркіян">
+        <div class="form-card" id="form-card-ui">
+            <div id="form-inputs">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Ім'я</label>
+                        <input type="text" id="f-name" placeholder="Наприклад: Маркіян">
+                    </div>
+                    <div class="form-field">
+                        <label>Прізвище</label>
+                        <input type="text" id="f-surname" placeholder="Наприклад: Іванців">
+                    </div>
                 </div>
                 <div class="form-field">
-                    <label>Прізвище</label>
-                    <input type="text" id="f-surname" placeholder="Наприклад: Іванців">
+                    <label>Клас</label>
+                    <input type="text" id="f-class" placeholder="Наприклад: 11-А">
                 </div>
+                <button class="action-btn" id="submit-btn" onclick="sendForm()">📨 Надіслати заявку</button>
             </div>
-            <div class="form-field">
-                <label>Клас</label>
-                <input type="text" id="f-class" placeholder="Наприклад: 11-А">
-            </div>
-            <button class="action-btn" onclick="sendForm()">📨 Надіслати заявку</button>
             <div class="success-msg" id="form-success">✅ Дякуємо! Вашу заявку отримано.</div>
         </div>
     </div>
@@ -290,7 +294,7 @@ if (localStorage.getItem('theme') === 'dark') {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCyRjdbRjQonfqNX-hY1XSdM2og2xeyngs",
@@ -302,7 +306,6 @@ const firebaseConfig = {
     appId: "1:869952269827:web:c15cf5553e2e43a2062836"
 };
 
-// Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -325,6 +328,19 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById('app-block').style.display = 'block';
         document.getElementById('user-photo').src = user.photoURL || '';
         document.getElementById('user-name').textContent = user.displayName || user.email;
+
+        // Нова перевірка: чи вже є запис для цього UID
+        const checkRef = ref(db, 'registrations/' + user.uid);
+        onValue(checkRef, (snapshot) => {
+            if (snapshot.exists()) {
+                document.getElementById('form-inputs').style.display = 'none';
+                document.getElementById('form-success').style.display = 'block';
+                document.getElementById('form-success').textContent = "✅ Ви вже зареєстровані!";
+            } else {
+                document.getElementById('form-inputs').style.display = 'block';
+                document.getElementById('form-success').style.display = 'none';
+            }
+        });
     } else {
         document.getElementById('login-block').style.display = 'block';
         document.getElementById('app-block').style.display = 'none';
@@ -338,14 +354,18 @@ window.sendForm = async () => {
     const name = document.getElementById('f-name').value.trim();
     const surname = document.getElementById('f-surname').value.trim();
     const cls = document.getElementById('f-class').value.trim();
+    const btn = document.getElementById('submit-btn');
 
     if (!name || !surname || !cls) {
         alert('Будь ласка, заповніть всі поля');
         return;
     }
 
+    btn.disabled = true;
+    btn.textContent = "Надсилання...";
+
     try {
-        await push(ref(db, 'registrations'), {
+        await set(ref(db, 'registrations/' + user.uid), {
             name, 
             surname, 
             class: cls, 
@@ -353,17 +373,16 @@ window.sendForm = async () => {
             time: Date.now()
         });
         
-        document.getElementById('f-name').value = '';
-        document.getElementById('f-surname').value = '';
-        document.getElementById('f-class').value = '';
-        
+        document.getElementById('form-inputs').style.display = 'none';
         const msg = document.getElementById('form-success');
         msg.style.display = 'block';
-        setTimeout(() => msg.style.display = 'none', 4000);
+        msg.textContent = "✅ Дякуємо! Вашу заявку отримано.";
         
     } catch (error) {
-        console.error("Помилка запису в базу:", error);
-        alert("Помилка при надсиланні: " + error.message);
+        console.error("Помилка запису:", error);
+        alert("Помилка: " + error.message);
+        btn.disabled = false;
+        btn.textContent = "📨 Надіслати заявку";
     }
 };
 </script>
