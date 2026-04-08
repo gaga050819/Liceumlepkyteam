@@ -55,8 +55,6 @@ body.dark {
 @media (hover:hover) {
     #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
 }
-
-/* iOS sidebar fix */
 .sidebar {
     position: fixed; top: 0; left: -100%;
     width: 100%; max-width: 300px;
@@ -88,7 +86,6 @@ body.dark {
     padding: 15px 20px calc(15px + env(safe-area-inset-bottom));
     font-size: 13px; opacity: 0.6; flex-shrink: 0; color: var(--text-light);
 }
-
 .container {
     width: 95%; max-width: 800px;
     margin-top: 100px; margin-bottom: 50px;
@@ -103,6 +100,8 @@ body.dark {
     width: 100%; border-radius: 30px; margin-bottom: 25px;
 }
 .form-group { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+.form-row { display: flex; gap: 15px; }
+.form-row .form-input { flex: 1; }
 .form-input {
     width: 100%;
     padding: 15px; border-radius: 15px;
@@ -110,20 +109,22 @@ body.dark {
     background: rgba(255,255,255,0.2);
     color: var(--text-light);
     font-size: 1rem; font-family: inherit;
+    outline: none; transition: border-color 0.2s;
 }
+.form-input:focus { border-color: var(--text-light); }
 textarea.form-input { resize: vertical; min-height: 150px; }
-.form-input::placeholder { color: var(--text-light); opacity: 0.8; }
+.form-input::placeholder { color: var(--text-light); opacity: 0.6; }
 body.dark .form-input { background: rgba(0,0,0,0.2); border-color: rgba(241,225,205,0.2); }
-.monobank-btn {
+.submit-btn {
     display: block; text-align: center;
-    background: var(--text-light); color: var(--bg-light) !important;
+    background: #000; color: #fff !important;
     padding: 18px; border-radius: 20px;
-    text-decoration: none; font-weight: bold;
-    margin-top: 15px; transition: var(--transition);
+    font-weight: bold; margin-top: 5px;
+    transition: var(--transition);
     border: none; cursor: pointer; font-size: 1rem; width: 100%;
 }
-.monobank-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-.monobank-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* Bug report */
 #bugTrigger {
@@ -167,7 +168,6 @@ body.dark .form-input { background: rgba(0,0,0,0.2); border-color: rgba(241,225,
     border: 1.5px solid var(--card-border); background: none;
     color: var(--text-light); font-size: 1rem; cursor: pointer;
 }
-
 footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; }
 .social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 35px; }
 .social-links a { text-decoration: none; color: inherit; font-weight: 700; font-size: 1rem; letter-spacing: 1px; transition: var(--tr); }
@@ -178,6 +178,7 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
     #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
     .container { margin-top: 80px; }
+    .form-row { flex-direction: column; gap: 15px; }
 }
 </style>
 </head>
@@ -215,20 +216,29 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
 
 <div class="container">
     <div class="card">
-        <img src="Forskrynkaidey.png" alt="Фото конкурсу" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'rgba(0,0,0,0.1)\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'20\' fill=\'gray\'>Фото конкурсу</text></svg>'">
+        <img src="Forskrynkaidey.png" alt="Фото конкурсу">
         <h2>Скринька ідей</h2>
         <p>Заповніть дані, і після натискання кнопки ми отримаємо вашу ідею.</p>
         <form action="https://api.web3forms.com/submit" method="POST" class="form-group" id="contestForm">
             <input type="hidden" name="access_key" value="e8a2b6b2-a256-4cde-bd25-acf647d0d522">
             <input type="hidden" name="subject" value="Нова ідея — Скринька ідей">
             <input type="hidden" name="from_name" value="Скринька ідей">
-            <input type="text" name="Name" class="form-input" placeholder="Ім'я (необов'язково)">
-            <input type="text" name="Sername" class="form-input" placeholder="Прізвище (необов'язково)">
-            <input type="text" name="Klass" class="form-input" placeholder="Клас (необов'язково)">
-            <input type="email" name="Email" class="form-input" placeholder="Ваша електронна пошта (необов'язково)">
-            <textarea name="message" class="form-input" placeholder="Напишіть сюди свою ідею..." required></textarea>
+
+            <div class="form-row">
+                <input type="text" name="Name" class="form-input" placeholder="Необов'язково: ім'я">
+                <input type="text" name="Sername" class="form-input" placeholder="Необов'язково: прізвище">
+            </div>
+
+            <div class="form-row">
+                <input type="text" name="Klass" class="form-input" placeholder="Необов'язково: клас">
+                <input type="email" name="Email" class="form-input" placeholder="Необов'язково: пошта">
+            </div>
+
+            <textarea name="message" class="form-input" placeholder="Ідея..." required></textarea>
+
             <div class="h-captcha" data-captcha="true"></div>
-            <button type="submit" id="submitBtn" class="monobank-btn">Відправити ідею</button>
+
+            <button type="submit" id="submitBtn" class="submit-btn">Відправити ідею</button>
         </form>
     </div>
 </div>
@@ -247,12 +257,9 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
 <script>
 function toggleTheme() {
     document.body.classList.toggle('dark');
-    const dark = document.body.classList.contains('dark');
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-    document.getElementById('theme-color-meta') && (document.getElementById('theme-color-meta').content = dark ? '#4b5982' : '#f1e1cd');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 }
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); }
-
 if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
 
 const form = document.getElementById('contestForm');
@@ -262,34 +269,24 @@ form.addEventListener("submit", async function(event) {
     event.preventDefault();
     const hCaptcha = form.querySelector('textarea[name=h-captcha-response]')?.value;
     if (!hCaptcha) {
-        Swal.fire({
-            icon: 'warning', title: 'Ой!',
-            text: 'Будь ласка, підтвердіть, що ви не робот (капча).',
-            confirmButtonText: 'Зрозуміло', confirmButtonColor: '#4b5982',
-        });
+        Swal.fire({ icon:'warning', title:'Ой!', text:'Підтвердіть капчу.', confirmButtonText:'Зрозуміло', confirmButtonColor:'#4b5982' });
         return;
     }
     btn.disabled = true; btn.innerText = "Відправка...";
-    const formData = new FormData(form);
     try {
         const response = await fetch("https://api.web3forms.com/submit", {
-            method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+            method:'POST', body: new FormData(form), headers:{'Accept':'application/json'}
         });
         const data = await response.json();
         if (response.ok && data.success) {
             form.reset(); btn.disabled = false; btn.innerText = "Відправити ідею";
-            Swal.fire({
-                icon: 'success', title: '🎉 Ідею надіслано!',
-                text: 'Дякуємо! Ми обов\'язково розглянемо вашу пропозицію.',
-                confirmButtonText: 'Чудово!', confirmButtonColor: '#4b5982',
-                timer: 4000, timerProgressBar: true,
-            });
+            Swal.fire({ icon:'success', title:'🎉 Надіслано!', text:'Дякуємо! Розглянемо вашу пропозицію.', confirmButtonText:'Чудово!', confirmButtonColor:'#4b5982', timer:4000, timerProgressBar:true });
         } else {
-            Swal.fire({ icon: 'error', title: 'Помилка', text: data.message || 'Щось пішло не так.', confirmButtonColor: '#4b5982' });
+            Swal.fire({ icon:'error', title:'Помилка', text:data.message||'Щось пішло не так.', confirmButtonColor:'#4b5982' });
             btn.disabled = false; btn.innerText = "Відправити ідею";
         }
     } catch(e) {
-        Swal.fire({ icon: 'error', title: 'Помилка мережі', text: 'Перевірте підключення.', confirmButtonColor: '#4b5982' });
+        Swal.fire({ icon:'error', title:'Помилка мережі', text:'Перевірте підключення.', confirmButtonColor:'#4b5982' });
         btn.disabled = false; btn.innerText = "Відправити ідею";
     }
 });
@@ -297,21 +294,21 @@ form.addEventListener("submit", async function(event) {
 const BUG_TELEGRAM_TOKEN = '8450851710:AAGsC5O72ab-C8ZWw2guCc7bGMX0rRbhhZI';
 const BUG_CHAT_ID = '6190541661';
 function openBug() { document.getElementById('bugModal').classList.add('open'); }
-function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
+function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value=''; }
 async function sendBug() {
     const text = document.getElementById('bugText').value.trim();
-    const btn2 = document.querySelector('.bug-send');
+    const b = document.querySelector('.bug-send');
     if (!text) return;
-    btn2.disabled = true; btn2.innerText = '⏳...';
+    b.disabled=true; b.innerText='⏳...';
     try {
         const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
             method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: 'Баг (Konkyrs.html):\n'+text})
+            body: JSON.stringify({chat_id:BUG_CHAT_ID, text:'Баг (Konkyrs.html):\n'+text})
         });
         if (r.ok) { closeBug(); alert('✅ Надіслано!'); }
         else alert('❌ Помилка');
     } catch(e) { alert('❌ Немає з\'єднання'); }
-    finally { btn2.disabled=false; btn2.innerText='📨 Надіслати'; }
+    finally { b.disabled=false; b.innerText='📨 Надіслати'; }
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeBug(); });
 </script>
