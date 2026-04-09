@@ -223,9 +223,65 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
     .page-hero { margin-top: 80px; }
     .form-row { flex-direction: column; gap: 0; }
 }
+
+#bugTrigger {
+    background: none; border: none; cursor: pointer;
+    font-size: 0.8rem; font-weight: 600; opacity: 0.5;
+    color: var(--text); display: block; margin: 10px auto 0;
+}
+#bugTrigger:hover { opacity: 1; }
+#bugModal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 9500;
+    align-items: flex-end; justify-content: center;
+    backdrop-filter: blur(8px);
+}
+#bugModal.open { display: flex; }
+.bug-box {
+    width: 100%; max-width: 500px;
+    background: var(--bg); border-radius: 30px 30px 0 0;
+    padding: 30px 28px calc(35px + env(safe-area-inset-bottom));
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.bug-box h3 { margin: 0 0 8px; font-size: 1.4rem; font-weight: 800; }
+.bug-box p { margin: 0 0 20px; font-size: 0.95rem; opacity: 0.7; }
+.bug-box textarea {
+    width: 100%; border-radius: 18px; border: 1.5px solid var(--card-border);
+    background: var(--card-bg); color: var(--text);
+    padding: 16px; font-size: 1rem; font-family: inherit;
+    resize: none; outline: none; min-height: 120px;
+}
+.bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
+.bug-send {
+    flex: 2; padding: 16px; border-radius: 18px; border: none;
+    background: var(--text); color: var(--bg);
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+}
+.bug-send:disabled { opacity: 0.5; }
+.bug-cancel {
+    flex: 1; padding: 16px; border-radius: 18px;
+    border: 1.5px solid var(--card-border); background: none;
+    color: var(--text); font-size: 1rem; cursor: pointer;
+}
+
 </style>
 </head>
 <body>
+
+
+<div id="bugModal" onclick="if(event.target===this)closeBug()">
+    <div class="bug-box">
+        <h3>🐞 Повідомити про баг 🐞</h3>
+        <p>Опишіть проблему на сайті</p>
+        <textarea id="bugText" placeholder="Наприклад: форма не відправляється..."></textarea>
+        <div class="bug-box-btns">
+            <button class="bug-cancel" onclick="closeBug()">Скасувати</button>
+            <button class="bug-send" onclick="sendBug()">📨 Надіслати</button>
+        </div>
+    </div>
+</div>
 
 <div class="controls">
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
@@ -325,47 +381,7 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
     </div>
 
 </div>
-#bugTrigger {
-    background: none; border: none; cursor: pointer;
-    font-size: 0.8rem; font-weight: 600; opacity: 0.5;
-    color: var(--text); display: block; margin: 10px auto 0;
-}
-#bugTrigger:hover { opacity: 1; }
-#bugModal {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.6); z-index: 9500;
-    align-items: flex-end; justify-content: center;
-    backdrop-filter: blur(8px);
-}
-#bugModal.open { display: flex; }
-.bug-box {
-    width: 100%; max-width: 500px;
-    background: var(--bg); border-radius: 30px 30px 0 0;
-    padding: 30px 28px calc(35px + env(safe-area-inset-bottom));
-    box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
-    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.bug-box h3 { margin: 0 0 8px; font-size: 1.4rem; font-weight: 800; }
-.bug-box p { margin: 0 0 20px; font-size: 0.95rem; opacity: 0.7; }
-.bug-box textarea {
-    width: 100%; border-radius: 18px; border: 1.5px solid var(--card-border);
-    background: var(--card-bg); color: var(--text);
-    padding: 16px; font-size: 1rem; font-family: inherit;
-    resize: none; outline: none; min-height: 120px;
-}
-.bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
-.bug-send {
-    flex: 2; padding: 16px; border-radius: 18px; border: none;
-    background: var(--text); color: var(--bg);
-    font-size: 1rem; font-weight: 700; cursor: pointer;
-}
-.bug-send:disabled { opacity: 0.5; }
-.bug-cancel {
-    flex: 1; padding: 16px; border-radius: 18px;
-    border: 1.5px solid var(--card-border); background: none;
-    color: var(--text); font-size: 1rem; cursor: pointer;
-}
+
 <footer>
     <div class="social-links">
         <a href="https://www.instagram.com/uchnivskesamovriaduvannia" target="_blank">INSTAGRAM</a>
@@ -390,7 +406,7 @@ async function sendBug() {
     try {
         const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
             method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id:BUG_CHAT_ID, text:'🐛 Баг (skrynkaidey.html):\n'+text})
+            body: JSON.stringify({chat_id:BUG_CHAT_ID, text:'Баг (skrynkaidey.html):\n'+text})
         });
         if (r.ok) { closeBug(); alert('✅ Надіслано!'); }
         else alert('❌ Помилка');
