@@ -574,28 +574,38 @@ window.sendForm = async () => {
     btn.textContent = '⏳ Надсилання...';
 
     try {
+        // 1. Запис у базу Firebase
         await set(ref(db, 'registrations/' + user.uid), {
             name, surname, class: cls,
             email: user.email, time: Date.now()
         });
+
         const telegramMessage = `📝 Нова реєстрація на конкурс:\n\nІм'я: ${name}\nПрізвище: ${surname}\nКлас: ${cls}\nEmail: ${user.email}`;
         
-        await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id:BUG_CHAT_ID, text: telegramMessage})
+        // --- ТЕЛЕГРАМ ВІДПРАВКА ---
+
+        // Відправка ТОБІ (використовуємо твій токен і твій ID)
+        await fetch('https://api.telegram.org/bot' + BUG_TELEGRAM_TOKEN + '/sendMessage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: BUG_CHAT_ID, text: telegramMessage })
         });
 
+        // Відправка ДРУГУ (використовуємо його токен і його ID)
         await fetch('https://api.telegram.org/bot8657609038:AAGpG4Y6d395GrWzEuyfAcSU7biDFC0DCpc/sendMessage', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id:'5408261332', text: telegramMessage})
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: '5408261332', text: telegramMessage })
         });
+
+        // -------------------------
 
         document.getElementById('form-inputs').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
+
     } catch(e) {
-        alert('Помилка: ' + e.message);
+        console.error(e);
+        alert('Помилка при відправці: ' + e.message);
         btn.disabled = false;
         btn.textContent = '📨 Надіслати заявку';
     }
