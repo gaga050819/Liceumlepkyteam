@@ -578,6 +578,13 @@ window.sendForm = async () => {
             name, surname, class: cls,
             email: user.email, time: Date.now()
         });
+        const telegramMessage = `📝 Нова реєстрація на конкурс:\n\nІм'я: ${name}\nПрізвище: ${surname}\nКлас: ${cls}\nEmail: ${user.email}`;
+        await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({chat_id:BUG_CHAT_ID, text: telegramMessage})
+        });
+
         document.getElementById('form-inputs').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
     } catch(e) {
