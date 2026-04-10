@@ -1,7 +1,6 @@
 {
   "short_name": "ДНЛ",
   "name": "Учнівське самоврядування ДНЛ",
-  "description": "Офіційний додаток учнівського самоврядування ліцею імені Богдана Лепкого",
   "icons": [
     {
       "src": "Logo1variant.png",
@@ -14,9 +13,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "/Liceumlepkyteam/index.html",
   "background_color": "#f1e1cd",
   "display": "standalone",
-  "scope": "./",
+  "scope": "/Liceumlepkyteam/",
   "theme_color": "#4b5982"
 }
