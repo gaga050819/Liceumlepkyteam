@@ -1,1 +1,15 @@
-const SITE_VERSION='v1.8',IDEAS_GAS_URL='https://script.google.com/macros/s/AKfycbxFg6A2iqRlkGkidiqRnJon6OrljzyFNS-gUE7vGIHAA4JLWWh0GsMJcUwmIR3JCaYl/exec',BUGS_GAS_URL='https://script.google.com/macros/s/AKfycbwFuuJfr2qmktLZtm47KjxPYz8C5JU0Fchby45ZYqAkUeTA60RromCXF2ylm8s3MEiq/exec',REG_GAS_URL='https://script.google.com/macros/s/AKfycbwyaaFaznEbebIZOjZvmNCwKcA5SCTeO3cDeCSlv-Q7zMhX5ALiMEcfEStNCORdnnsTYw/exec',IDEA_TOKEN='Secret_Idea_2026',BUG_TOKEN='Secret_Bug_2026',REG_TOKEN='Reg_2026_Secure';globalThis['SITE_VERSION']=SITE_VERSION;globalThis['IDEAS_GAS_URL']=IDEAS_GAS_URL;globalThis['BUGS_GAS_URL']=BUGS_GAS_URL;globalThis['REG_GAS_URL']=REG_GAS_URL;globalThis['IDEA_TOKEN']=IDEA_TOKEN;globalThis['BUG_TOKEN']=BUG_TOKEN;globalThis['REG_TOKEN']=REG_TOKEN;
+const SITE_VERSION='v1.8',
+      IDEAS_GAS_URL='https://script.google.com/macros/s/AKfycbxFg6A2iqRlkGkidiqRnJon6OrljzyFNS-gUE7vGIHAA4JLWWh0GsMJcUwmIR3JCaYl/exec',
+      BUGS_GAS_URL='https://script.google.com/macros/s/AKfycbwFuuJfr2qmktLZtm47KjxPYz8C5JU0Fchby45ZYqAkUeTA60RromCXF2ylm8s3MEiq/exec',
+      REG_GAS_URL='https://script.google.com/macros/s/AKfycbwyaaFaznEbebIZOjZvmNCwKcA5SCTeO3cDeCSlv-Q7zMhX5ALiMEcfEStNCORdnnsTYw/exec',
+      IDEA_TOKEN='Secret_Idea_2026',
+      BUG_TOKEN='Secret_Bug_2026',
+      REG_TOKEN='Reg_2026_Secure';
+
+globalThis['SITE_VERSION'] = SITE_VERSION;
+globalThis['IDEAS_GAS_URL']  = IDEAS_GAS_URL;
+globalThis['BUGS_GAS_URL']   = BUGS_GAS_URL;
+globalThis['REG_GAS_URL']    = REG_GAS_URL;
+globalThis['IDEA_TOKEN']     = IDEA_TOKEN;
+globalThis['BUG_TOKEN']      = BUG_TOKEN;
+globalThis['REG_TOKEN']      = REG_TOKEN;
