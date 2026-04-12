@@ -376,7 +376,8 @@ async function sendBug() {
     b.disabled=true; b.innerText='⏳...';
     try {
         await fetch(globalThis.BUGS_GAS_URL, {
-            method:'POST', mode:'no-cors',
+            method: 'POST',
+            headers: {'Content-Type': 'text/plain;charset=utf-8'},
             body: JSON.stringify({token: globalThis.BUG_TOKEN, message:'Баг (Konkyrs.html):\n'+text})
         });
         closeBug(); alert('✅ Надіслано!');
@@ -525,7 +526,7 @@ window.sendForm = async () => {
 
         await fetch(globalThis.REG_GAS_URL, {
             method: 'POST',
-            mode: 'no-cors',
+            headers: {'Content-Type': 'text/plain;charset=utf-8'},
             body: JSON.stringify({
                 token: globalThis.REG_TOKEN,
                 name, surname, klass: cls, email: user.email
