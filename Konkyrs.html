@@ -256,7 +256,6 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
 </style>
 </head>
 <body>
-
 <div id="bugModal" onclick="if(event.target===this)closeBug()">
     <div class="bug-box">
         <h3>🐞 Повідомити про баг 🐞</h3>
@@ -268,12 +267,10 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
         </div>
     </div>
 </div>
-
 <div class="controls">
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
     <button id="menuBtn" onclick="toggleMenu()">🏠</button>
 </div>
-
 <div class="sidebar" id="sidebar">
     <button id="closeBtn" onclick="toggleMenu()">✖</button>
     <div class="sidebar-links">
@@ -286,17 +283,13 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
     </div>
     <div id="versionBox">Версія: <span id="version"></span></div>
 </div>
-
 <div class="page-hero">
     <img src="Konkyrs.jpg" alt="Конкурс">
 </div>
-
 <header>
     <h1 class="main-title">Форма реєстрації на конкурс</h1>
 </header>
-
 <div class="container" id="main-container">
-
     <div id="tg-warning-block" style="display:none;" class="tg-warning">
         <div class="tg-warning-icon">🌐</div>
         <h2>Відкрийте у Safari</h2>
@@ -311,7 +304,6 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
             <span id="copy-btn-text">📋 Скопіювати посилання</span>
         </button>
     </div>
-
     <div id="login-block" class="login-card" style="display:none;">
         <h2>🔐 Увійдіть щоб продовжити</h2>
         <p>Для реєстрації потрібен Gmail-акаунт</p>
@@ -321,7 +313,6 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
         </button>
         <p style="font-size:0.8rem;opacity:0.5;margin-top:15px;">Приймаються лише @gmail.com акаунти</p>
     </div>
-
     <div id="app-block" style="display:none;">
         <div class="user-info">
             <img id="user-photo" src="" alt="">
@@ -352,9 +343,7 @@ footer { width: 100%; padding: 40px 20px; text-align: center; margin-top: auto; 
             </div>
         </div>
     </div>
-
 </div>
-
 <footer>
     <div class="social-links">
         <a href="https://www.instagram.com/uchnivskesamovriaduvannia" target="_blank">INSTAGRAM</a>
@@ -422,7 +411,6 @@ import {
     browserLocalPersistence, setPersistence
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
 const firebaseConfig = {
     apiKey: "AIzaSyCyRjdbRjQonfqNX-hY1XSdM2og2xeyngs",
     authDomain: "golosovanna.firebaseapp.com",
@@ -432,20 +420,15 @@ const firebaseConfig = {
     messagingSenderId: "869952269827",
     appId: "1:869952269827:web:c15cf5553e2e43a2062836"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
-
 const isTgIOS = /Telegram/i.test(navigator.userAgent) && /iPhone|iPad|iPod/i.test(navigator.userAgent);
 const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
 await setPersistence(auth, browserLocalPersistence).catch(console.error);
-
 const REDIRECT_KEY = 'auth_redirect_url';
-
 try {
     const result = await getRedirectResult(auth);
     if (result?.user) {
@@ -457,7 +440,6 @@ try {
         if (!result.user.email.endsWith('@gmail.com')) { await signOut(auth); alert('❌ Тільки @gmail.com акаунти'); }
     }
 } catch(e) { console.log('Redirect result:', e.code); }
-
 document.getElementById('google-btn')?.addEventListener('click', async () => {
     sessionStorage.setItem(REDIRECT_KEY, window.location.href);
     if (isMobile && !isTgIOS) {
@@ -469,42 +451,35 @@ document.getElementById('google-btn')?.addEventListener('click', async () => {
         } catch(e) { if (e.code !== 'auth/popup-closed-by-user') alert('Помилка: ' + e.message); }
     }
 });
-
 document.getElementById('logout-btn')?.addEventListener('click', () => signOut(auth));
-
 onAuthStateChanged(auth, (user) => {
     const tgBlock = document.getElementById('tg-warning-block');
     const loginBlock = document.getElementById('login-block');
     const appBlock = document.getElementById('app-block');
-
     if (isTgIOS) {
         tgBlock.style.display = 'block';
         loginBlock.style.display = 'none';
         appBlock.style.display = 'none';
         return;
     }
-
     if (user && user.email.endsWith('@gmail.com')) {
         tgBlock.style.display = 'none';
         loginBlock.style.display = 'none';
         appBlock.style.display = 'block';
         document.getElementById('user-photo').src = user.photoURL || '';
         document.getElementById('user-name').textContent = user.displayName || user.email;
-
         onValue(ref(db, 'registrations/' + user.uid), (snap) => {
             const inputs = document.getElementById('form-inputs');
             const success = document.getElementById('form-success');
             if (snap.exists()) { inputs.style.display = 'none'; success.style.display = 'block'; }
             else { inputs.style.display = 'block'; success.style.display = 'none'; }
         }, { onlyOnce: true });
-
     } else {
         tgBlock.style.display = 'none';
         loginBlock.style.display = 'block';
         appBlock.style.display = 'none';
     }
 });
-
 window.sendForm = async () => {
     const user = auth.currentUser;
     if (!user) return;
@@ -512,17 +487,13 @@ window.sendForm = async () => {
     const surname = document.getElementById('f-surname').value.trim();
     const cls = document.getElementById('f-class').value.trim();
     const btn = document.getElementById('submit-btn');
-
     if (!name || !surname || !cls) { alert('Будь ласка, заповніть всі поля'); return; }
-
     btn.disabled = true;
     btn.textContent = '⏳ Надсилання...';
-
     try {
         await set(ref(db, 'registrations/' + user.uid), {
             name, surname, class: cls, email: user.email, time: Date.now()
         });
-
         await fetch(globalThis.REG_GAS_URL, {
             method: 'POST',
             mode: 'no-cors',
@@ -531,10 +502,8 @@ window.sendForm = async () => {
                 name, surname, klass: cls, email: user.email
             })
         });
-
         document.getElementById('form-inputs').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
-
     } catch(e) {
         console.error(e);
         alert('Помилка при відправці: ' + e.message);
@@ -543,6 +512,5 @@ window.sendForm = async () => {
     }
 };
 </script>
-
 </body>
 </html>
