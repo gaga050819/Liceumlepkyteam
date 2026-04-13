@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3060369291416814"
-crossorigin="anonymous"></script>
+<script src="config.js?v=2026"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3060369291416814" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Офіційний сайт учнівського самоврядування наукового ліцею імені Богдана Лепкого. Наші проєкти, ініціативи та шкільне життя.">
@@ -332,7 +332,7 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
 #dp-toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 22px; border-radius: 14px; font-size: 0.9rem; font-weight: 700; z-index: 10000; opacity: 0; transform: translateY(12px); transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; font-family: -apple-system, sans-serif; display: flex; align-items: center; gap: 8px; }
 #dp-toast.show { opacity: 1; transform: translateY(0); }
 #dp-toast.green { background: #fff; color: #059669; box-shadow: 0 8px 30px rgba(0,0,0,0.15), 0 0 0 2px #d1fae5; }
-#dp-toast.blue  { background: #fff; color: #667eea; box-shadow: 0 8px 30px rgba(0,0,0,0.15), 0 0 0 2px #ede9fe; }
+#dp-toast.blue { background: #fff; color: #667eea; box-shadow: 0 8px 30px rgba(0,0,0,0.15), 0 0 0 2px #ede9fe; }
 body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outline-offset: 3px; border-radius: 4px; cursor: pointer; }
 </style>
 <link rel="manifest" href="manifest.json">
@@ -343,12 +343,10 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
 </script>
 </head>
 <body>
-
 <div id="lightbox" onclick="closeLightbox()">
     <button id="lightbox-close" onclick="closeLightbox()">✕</button>
     <img id="lightbox-img" src="" alt="">
 </div>
-
 <div id="bugModal" onclick="if(event.target===this)closeBug()">
     <div class="bug-box">
         <h3>Повідомити про баг</h3>
@@ -360,14 +358,11 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
         </div>
     </div>
 </div>
-
 <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
-
 <div class="controls">
     <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
     <button id="menuBtn" onclick="toggleMenu()">🏠</button>
 </div>
-
 <div class="sidebar" id="sidebar">
     <button id="closeBtn" onclick="toggleMenu()">✖</button>
     <div class="sidebar-links">
@@ -380,21 +375,17 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
     </div>
     <div id="versionBox">Версія: <span id="version"></span></div>
 </div>
-
 <header>
     <h1 class="main-title" data-dev-id="main-title">Головна</h1>
     <div class="logo">
         <img src="Logo1variant.png" alt="Логотип" style="width:120%;height:120%;object-fit:cover;">
     </div>
 </header>
-
 <div class="container">
-
     <div class="card hero-card">
         <div class="hero-box-label" data-dev-id="hero-label">Загальна довідка</div>
         <div class="hero-text" data-dev-id="hero-text">Офіційний сайт учнівського самоврядування наукового ліцею ім. Б. Лепкого.</div>
     </div>
-
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand('eventCard')">+</button>
         <video controls preload="metadata" style="border-radius:20px;">
@@ -416,7 +407,6 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
             </div>
         </div>
     </div>
-
     <div class="card" id="lastEventCard">
         <button class="expand-btn" onclick="toggleExpand('lastEventCard')">+</button>
         <div class="gallery-container">
@@ -454,7 +444,6 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
             </div>
         </div>
     </div>
-
     <div class="ad-block">
         <span class="ad-label">Реклама</span>
         <div class="ad-banner-center">
@@ -462,7 +451,6 @@ body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outli
             <script src="https://orcelebration.com/059b14656284abaa3d2cc406e7d88414/invoke.js"></script>
         </div>
     </div>
-
 </div>
 <footer>
     <div class="social-links">
@@ -521,7 +509,6 @@ const body = document.body;
 const sidebar = document.getElementById('sidebar');
 const scrollBtn = document.getElementById('scrollTopBtn');
 const themeMeta = document.getElementById('theme-color-meta');
-
 function toggleTheme() {
     body.classList.toggle('dark');
     const dark = body.classList.contains('dark');
@@ -532,7 +519,6 @@ function toggleMenu() { sidebar.classList.toggle('open'); }
 function toggleExpand(id) { document.getElementById(id).classList.toggle('expanded'); }
 window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', scrollY > 300));
 if (localStorage.getItem('theme') === 'dark') { body.classList.add('dark'); themeMeta.content = '#4b5982'; }
-
 function openLightbox(src) {
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('open');
@@ -542,7 +528,6 @@ function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
     document.body.style.overflow = '';
 }
-
 function openBug() { document.getElementById('bugModal').classList.add('open'); }
 function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
 async function sendBug() {
@@ -605,7 +590,6 @@ var DEV_MEDIA = {
 var dpOriginalSrcs={},dpOriginalTexts={},dpOpen=false,_dpClicks=0,_dpTimer=null;
 var DEV_PASS='Lp9#mK2vXq7rNz4wYj8e';
 var __b64='PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9InVrIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+0KPRh9C90ZbQstGB0YzQutC1INGB0LDQvNC+0LLRgNGP0LTRg9Cy0LDQvdC90Y88L3RpdGxlPgoKPHN0eWxlPgogICAgI3Njcm9sbFRvcEJ0biB7CiAgICBwb3NpdGlvbjogZml4ZWQ7CiAgICBib3R0b206IDMwcHg7CiAgICBsZWZ0OiAzMHB4OwogICAgd2lkdGg6IDUwcHg7CiAgICBoZWlnaHQ6IDUwcHg7CiAgICBib3JkZXItcmFkaXVzOiA1MCU7CiAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1jYXJkLWJvcmRlcik7CiAgICBiYWNrZ3JvdW5kOiB2YXIoLS1jYXJkLWJnKTsKICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cigxNXB4KTsKICAgIC13ZWJraXQtYmFja2Ryb3AtZmlsdGVyOiBibHVyKDE1cHgpOwogICAgY29sb3I6IGluaGVyaXQ7CiAgICBmb250LXNpemU6IDIycHg7CiAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICBib3gtc2hhZG93OiAwIDhweCAzMnB4IHJnYmEoMCwwLDAsMC4xKTsKICAgIHRyYW5zaXRpb246IHZhcigtLXRyYW5zaXRpb24pOwogICAgb3BhY2l0eTogMDsKICAgIHZpc2liaWxpdHk6IGhpZGRlbjsKICAgIHotaW5kZXg6IDk5OTsKfQojc2Nyb2xsVG9wQnRuLnZpc2libGUgeyBvcGFjaXR5OiAxOyB2aXNpYmlsaXR5OiB2aXNpYmxlOyB9CiNzY3JvbGxUb3BCdG46aG92ZXIgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTNweCk7IH0KOnJvb3QgewogICAgLS1iZy1saWdodDogI2YxZTFjZDsKICAgIC0tdGV4dC1saWdodDogIzRiNTk4MjsKICAgIC0tY2FyZC1iZzogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjMpOwogICAgLS1jYXJkLWJvcmRlcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjUpOwogICAgLS10cmFuc2l0aW9uOiBhbGwgMC40cyBjdWJpYy1iZXppZXIoMC4yNSwgMC44LCAwLjI1LCAxKTsKfQoKYm9keSB7CiAgICBtYXJnaW46IDA7CiAgICBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAiU2Vnb2UgVUkiLCBSb2JvdG8sIHNhbnMtc2VyaWY7CiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTgwZGVnLCB2YXIoLS1iZy1saWdodCksICNlNWQyYjgsIHZhcigtLWJnLWxpZ2h0KSk7CiAgICBjb2xvcjogdmFyKC0tdGV4dC1saWdodCk7CiAgICBkaXNwbGF5OiBmbGV4OwogICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7CiAgICBtaW4taGVpZ2h0OiAxMDB2aDsKICAgIHRyYW5zaXRpb246IGJhY2tncm91bmQgMC44cyBlYXNlLCBjb2xvciAwLjVzIGVhc2U7CiAgICBvdmVyZmxvdy14OiBoaWRkZW47Cn0KCmJvZHkuZGFyayB7CiAgICAtLWJnLWxpZ2h0OiAjNGI1OTgyOwogICAgLS10ZXh0LWxpZ2h0OiAjZjFlMWNkOwogICAgLS1jYXJkLWJnOiByZ2JhKDI0MSwgMjI1LCAyMDUsIDAuMSk7CiAgICAtLWNhcmQtYm9yZGVyOiByZ2JhKDI0MSwgMjI1LCAyMDUsIDAuMik7CiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTgwZGVnLCAjNGI1OTgyLCAjMzUzZjVjLCAjNGI1OTgyKSAhaW1wb3J0YW50Owp9Cg==';
-
 function __dec(){try{return decodeURIComponent(escape(atob(__b64)));}catch(e){return null;}}
 function __enc(s){return btoa(unescape(encodeURIComponent(s)));}
 function dpInit(){
@@ -746,7 +730,7 @@ dpInit();
 var c=document.querySelector('[data-dev-id="footer-copy"]');
 if(c) c.addEventListener('click',_dpTrigger);
 </script>
-<script src="config.js?v=2026"></script>
+
 <script>if(typeof globalThis.SITE_VERSION!=='undefined') document.getElementById("version").textContent=globalThis.SITE_VERSION;</script>
 </body>
 </html>
