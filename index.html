@@ -534,16 +534,23 @@ async function sendBug() {
     const text = document.getElementById('bugText').value.trim();
     const btn = document.querySelector('.bug-send');
     if (!text) return;
-    btn.disabled = true; btn.innerText = '⏳...';
+    btn.disabled = true; 
+    btn.innerText = '⏳...';
     try {
         await fetch(globalThis.BUGS_GAS_URL, {
             method: 'POST',
+            mode: 'no-cors',           
             headers: {'Content-Type': 'text/plain;charset=utf-8'},
             body: JSON.stringify({token: globalThis.BUG_TOKEN, message:'Баг (index.html):\n'+text})
         });
-        closeBug(); dpToast('✅ Надіслано!','green');
-    } catch(e) { dpToast('❌ Немає з\'єднання','green'); }
-    finally { btn.disabled=false; btn.innerText='📨 Надіслати'; }
+        closeBug(); 
+        alert('✅ Надіслано!');
+    } catch(e) { 
+        alert('❌ Немає з\'єднання');
+    } finally { 
+        btn.disabled = false; 
+        btn.innerText = '📨 Надіслати'; 
+    }
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape'){closeLightbox();closeBug();} });
 
@@ -729,8 +736,9 @@ function dpToast(msg,type){var t=document.getElementById('dp-toast');t.textConte
 dpInit();
 var c=document.querySelector('[data-dev-id="footer-copy"]');
 if(c) c.addEventListener('click',_dpTrigger);
+<script>
+if (typeof globalThis.SITE_VERSION !== 'undefined') 
+    document.getElementById("version").textContent = globalThis.SITE_VERSION;
 </script>
-
-<script>if(typeof globalThis.SITE_VERSION!=='undefined') document.getElementById("version").textContent=globalThis.SITE_VERSION;</script>
 </body>
 </html>
