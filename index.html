@@ -150,7 +150,6 @@ header {
 .card.expanded .gallery-container > img:first-child {
     width: 100%; aspect-ratio: unset; height: 200px; object-fit: cover;
 }
-/* Lightbox */
 .lightbox-trigger { cursor: zoom-in; }
 #lightbox {
     display: none; position: fixed; inset: 0;
@@ -200,8 +199,7 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
     color: var(--text); transition: var(--tr);
     display: block; margin: 10px auto 0;
 }
-#bugBtn:hover { opacity: 1; transform: none; }
-#bugBtn:hover { transform: translateY(-5px); }
+#bugBtn:hover { opacity: 1; }
 #bugModal {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.6); z-index: 9500;
@@ -228,14 +226,6 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
 .bug-box textarea:focus { border-color: var(--text); }
 .bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
 .bug-send {
-    if (text.trim().length === 0) {
-        alert("Будь ласка, опишіть проблему.");
-        return;
-    }
-     if (text.length > 500) {
-        alert("Занадто довге повідомлення (макс. 500 символів).");
-        return; 
-    }
     flex: 2; padding: 16px; border-radius: 18px; border: none;
     background: var(--text); color: var(--bg);
     font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s;
@@ -247,8 +237,6 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
     color: var(--text); font-size: 1rem; cursor: pointer; transition: 0.2s;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ── MOBILE FIX ── */
 @media (max-width: 768px) {
     .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
     #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
@@ -256,23 +244,13 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
     header { display: flex; flex-direction: column-reverse; gap: 15px; margin-top: 70px; }
     .main-title { font-size: 2.2rem; }
     .logo { align-self: center; }
-    .card {
-        flex-direction: column;
-        text-align: center;
-        padding-top: 60px;
-        gap: 20px;
-    }
-    .card > img,
-    .card > video,
-    .gallery-container,
-    .card-content { width: 100% !important; max-width: none !important; }
+    .card { flex-direction: column; text-align: center; padding-top: 60px; gap: 20px; }
+    .card > img, .card > video, .gallery-container, .card-content { width: 100% !important; max-width: none !important; }
     .card > video { aspect-ratio: 16/9 !important; height: auto !important; }
     .hero-box-label { border-right: none; border-bottom: 3px solid currentColor; padding-bottom: 10px; margin-bottom: 10px; padding-right: 0; }
     .hero-text { padding-left: 0; }
     .expand-btn { top: 15px; right: 15px; }
 }
-
-/* ── Developer Panel ── */
 #devToggle { display: none; }
 #devPassModal {
     display: none; position: fixed; inset: 0;
@@ -358,7 +336,6 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
 body.dev-active [data-dev-id] { outline: 2px dashed rgba(102,126,234,0.4); outline-offset: 3px; border-radius: 4px; cursor: pointer; }
 </style>
 <link rel="manifest" href="manifest.json">
-
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js');
@@ -566,9 +543,6 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
-const BUG_TELEGRAM_TOKEN = '8450851710:AAGsC5O72ab-C8ZWw2guCc7bGMX0rRbhhZI';
-const BUG_CHAT_ID = '6190541661';
-
 function openBug() { document.getElementById('bugModal').classList.add('open'); }
 function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
 async function sendBug() {
@@ -577,12 +551,12 @@ async function sendBug() {
     if (!text) return;
     btn.disabled = true; btn.innerText = '⏳...';
     try {
-        const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: '🐛 Баг-репорт:\n'+text+'\n\n📄 '+location.pathname})
+        await fetch(globalThis.BUGS_GAS_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'text/plain;charset=utf-8'},
+            body: JSON.stringify({token: globalThis.BUG_TOKEN, message:'Баг (index.html):\n'+text})
         });
-        if (r.ok) { closeBug(); dpToast('✅ Надіслано!','green'); }
-        else dpToast('❌ Помилка','green');
+        closeBug(); dpToast('✅ Надіслано!','green');
     } catch(e) { dpToast('❌ Немає з\'єднання','green'); }
     finally { btn.disabled=false; btn.innerText='📨 Надіслати'; }
 }
@@ -772,7 +746,7 @@ dpInit();
 var c=document.querySelector('[data-dev-id="footer-copy"]');
 if(c) c.addEventListener('click',_dpTrigger);
 </script>
-<script src="config.js"></script>
-<script>document.getElementById("version").textContent=SITE_VERSION;</script>
+<script src="config.js?v=2026"></script>
+<script>if(typeof globalThis.SITE_VERSION!=='undefined') document.getElementById("version").textContent=globalThis.SITE_VERSION;</script>
 </body>
 </html>
