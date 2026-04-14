@@ -1,5 +1,6 @@
 <!DOCTYPE html>  <html lang="uk">  
 <head>  
+<script src="config.js?v=2026"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3060369291416814"
 crossorigin="anonymous"></script>
 <meta charset="UTF-8">  
@@ -153,8 +154,6 @@ text-decoration: none; color: inherit; font-weight: 700;
 font-size: 1rem; letter-spacing: 1px; transition: var(--tr);
 }
 .social-links a:hover { opacity: 0.7; }
-
-/* Lightbox */
 #lightbox {
 display: none; position: fixed; inset: 0;
 background: rgba(0,0,0,0.92); z-index: 9000;
@@ -169,8 +168,6 @@ background: rgba(255,255,255,0.15); border: none; color: white;
 font-size: 32px; cursor: pointer; border-radius: 50%;
 width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
 }
-
-/* Bug report */
 #bugTrigger {
 background: none; border: none; cursor: pointer;
 font-size: 0.8rem; font-weight: 600; opacity: 0.5;
@@ -212,7 +209,6 @@ flex: 1; padding: 16px; border-radius: 18px;
 border: 1.5px solid var(--card-border); background: none;
 color: var(--text); font-size: 1rem; cursor: pointer;
 }
-
 @media (max-width: 768px) {
 .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
 #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
@@ -343,8 +339,6 @@ function closeLightbox() {
     document.body.style.overflow = '';
 }
 
-const BUG_TELEGRAM_TOKEN = '8450851710:AAGsC5O72ab-C8ZWw2guCc7bGMX0rRbhhZI';
-const BUG_CHAT_ID = '6190541661';
 function openBug() { document.getElementById('bugModal').classList.add('open'); }
 function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
 async function sendBug() {
@@ -353,18 +347,17 @@ async function sendBug() {
     if (!text) return;
     btn.disabled = true; btn.innerText = '⏳...';
     try {
-        const r = await fetch('https://api.telegram.org/bot'+BUG_TELEGRAM_TOKEN+'/sendMessage', {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({chat_id: BUG_CHAT_ID, text: 'Баг (news.html):\n'+text})
+        await fetch(globalThis.BUGS_GAS_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'text/plain;charset=utf-8'},
+            body: JSON.stringify({token: globalThis.BUG_TOKEN, message:'Баг (news.html):\n'+text})
         });
-        if (r.ok) { closeBug(); alert('✅ Надіслано!'); }
-        else alert('❌ Помилка');
+        closeBug(); alert('✅ Надіслано!');
     } catch(e) { alert('❌ Немає з\'єднання'); }
     finally { btn.disabled=false; btn.innerText='📨 Надіслати'; }
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape'){closeLightbox();closeBug();} });
+if (typeof globalThis.SITE_VERSION !== 'undefined') document.getElementById('version').textContent = globalThis.SITE_VERSION;
 </script>
-<script src="config.js"></script>  
-<script>document.getElementById("version").textContent = SITE_VERSION;</script>
 </body>  
 </html>
