@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<script src="config.js?v=2026"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f1e1cd" id="theme-color-meta">
+<title>Як активно проводити час | Учнівське самоврядування</title>
+<style>
+#versionBox {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 13px; opacity: 0.6; color: var(--text);
+}
+:root {
+  --bg: #f1e1cd; --text: #4b5982;
+  --card-bg: rgba(255,255,255,0.3);
+  --card-border: rgba(255,255,255,0.5);
+  --tr: all 0.4s cubic-bezier(0.25,0.8,0.25,1);
+}
+*,*::before,*::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(180deg, var(--bg), #e5d2b8, var(--bg));
+  color: var(--text);
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 100vh;
+  transition: background 0.8s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+body.dark {
+  --bg: #4b5982; --text: #f1e1cd;
+  --card-bg: rgba(241,225,205,0.1);
+  --card-border: rgba(241,225,205,0.2);
+  background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) !important;
+}
+.controls {
+  position: fixed; top: 20px; left: 20px;
+  z-index: 1000; display: flex; flex-direction: column; gap: 15px;
+}
+#themeBtn, #menuBtn {
+  padding: 12px; border-radius: 50px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg); backdrop-filter: blur(15px);
+  color: inherit; cursor: pointer; font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: var(--tr);
+  display: flex; justify-content: center; align-items: center;
+}
+#menuBtn { width: 50px; height: 50px; font-size: 22px; }
+@media (hover:hover) {
+  #themeBtn:hover, #menuBtn:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
+}
+.sidebar {
+  position: fixed; top: 0; left: -100%;
+  width: 100%; max-width: 300px;
+  height: 100vh; height: -webkit-fill-available;
+  background: var(--card-bg); backdrop-filter: blur(40px);
+  border-right: 1px solid var(--card-border);
+  z-index: 1001; transition: var(--tr);
+  display: flex; flex-direction: column;
+  padding: 100px 30px calc(30px + env(safe-area-inset-bottom));
+  box-shadow: 15px 0 50px rgba(0,0,0,0.2);
+  opacity: 0; visibility: hidden; overflow-y: auto;
+}
+.sidebar.open { left: 0; opacity: 1; visibility: visible; }
+.sidebar a {
+  text-decoration: none; padding: 18px 25px; margin-bottom: 20px;
+  border-radius: 25px; background: rgba(255,255,255,0.1);
+  border: 1px solid var(--card-border);
+  color: inherit; font-weight: 700; font-size: 1.2rem; transition: var(--tr);
+}
+@media (hover:hover) {
+  .sidebar a:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
+}
+#closeBtn {
+  position: absolute; top: 30px; right: 30px;
+  background: none; border: none; font-size: 28px; color: inherit; cursor: pointer;
+}
+.lh-trigger-btn {
+  text-decoration: none; padding: 18px 25px;
+  border-radius: 25px; background: rgba(255,255,255,0.1);
+  border: 1px solid var(--card-border);
+  color: inherit; font-weight: 700; font-size: 1.2rem; transition: var(--tr);
+  cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  width: 100%; margin-bottom: 20px;
+}
+.lh-trigger-btn:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
+.lh-arrow { font-size: 1rem; opacity: 0.6; }
+#lhModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 9500;
+  align-items: flex-end; justify-content: center;
+  backdrop-filter: blur(8px);
+}
+#lhModal.open { display: flex; }
+.lh-sheet {
+  width: 100%; max-width: 500px;
+  background: var(--bg); border-radius: 30px 30px 0 0;
+  padding: 20px 24px calc(30px + env(safe-area-inset-bottom));
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.lh-sheet-handle {
+  width: 40px; height: 4px; border-radius: 4px;
+  background: currentColor; opacity: 0.2;
+  margin: 0 auto 10px;
+}
+.lh-sheet-title { margin: 0; font-size: 1.4rem; font-weight: 900; }
+.lh-sheet-sub { margin: 0 0 4px; font-size: 0.95rem; opacity: 0.6; }
+.lh-sheet-btn {
+  display: block; text-decoration: none;
+  padding: 18px 22px; border-radius: 22px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg); backdrop-filter: blur(20px);
+  color: var(--text); font-size: 1rem; font-weight: 700;
+  transition: var(--tr);
+}
+.lh-sheet-btn:hover { background: var(--text); color: var(--bg); border-color: transparent; }
+.lh-sheet-cancel {
+  padding: 16px; border-radius: 22px;
+  border: 1.5px solid var(--card-border); background: none;
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  font-weight: 600; margin-top: 4px; transition: var(--tr);
+}
+.lh-sheet-cancel:hover { opacity: 0.7; }
+header {
+  width: 90%; max-width: 1000px; margin: 90px 0 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.main-title {
+  font-size: clamp(2rem,7vw,3.5rem);
+  font-weight: 900; text-align: center; margin: 0; line-height: 1.15;
+}
+.subtitle { font-size: 1rem; opacity: 0.6; font-weight: 500; text-align: center; margin: 0; }
+.container { width: 95%; max-width: 1000px; padding-bottom: 20px; }
+.media-card {
+  border-radius: 40px; padding: 28px;
+  background: var(--card-bg); backdrop-filter: blur(25px);
+  border: 1px solid var(--card-border);
+  margin-bottom: 28px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.card-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.5; }
+.card-title { font-size: 1.6rem; font-weight: 900; margin: 0; line-height: 1.2; }
+.card-desc { font-size: 1rem; opacity: 0.8; line-height: 1.6; margin: 0; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  padding: 6px 16px; border-radius: 20px;
+  border: 1px solid var(--card-border); background: rgba(255,255,255,0.15);
+  font-size: 0.78rem; font-weight: 600;
+}
+.media-wrap {
+  width: 100%; height: 220px; border-radius: 25px;
+  border: 1.5px dashed currentColor;
+  overflow: hidden; position: relative;
+  background: var(--card-bg);
+  display: flex; align-items: center; justify-content: center;
+}
+.media-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  cursor: zoom-in; border: none; display: block;
+}
+.media-ph {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; font-size: 0.85rem; font-weight: 600;
+  width: 100%; height: 100%;
+}
+.media-ph svg { width: 36px; height: 36px; opacity: 0.4; }
+#lightbox {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92); z-index: 9000;
+  align-items: center; justify-content: center; backdrop-filter: blur(10px);
+}
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 94vw; max-height: 94vh; border-radius: 16px; object-fit: contain; }
+#lightbox-close {
+  position: absolute; top: 20px; right: 24px;
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  font-size: 32px; cursor: pointer; border-radius: 50%;
+  width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+}
+#bugModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 9500;
+  align-items: flex-end; justify-content: center; backdrop-filter: blur(8px);
+}
+#bugModal.open { display: flex; }
+.bug-box {
+  width: 100%; max-width: 500px; background: var(--bg);
+  border-radius: 30px 30px 0 0;
+  padding: 30px 28px calc(35px + env(safe-area-inset-bottom));
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.bug-box h3 { margin: 0 0 8px; font-size: 1.4rem; font-weight: 800; }
+.bug-box p { margin: 0 0 20px; font-size: 0.95rem; opacity: 0.7; }
+.bug-box textarea {
+  width: 100%; border-radius: 18px; border: 1.5px solid var(--card-border);
+  background: var(--card-bg); color: var(--text);
+  padding: 16px; font-size: 1rem; font-family: inherit;
+  resize: none; outline: none; min-height: 120px;
+}
+.bug-box-btns { display: flex; gap: 12px; margin-top: 18px; }
+.bug-send {
+  flex: 2; padding: 16px; border-radius: 18px; border: none;
+  background: var(--text); color: var(--bg); font-size: 1rem; font-weight: 700; cursor: pointer;
+}
+.bug-send:disabled { opacity: 0.5; }
+.bug-cancel {
+  flex: 1; padding: 16px; border-radius: 18px;
+  border: 1.5px solid var(--card-border); background: none;
+  color: var(--text); font-size: 1rem; cursor: pointer;
+}
+#scrollTopBtn {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; border-radius: 50%;
+  border: 1px solid var(--card-border); background: var(--card-bg);
+  backdrop-filter: blur(15px); color: inherit; font-size: 22px;
+  cursor: pointer; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: var(--tr); opacity: 0; visibility: hidden; z-index: 999;
+}
+#scrollTopBtn.visible { opacity: 1; visibility: visible; }
+#scrollTopBtn:hover { transform: translateY(-3px); }
+footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: auto; }
+.social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-bottom: 35px; }
+.social-links a {
+  text-decoration: none; color: inherit; font-weight: 700;
+  font-size: 1rem; letter-spacing: 1px; transition: var(--tr);
+}
+.social-links a:hover { opacity: 0.7; }
+#bugTrigger {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.8rem; font-weight: 600; opacity: 0.5;
+  color: var(--text); display: block; margin: 10px auto 0;
+}
+#bugTrigger:hover { opacity: 1; }
+@media (max-width: 768px) {
+  .controls { flex-direction: row; width: calc(100% - 40px); justify-content: space-between; top: 15px; }
+  #themeBtn, #menuBtn { padding: 10px 15px; height: 45px; font-size: 14px; }
+  #menuBtn { width: 45px; padding: 0; position: fixed; right: 20px; left: auto; }
+  header { margin-top: 70px; }
+  .main-title { font-size: 2rem; }
+  .media-card { padding: 20px; border-radius: 30px; }
+  .card-title { font-size: 1.3rem; }
+  .media-wrap { height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="bugModal" onclick="if(event.target===this)closeBug()">
+  <div class="bug-box">
+    <h3>🐞 Повідомити про баг 🐞</h3>
+    <p>Опишіть проблему на сайті</p>
+    <textarea id="bugText" placeholder="Наприклад: фото не відкривається..."></textarea>
+    <div class="bug-box-btns">
+      <button class="bug-cancel" onclick="closeBug()">Скасувати</button>
+      <button class="bug-send" onclick="sendBug()">📨 Надіслати</button>
+    </div>
+  </div>
+</div>
+
+<div id="lhModal" onclick="if(event.target===this)closeLh()">
+  <div class="lh-sheet">
+    <div class="lh-sheet-handle"></div>
+    <h3 class="lh-sheet-title">Лайвхаки</h3>
+    <p class="lh-sheet-sub">Обери тему</p>
+    <a class="lh-sheet-btn" href="aktyvniychas.html">Як активно проводити час</a>
+    <a class="lh-sheet-btn" href="activelearning.html">Методи активного навчання</a>
+    <a class="lh-sheet-btn" href="muzyka.html">Музика</a>
+    <button class="lh-sheet-cancel" onclick="closeLh()">Скасувати</button>
+  </div>
+</div>
+
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+<div class="controls">
+  <button id="themeBtn" onclick="toggleTheme()">🌓 Тема</button>
+  <button id="menuBtn" onclick="toggleMenu()">🏠</button>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <button id="closeBtn" onclick="toggleMenu()">✖</button>
+  <a href="index.html">Головна</a>
+  <a href="news.html">Новини</a>
+  <a href="past_events.html">Проєкти</a>
+  <a href="about.html">Про нас</a>
+  <a href="skrynkaidey.html">Скринька ідей</a>
+  <a href="Konkyrs.html">Реєстрація на конкурс</a>
+  <button class="lh-trigger-btn" onclick="openLh()">Лайвхаки <span class="lh-arrow">→</span></button>
+  <div id="versionBox">Версія: <span id="version"></span></div>
+</div>
+
+<header>
+  <h1 class="main-title">Як активно<br>проводити час</h1>
+  <p class="subtitle">Ідеї, поради та натхнення для насиченого дозвілля</p>
+</header>
+
+<div class="container">
+
+  <div class="media-card">
+    <span class="card-label">Активний відпочинок</span>
+    <h2 class="card-title"></h2>
+    <div class="media-wrap">
+      <div class="media-ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+<img src="2Woman.jpg" alt="2Woman">
+      </div>
+    </div>
+    <p class="card-desc"><p>Відпочинок — це не просто пауза, а половина успіху в навчанні. Саме під час відновлення мозок обробляє інформацію, зміцнює пам’ять і готується до нових викликів. Якщо ігнорувати відпочинок, навіть найстаранніше навчання не дасть бажаного результату.</p>
+<p>Особливу роль відіграє сон. Для підлітків важливо спати приблизно 8–9 годин на добу. Є простий лайфхак: сон проходить циклами по ~90 хвилин, тому краще планувати пробудження так, щоб прокидатися наприкінці циклу. Наприклад: </p>
+<p>якщо потрібно встати о 7:00 — лягай приблизно о 22:30 або 00:00</p>
+<p>якщо вставати о 6:30 — оптимально заснути о 21:30 або 23:00 </p>
+<p>Так прокинутися буде значно легше, без відчуття «розбитості». </p>
+<p>Ще кілька порад для якісного відпочинку: <p>
+роби короткі перерви під час навчання (5–10 хв кожні 40–50 хв)
+<p>менше користуйся телефоном перед сном </p>
+<p>провітрюй кімнату (реально працює, перевірено :) ) </p>
+<p>Активний відпочинок: прогулянки або легкий спорт допомагають «перезавантажити» мозок (особливо рекомендую прогулятись ввечері за 2 годинки до сну)</p></p>
+  </div>
+
+  <div class="media-card">
+    <span class="card-label">Спорт не тільки фізична форма</span>
+    <div class="media-wrap">
+      <div class="media-ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="3"/><polygon points="10,9 16,12 10,15"/></svg>
+        <img src="Woman.jpg" alt="Woman">
+      </div>
+    </div>
+    <p class="card-desc"><p>Спорт — це не лише про фізичну форму, а й про успішне навчання. Регулярна активність покращує концентрацію, пам’ять і настрій, допомагає зняти стрес і дає більше енергії протягом дня. Навіть 15–30 хвилин руху щодня можуть значно підвищити продуктивність.</p>
+    <p>Ось види активності, які не займають багато часу і легко вписуються у шкільний графік:</p>
+
+<p>Ранкова зарядка (5–10 хв) — допомагає швидко прокинутися і «запустити» організм</p>
+
+<p>Планка — ефективна навіть за 1–2 хвилини на день</p>
+
+<p>Стрибки на скакалці — інтенсивно і швидко, достатньо 5–15 хв</p>
+
+<p>Йога або розтяжка — розслабляє і зменшує напругу після уроків</p>
+
+<p>Прогулянки швидким темпом — можна поєднувати з дорогою до школи</p>
+
+<p>Біг — короткі пробіжки 10–20 хв</p>
+
+<p>Волейбол — навіть коротка гра з друзями дає гарне навантаження</p>
+
+<p>Танці під улюблену музику — 10–15 хв активності без відчуття «тренування»</p>
+
+Головне — регулярність, а не тривалість.</p>
+  </div>
+<footer>
+  <div class="social-links">
+    <a href="https://www.instagram.com/uchnivskesamovriaduvannia?igsh=MXJtNmliZXJoYmZwdA==" target="_blank">INSTAGRAM</a>
+    <a href="https://www.facebook.com/share/1DtXY2x5Us/?mibextid=wwXIfr" target="_blank">FACEBOOK</a>
+    <a href="https://t.me/DNLLepkyi" target="_blank">TELEGRAM</a>
+    <a href="https://www.tiktok.com/@lyceumlepkogo?_r=1&_t=ZS-94d1kkArRpN" target="_blank">TIKTOK</a>
+  </div>
+  <p style="opacity:0.6;font-size:0.85rem;font-weight:600;">&copy; 2026 учнівське самоврядування</p>
+  <button id="bugTrigger" onclick="openBug()">🐞 Повідомити про баг 🐞</button>
+</footer>
+
+<script>
+const body = document.body;
+const sidebar = document.getElementById('sidebar');
+const themeMeta = document.getElementById('theme-color-meta');
+const scrollBtn = document.getElementById('scrollTopBtn');
+
+function toggleTheme() {
+  body.classList.toggle('dark');
+  const dark = body.classList.contains('dark');
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+  themeMeta.content = dark ? '#4b5982' : '#f1e1cd';
+}
+function toggleMenu() { sidebar.classList.toggle('open'); }
+if (localStorage.getItem('theme') === 'dark') { body.classList.add('dark'); themeMeta.content = '#4b5982'; }
+
+window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', scrollY > 300));
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function openBug() { document.getElementById('bugModal').classList.add('open'); }
+function closeBug() { document.getElementById('bugModal').classList.remove('open'); document.getElementById('bugText').value = ''; }
+async function sendBug() {
+  const text = document.getElementById('bugText').value.trim();
+  const btn = document.querySelector('.bug-send');
+  if (!text) return;
+  btn.disabled = true; btn.innerText = '⏳...';
+  try {
+    await fetch(globalThis.BUGS_GAS_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({token: globalThis.BUG_TOKEN, message:'Баг (aktyvniychas.html):\n'+text})
+    });
+    closeBug(); alert('✅ Надіслано!');
+  } catch(e) { alert('❌ Немає з\'єднання'); }
+  finally { btn.disabled=false; btn.innerText='📨 Надіслати'; }
+}
+function openLh() { document.getElementById('lhModal').classList.add('open'); }
+function closeLh() { document.getElementById('lhModal').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeLightbox();closeBug();closeLh();} });
+if (typeof globalThis.SITE_VERSION !== 'undefined') document.getElementById('version').textContent = globalThis.SITE_VERSION;
+</script>
+</body>
+</html>
