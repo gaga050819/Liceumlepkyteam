@@ -1,4 +1,4 @@
-const SITE_VERSION='v1.8',
+const SITE_VERSION='v2.0',
       IDEAS_GAS_URL='https://script.google.com/macros/s/AKfycbxFg6A2iqRlkGkidiqRnJon6OrljzyFNS-gUE7vGIHAA4JLWWh0GsMJcUwmIR3JCaYl/exec',
       BUGS_GAS_URL='https://script.google.com/macros/s/AKfycbwFuuJfr2qmktLZtm47KjxPYz8C5JU0Fchby45ZYqAkUeTA60RromCXF2ylm8s3MEiq/exec',
       REG_GAS_URL='https://script.google.com/macros/s/AKfycbwyaaFaznEbebIZOjZvmNCwKcA5SCTeO3cDeCSlv-Q7zMhX5ALiMEcfEStNCORdnnsTYw/exec',
