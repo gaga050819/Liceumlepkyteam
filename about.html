@@ -9,6 +9,42 @@ crossorigin="anonymous"></script>
 <meta name="theme-color" content="#f1e1cd" id="theme-color-meta">
 <title>Про нас | Команда самоврядування ліцею</title>
 <style>
+.lh-trigger-btn {
+    text-decoration: none; padding: 18px 25px; margin-bottom: 20px;
+    border-radius: 25px; background: rgba(255,255,255,0.1);
+    border: 1px solid var(--card-border);
+    color: inherit; font-weight: 700; font-size: 1.2rem; transition: var(--tr);
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%;
+}
+.lh-trigger-btn:hover { transform: translateX(10px); background: rgba(255,255,255,0.3); }
+.lh-arrow { font-size: 1rem; opacity: 0.6; }
+#lhModal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 9500;
+    align-items: flex-end; justify-content: center; backdrop-filter: blur(8px);
+}
+#lhModal.open { display: flex; }
+.lh-sheet {
+    width: 100%; max-width: 500px; background: var(--bg);
+    border-radius: 30px 30px 0 0;
+    padding: 20px 24px calc(30px + env(safe-area-inset-bottom));
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+    display: flex; flex-direction: column; gap: 10px;
+}
+.lh-sheet-handle { width: 40px; height: 4px; border-radius: 4px; background: currentColor; opacity: 0.2; margin: 0 auto 10px; }
+.lh-sheet-title { margin: 0; font-size: 1.4rem; font-weight: 900; }
+.lh-sheet-sub { margin: 0 0 4px; font-size: 0.95rem; opacity: 0.6; }
+.lh-sheet-btn {
+    display: block; text-decoration: none; padding: 18px 22px; border-radius: 22px;
+    border: 1px solid var(--card-border); background: var(--card-bg); backdrop-filter: blur(20px);
+    color: var(--text); font-size: 1rem; font-weight: 700; transition: var(--tr);
+}
+.lh-sheet-btn:hover { background: var(--text); color: var(--bg); border-color: transparent; }
+.lh-sheet-cancel {
+    padding: 16px; border-radius: 22px; border: 1.5px solid var(--card-border); background: none;
+    color: var(--text); font-size: 1rem; cursor: pointer; font-weight: 600; margin-top: 4px;
+}
 :root {
     --bg: #f1e1cd;
     --text: #4b5982;
@@ -60,8 +96,9 @@ body.dark { background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) fixed !i
     border-right: 1px solid var(--card-border);
     z-index: 1001; transition: var(--tr);
     display: flex; flex-direction: column;
-    padding: 100px 30px 0;
-    opacity: 0; visibility: hidden;
+    padding: 100px 30px calc(100px + env(safe-area-inset-bottom));
+    box-shadow: 15px 0 50px rgba(0,0,0,0.2);
+    opacity: 0; visibility: hidden; overflow-y: auto;
 }
 .sidebar.open { left: 0; opacity: 1; visibility: visible; }
 .sidebar-links { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
@@ -79,8 +116,11 @@ body.dark { background: linear-gradient(180deg,#4b5982,#353f5c,#4b5982) fixed !i
     background: none; border: none; font-size: 28px; color: inherit; cursor: pointer;
 }
 #versionBox {
-    padding: 15px 20px calc(15px + env(safe-area-inset-bottom));
-    font-size: 13px; opacity: 0.6; flex-shrink: 0;
+    margin-top: auto;
+    padding-top: 20px;
+    font-size: 13px;
+    opacity: 0.6;
+    color: var(--text);
 }
 header {
     width: 90%; max-width: 1200px;
@@ -288,7 +328,17 @@ footer { width: 100%; padding: 40px 20px 40px; text-align: center; margin-top: a
         </div>
     </div>
 </div>
-
+<div id="lhModal" onclick="if(event.target===this)closeLh()">
+    <div class="lh-sheet">
+        <div class="lh-sheet-handle"></div>
+        <h3 class="lh-sheet-title">Лайвхаки</h3>
+        <p class="lh-sheet-sub">Обери тему</p>
+        <a class="lh-sheet-btn" href="aktyvniychas.html">Як активно проводити час</a>
+        <a class="lh-sheet-btn" href="activelearning.html">Методи активного навчання</a>
+        <a class="lh-sheet-btn" href="muzyka.html">Музика</a>
+        <button class="lh-sheet-cancel" onclick="closeLh()">Скасувати</button>
+    </div>
+</div>
 <button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 
 <div class="controls">
@@ -298,14 +348,13 @@ footer { width: 100%; padding: 40px 20px 40px; text-align: center; margin-top: a
 
 <div class="sidebar" id="sidebar">
     <button id="closeBtn" onclick="toggleMenu()">✖</button>
-    <div class="sidebar-links">
-        <a href="index.html">Головна</a>
-        <a href="news.html">Новини</a>
-        <a href="past_events.html">Проєкти</a>
-        <a href="about.html">Про нас</a>
-        <a href="skrynkaidey.html">Скринька ідей</a>
-        <a href="Konkyrs.html">Реєстрація на конкурс</a>
-    </div>
+    <a href="index.html">Головна</a>
+    <a href="news.html">Новини</a>
+    <a href="past_events.html">Проєкти</a>
+    <a href="about.html">Про нас</a>
+    <a href="skrynkaidey.html">Скринька ідей</a>
+    <a href="Konkyrs.html">Реєстрація на конкурс</a>
+    <button class="lh-trigger-btn" onclick="openLh()">Лайвхаки <span class="lh-arrow">→</span></button>
     <div id="versionBox">Версія: <span id="version"></span></div>
 </div>
 
@@ -531,10 +580,9 @@ function scrollToCard(id) {
     dropdown.classList.remove('open');
 }
 
-document.addEventListener('click', e => {
-    if (!document.getElementById('navigatorBtn').contains(e.target) && !dropdown.contains(e.target))
-        dropdown.classList.remove('open');
-});
+function openLh() { document.getElementById('lhModal').classList.add('open'); }
+function closeLh() { document.getElementById('lhModal').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLightbox(); closeBug(); closeLh(); } });
 window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', scrollY > 300));
 if (localStorage.getItem('theme') === 'dark') { body.classList.add('dark'); themeMeta.content = '#4b5982'; }
 
