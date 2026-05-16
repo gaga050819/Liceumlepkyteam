@@ -352,6 +352,33 @@ footer { width: 100%; padding: 60px 20px 40px; text-align: center; margin-top: a
 
 <div class="container">
 
+<div class="card">
+    <button class="expand-btn" onclick="toggleExpand(this)">+</button>
+    <div class="gallery-container">
+        <video controls preload="metadata" style="width: 100%; max-height: 300px; object-fit: contain; display: block; background: #000;"><source src="Girlinfront.MOV" type="video/mp4"></video>
+        <div class="more-text">
+            <div class="gallery-grid">
+                <img src="Cool2.jpg" alt="Фото учасників2" onclick="openLightbox(this.src)">
+                <img src="Cool3.jpg" alt="Фото учасників3" onclick="openLightbox(this.src)">
+                <img src="Cool1.jpg" alt="Фото учасників1" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </div>
+    <div class="card-content">
+        <h2>«Хто зверху?»</h2>
+        <p>Купа емоцій, сміху, боротьби до останнього балу й атмосфера, яку неможливо передати словами.</p>
+        <div class="more-text">
+            <p>Дякуємо всім командам, глядачам та кожному, хто зробив цей вечір таким драйвовим 💥</p>
+            <p>Особлива подяка:</p>
+            <p>організатору заходу — Ярині Чопик,</p>
+            <p>віцепрезиденту нашого ліцею — Яні Куриляк,</p>
+            <p>педагогу-організатору — Тетяні Іванців,</p>
+            <p>адміністрації ліцею — за підтримку заходу.</p>
+            <p>Також дякуємо всій команді учнівського самоврядування за високий рівень підготовки та відповідальність ❤️</p>
+        </div>
+    </div>
+</div>
+
     <div class="card" id="eventCard">
         <button class="expand-btn" onclick="toggleExpand(this)">+</button>
         <video controls preload="metadata" style="border-radius:20px;width:100%;">
